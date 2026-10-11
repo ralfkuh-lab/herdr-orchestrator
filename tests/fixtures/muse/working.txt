@@ -1,0 +1,13 @@
+⟩ Run the shell command ls -la in this directory and then tell me only the
+  number of entries.
+
+◆ Ran command · List directory contents in detail · ✓ · 0.3s · ctrl+o
+
+◆ 2
+
+◈ Double checking (10s · esc to interrupt)
+
+──────────────────────────────────────────────────────────────────────────────────────────
+⟩
+──────────────────────────────────────────────────────────────────────────────────────────
+  muse-spark-1.3 · high · /t/c/-/1a22b407-314c-4ebb-b7c9-5590390d57ae/scratchpad

@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Fake muse for the tests (recursion guard muse_foreign_guard in herd.sh,
+# muse >= 1.0.3: no run flag, persistent skill activation). Controlled via env:
+#   FAKE_MUSE_ORCH_ACTIVATION=on|off  activation of herdr-orchestrator in
+#                           `skills list --source user --json` (default on)
+#   FAKE_MUSE_DISABLE_FAILS=1  `skills disable` does NOT change the activation
+# Side effects in $FAKE_HERDR_DIR: `skills disable …` logs one line in
+# muse-skills-calls and creates muse-disabled (afterwards list reports "off").
+dir="${FAKE_HERDR_DIR:-/tmp}"
+case "${1:-}" in
+  --help|exec)
+    exit 0 ;;
+  skills)
+    case "${2:-}" in
+      list)
+        act="${FAKE_MUSE_ORCH_ACTIVATION:-on}"
+        [ -e "$dir/muse-disabled" ] && act=off
+        printf '{"diagnostics":[],"skills":[{"id":"agy-auth","activation":"on"},{"id":"herdr-orchestrator","activation":"%s"}]}\n' "$act"
+        exit 0 ;;
+      disable|enable)
+        shift 2
+        printf '%s\n' "$*" >> "$dir/muse-skills-calls"
+        [ "${FAKE_MUSE_DISABLE_FAILS:-0}" = 1 ] || touch "$dir/muse-disabled"
+        exit 0 ;;
+    esac
+    exit 0 ;;
+esac
+exit 0

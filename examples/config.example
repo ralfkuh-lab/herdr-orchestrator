@@ -1,0 +1,85 @@
+# herdr-orchestrator configuration (template)
+#
+# Copy to ~/.config/herdr-orchestrator/config and uncomment what you need.
+# scripts/herd.sh sources this file as shell code on every call, so use plain
+# shell syntax (no spaces around "="). Set HERD_CONFIG in the environment to
+# use a different path.
+#
+# This file controls mechanics only. Which model implements or reviews what
+# belongs in ~/.config/herdr-orchestrator/policy.md (see policy.example.md).
+
+# --- Backends ---------------------------------------------------------------
+
+# Allowlist of backends herd.sh may start, comma-separated. Empty or unset:
+# every installed backend is allowed. Use it to keep work and private
+# accounts apart, e.g. only approved backends on a work machine.
+# BACKENDS=claude,codex,pi
+
+# --- Default models (used when start/exec gets no --model) ------------------
+# Unset: the backend's own default applies. Slugs depend on your accounts.
+
+# MODEL_CLAUDE=opus
+# MODEL_CODEX="<model>"
+# MODEL_AGY="<model>"
+# MODEL_OPENCODE="<provider/model>"
+# MODEL_COPILOT="<model>"
+# MODEL_GROK="<model>"
+# MODEL_KIMI="<model>"
+# MODEL_MUSE="<model>"
+# pi has no fallback: without --model or MODEL_PI, start/exec refuse.
+# MODEL_PI="<provider/model>"
+
+# Provider prefix for opencode models given without "provider/". No default.
+# OPENCODE_PROVIDER="<provider>"
+
+# Provider for pi when --model is not "provider/id". No default; without it
+# such a pi start fails.
+# HERD_PI_PROVIDER="<provider>"
+
+# Answer pi's project-trust prompt in advance: approve (--approve, loads the
+# project's .pi/ settings, extensions, skills and .agents/skills) or ignore
+# (--no-approve, leaves them out). Either way no dialog. Default: approve if
+# HERD_AUTO_TRUST=1, otherwise ignore.
+# HERD_PI_PROJECT_TRUST=ignore
+
+# Pre-trust the working directory for backends with a trust dialog (0|1,
+# default 0). A trusted folder makes the backend load the project's own
+# configuration, skills and hooks — code and instructions from the repository.
+# At 1: codex (-c projects=… for this session), muse (--trust-workspace for this
+# session), grok (entry in ~/.grok/trusted_folders.toml, PERMANENT) and pi
+# (--approve, unless HERD_PI_PROJECT_TRUST says otherwise). At 0 codex, grok
+# and muse ask and the orchestrator answers the dialog; pi gets --no-approve
+# (no dialog, project resources stay unloaded). Enable only for repositories
+# whose configuration you trust.
+# HERD_AUTO_TRUST=0
+
+# Permission mode for claude/grok started with --role impl (default:
+# acceptEdits). Research agents stay in plan mode. An explicit
+# "start ... --permission-mode M" overrides this for both roles.
+# HERD_IMPL_PERMISSION_MODE=acceptEdits
+
+# --- Panes and housekeeping -------------------------------------------------
+
+# Open a new tab once the current one has this many panes (default 4).
+# HERD_MAX_PER_TAB=4
+
+# How start launches a backend: agent (herdr agent start), run (pane run with
+# a command file) or auto (default: run on Windows, agent elsewhere).
+# HERD_START_VIA=auto
+
+# start/exec/run delete log folders under ${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/herd-<uid>/
+# older than this many days (default 7; 0 = never).
+# HERD_LOG_KEEP_DAYS=7
+
+# start/exec/run delete entries in .herd/ unchanged for this many days
+# (default 14; 0 = never). Question files are kept.
+# HERD_WORKDIR_KEEP_DAYS=14
+
+# --- Watching ---------------------------------------------------------------
+
+# Observation engine for watch/wait: auto (default) or events.
+# HERD_WATCH_ENGINE=auto
+
+# 1 = watch/wait also raise a herdr notification for every action line they
+# print (default off). Read by the Python engine, so it must be exported.
+# export HERD_NOTIFY=1

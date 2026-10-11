@@ -1,0 +1,677 @@
+#!/usr/bin/env bash
+# Fake herdr for the tests: delivers deterministic status sequences and pane
+# texts from a fixture directory, without a real daemon and without panes.
+#
+# Fixture directory: $FAKE_HERDR_DIR
+#   status.<name>   lines — the N-th `agent get <name>` returns line N, the last
+#                   line repeats arbitrarily often.
+#                   Missing file → agent unknown (empty answer).
+#                   A line "-" means: gone from here on (empty status),
+#                   simulates pane/backend death of a previously known agent.
+#   ws.<name>       workspace_id for this agent (empty/missing → "").
+#   extra.jsonl     additional agent objects only in `agent list` (one JSON
+#                   line per agent) — for name collisions across spaces.
+#   extra-panes.jsonl  additional pane objects in `pane list` (label+space).
+#   workspaces      additional known workspace_ids (one per line).
+#   .listfail       `agent list` fails (exit 1).
+#   .wslistfail     `workspace list` fails (exit 1).
+#   .keysfail.<name> send-keys for this pane fails (exit 1), content on stderr.
+#   .side           side-effect log (prompt/keys/close/text) for isolation tests.
+#   prompt-seq.<name> sequence per `agent prompt` (counter .promptcount.<name>).
+#                   "ok" -> success JSON as before; any other line -> stderr,
+#                   exit 1. Takes precedence over prompt-fail.<name>.
+#   kind.<name>     backend kind for `agent get` (field "agent", e.g. agy).
+#                   Missing file, the output stays without this field.
+#   session.<name>  session id for this agent. If it exists, `agent get` and
+#                   `agent list` additionally deliver
+#                   "agent_session":{"agent":"<kind from kind.<name> or claude>",
+#                   "kind":"id","source":"herdr:test","value":"<id>"}.
+#                   Missing file, the field stays off (backward compatible).
+#   .getfail.<name> `agent get` for this agent fails (exit 1). `agent list`
+#                   stays intact - the pane resolution via the list keeps
+#                   working (for stop tests: get before close).
+#   pane.<name>     visible pane text (static). Missing → empty.
+#   pane-after.<name>  pane text from the 2nd `pane read` of this pane (otherwise
+#                   pane.<name> continues). For answer verification: the first
+#                   read shows the dialog, the second read no longer does.
+#   pane-after-N.<name> pane text from the N-th `pane read` of this pane
+#                   (e.g. pane-after-3.<name> from the 3rd read).
+#   pane-ansi.<name> visible pane ANSI text at `pane read --format ansi`.
+#   pane-ansi-after.<name>  ANSI text from the 2nd ANSI read of this pane.
+#   .reads.<name>   logs one line "<source> <lines>" per `pane read` (for format
+#                   ansi: "ansi <lines>").
+#   split.pane      pane_id that `pane split` returns.
+#   start.<name>    sequence for `agent start`: line N applies to the N-th call.
+#                   "ok" -> {"result":{"ok":true}}; "noreg:<text>" -> error
+#                   WITHOUT registration (no .started.<name>), stderr = <text>;
+#                   anything else -> error text on stderr (exit 1) AND
+#                   registration (.started.<name>).
+#                   If start.<name> exists, the agent stays invisible in get/list
+#                   until it was registered — analogous to the real herdr
+#                   (registration only by agent start).
+#   startsleep.<name> seconds: `agent start <name>` sleeps that long (TERM-able:
+#                   kill leaves .startkilled.<name>), BEFORE the sequence from
+#                   start.<name> applies. The sequence line is consumed already at
+#                   the call — a killed attempt still counts in
+#                   .startcount.<name> (proof: no second attempt).
+#                   Multi-line: line N applies to the N-th start (last line
+#                   repeats) — analogous to start.<name>.
+#   pane-after-start.<name> pane text as soon as the first `agent start` has
+#                   reached its sequence (after startsleep, also for noreg; marker
+#                   .startdone.<name>). Independent of the read counter — for
+#                   baseline renewal between attempt 1 and 2.
+#   readfail.<name> number N — the N-th and every further `pane read` of THIS
+#                   pane fails (exit 1), simulates a pane that disappears in the
+#                   middle of an evaluation. Counter: .rcount.<name>.
+#   readfail-once.<name> read numbers (one per line or space-separated) that fail
+#                   ONCE (exit 1); other reads stay ok. Unlike readfail.<name>
+#                   (permanently from N on).
+#   readsleep.<name> seconds: `pane read` starts a TERM-resistant descendant
+#                   (ignores SIGTERM, sleeps in-process). Writes ITS pid to
+#                   .readpid.<name> — not that of the fake shell — so tests can
+#                   check SIGKILL on the process group.
+#   readsleep-N.<name> like readsleep, but only for the N-th read of this pane
+#                   (takes precedence over readsleep.<name>).
+#   .pane-list-error stderr for a failing pane list (exit 13; also empty).
+#   .down           if the file exists, EVERY herdr call fails (daemon/IPC
+#                   outage).
+#
+# Call counters live in $FAKE_HERDR_DIR/.count.<name>.
+
+set -u
+
+dir="${FAKE_HERDR_DIR:?FAKE_HERDR_DIR not set}"
+
+[ -f "$dir/.down" ] && { echo "herdr: connection refused" >&2; exit 1; }
+
+sub="${1:-}"; shift || true
+
+# Deliver the next value of a sequence file (the last line repeats).
+# Generation like the real herdr: counts up when the status changes and stays
+# stable otherwise.
+gen_for() {
+  local file="$1" cnt_file="$2" n g prev cur i
+  n=1; [ -f "$cnt_file" ] && n="$(cat "$cnt_file")"
+  local total; total="$(wc -l < "$file")"
+  [ "$n" -gt "$total" ] && n="$total"
+  g=0; prev=""
+  for i in $(seq 1 "$n"); do
+    cur="$(sed -n "${i}p" "$file")"; cur="${cur%%:*}"
+    [ "$cur" = "$prev" ] || g=$((g + 1))
+    prev="$cur"
+  done
+  echo "$g"
+}
+
+seq_next() {
+  local file="$1" cnt_file="$2" n total
+  [ -f "$file" ] || return 1
+  total="$(wc -l < "$file")"
+  [ "$total" -gt 0 ] || return 1
+  n=0
+  [ -f "$cnt_file" ] && n="$(cat "$cnt_file")"
+  n=$((n + 1))
+  echo "$n" > "$cnt_file"
+  [ "$n" -gt "$total" ] && n="$total"
+  sed -n "${n}p" "$file"
+}
+
+# Name from target: the name itself or pane id p:<name> (send addresses by
+# pane after space resolution, no longer by global name).
+fixture_name() {
+  local target="$1"
+  if [ -f "$dir/status.$target" ]; then
+    printf '%s' "$target"
+    return 0
+  fi
+  local base="${target#p:}"
+  if [ "$base" != "$target" ] && [ -f "$dir/status.$base" ]; then
+    printf '%s' "$base"
+    return 0
+  fi
+  return 1
+}
+
+ws_of() {
+  local name="$1"
+  if [ -f "$dir/ws.$name" ]; then cat "$dir/ws.$name"
+  else printf ''
+  fi
+}
+
+side() { printf '%s\n' "$*" >> "$dir/.side"; }
+
+collect_workspaces() {
+  local f nm line ws
+  for f in "$dir"/ws.*; do
+    [ -f "$f" ] || continue
+    ws="$(cat "$f")"
+    [ -n "$ws" ] && printf '%s\n' "$ws"
+  done
+  if [ -f "$dir/extra.jsonl" ]; then
+    while IFS= read -r line || [ -n "$line" ]; do
+      [ -n "$line" ] || continue
+      printf '%s\n' "$line" | sed -n 's/.*"workspace_id":"\([^"]*\)".*/\1/p'
+    done < "$dir/extra.jsonl"
+  fi
+  if [ -f "$dir/extra-panes.jsonl" ]; then
+    while IFS= read -r line || [ -n "$line" ]; do
+      [ -n "$line" ] || continue
+      printf '%s\n' "$line" | sed -n 's/.*"workspace_id":"\([^"]*\)".*/\1/p'
+    done < "$dir/extra-panes.jsonl"
+  fi
+  [ -f "$dir/workspaces" ] && cat "$dir/workspaces"
+}
+
+case "$sub" in
+  agent)
+    action="${1:-}"; shift || true
+    case "$action" in
+      get)
+        target="${1:-}"
+        name="$(fixture_name "$target")" || exit 1
+        [ -f "$dir/.getfail.$name" ] && { echo "herdr: agent get failed" >&2; exit 1; }
+        # Registration gate (test fixtures only): a BARE name lookup only
+        # succeeds once the agent is registered (.started.<name>, set by agent
+        # start/agent rename). Pane lookups (target with ':') stay untouched —
+        # the start detection works via the pane. The first successful
+        # resolution is logged as 'agent-resolve' (order proof TLB6).
+        if [ -f "$dir/.register-gate" ]; then
+          case "$target" in
+            *:*) ;;
+            *)
+              [ -f "$dir/.started.$name" ] || exit 1
+              if [ ! -f "$dir/.resolved.$name" ]; then
+                side "agent-resolve $name"
+                : > "$dir/.resolved.$name"
+              fi
+              ;;
+          esac
+        fi
+        # start.<name> = not yet registered until agent start has run.
+        if [ -f "$dir/start.$name" ] && [ ! -f "$dir/.started.$name" ]; then
+          exit 1
+        fi
+        st="$(seq_next "$dir/status.$name" "$dir/.count.$name")" || exit 1
+        # "-" = agent gone: empty answer like the real herdr
+        [ "$st" = "-" ] && exit 1
+        # Fixture line "status:seq" sets the generation (state_change_seq)
+        # explicitly — needed for cycles that lie between two polls: same status,
+        # but a new generation. Without ":seq" it counts up per status change, as
+        # the real herdr does.
+        case "$st" in
+          *:*) gen="${st##*:}"; st="${st%%:*}" ;;
+          *)   gen="$(gen_for "$dir/status.$name" "$dir/.count.$name")" ;;
+        esac
+        kind=""
+        [ -f "$dir/kind.$name" ] && kind="$(tr -d '\n\r' < "$dir/kind.$name")"
+        sess_json=""
+        if [ -f "$dir/session.$name" ]; then
+          sk="$kind"; [ -n "$sk" ] || sk="claude"
+          sv="$(tr -d '\n\r' < "$dir/session.$name")"
+          sess_json="$(SK="$sk" SV="$sv" python3 -c 'import json,os; print(",\"agent_session\":" + json.dumps({"agent":os.environ["SK"],"kind":"id","source":"herdr:test","value":os.environ["SV"]}))')" || exit 1
+        fi
+        if [ -n "$kind" ]; then
+          printf '{"result":{"agent":{"name":"%s","agent":"%s","agent_status":"%s","pane_id":"p:%s","state_change_seq":%s,"workspace_id":"%s"%s}}}\n' \
+            "$name" "$kind" "$st" "$name" "$gen" "$(ws_of "$name")" "$sess_json"
+        else
+          printf '{"result":{"agent":{"name":"%s","agent_status":"%s","pane_id":"p:%s","state_change_seq":%s,"workspace_id":"%s"%s}}}\n' \
+            "$name" "$st" "$name" "$gen" "$(ws_of "$name")" "$sess_json"
+        fi
+        ;;
+      prompt)
+        name="$(fixture_name "${1:-}")" || name="${1:-}"
+        if [ $# -ge 2 ]; then
+          side "prompt $name $2"
+        else
+          side "prompt $name"
+        fi
+        if [ -f "$dir/prompt-seq.$name" ]; then
+          line="$(seq_next "$dir/prompt-seq.$name" "$dir/.promptcount.$name")" || line=""
+          if [ "$line" = "ok" ]; then
+            printf '{"result":{"ok":true}}\n'
+            exit 0
+          fi
+          printf '%s\n' "$line" >&2
+          exit 1
+        fi
+        if [ -f "$dir/prompt-fail.$name" ]; then
+          cat "$dir/prompt-fail.$name" >&2
+          exit 1
+        fi
+        printf '{"result":{"ok":true}}\n'
+        ;;
+      send-keys)
+        name="$(fixture_name "${1:-}")" || name="${1:-}"
+        if [ -f "$dir/.keysfail.$name" ]; then
+          cat "$dir/.keysfail.$name" >&2
+          exit 1
+        fi
+        # Real CLI contract: send-keys writes nothing to stdout on success.
+        side "agent-keys $*"
+        ;;
+      rename)
+        # agent rename <pane> <name> — logged for the label order (agent label
+        # only after registration, see TLB6). Under the registration gate the
+        # call registers the name server-side; only the next BARE name lookup
+        # succeeds (agent-resolve).
+        side "agent-rename ${1:-} ${2:-}"
+        if [ -f "$dir/.register-gate" ] && [ -n "${2:-}" ]; then
+          : > "$dir/.started.$2"
+        fi
+        printf '{"result":{"ok":true}}\n'
+        ;;
+      start)
+        for arg in "$@"; do
+          case "$arg" in
+            --help|-h)
+              if [ -f "$dir/kinds" ]; then
+                awk '
+                  NF { has_content=1 }
+                  { lines[NR] = $0 }
+                  END {
+                    if (!has_content) exit
+                    for (i = 1; i <= NR; i++) {
+                      if (i == 1 && i == NR) {
+                        printf "      --kind <KIND>  [possible values: %s]\n", lines[i]
+                      } else if (i == 1) {
+                        printf "      --kind <KIND>  [possible values: %s\n", lines[i]
+                      } else if (i == NR) {
+                        printf "                     %s]\n", lines[i]
+                      } else {
+                        printf "                     %s\n", lines[i]
+                      }
+                    }
+                  }
+                ' "$dir/kinds"
+              else
+                echo "      --kind <KIND>  [possible values: pi, claude, codex, gemini, cursor, devin, agy, cline, omp, mastracode, opencode, copilot, kimi, kiro, droid, amp, grok, hermes, kilo, qodercli, qwen, maki]"
+              fi
+              exit 0
+              ;;
+          esac
+        done
+        name="${1:-}"
+        # Consume the sequence line already at the call (not only after
+        # sleeping): if the start is killed during startsleep (herd.sh early
+        # detection), the attempt stays counted anyway.
+        line=""; has_seq=0
+        if [ -f "$dir/start.$name" ]; then
+          line="$(seq_next "$dir/start.$name" "$dir/.startcount.$name")" || line=""
+          has_seq=1
+        fi
+        if [ -f "$dir/startsleep.$name" ]; then
+          # Delayed start for timing tests: sleeps BEFORE the sequence applies.
+          # TERM-able via sleep+wait (wait is interruptible by trap; a foreground
+          # sleep alone would keep running after TERM) — kill leaves
+          # .startkilled.<name>. No SIG_IGN as with readsleep. Multi-line: line N
+          # = N-th start (startcount is already increased).
+          sl_n=1
+          [ -f "$dir/.startcount.$name" ] && sl_n="$(cat "$dir/.startcount.$name")"
+          sl_total="$(wc -l < "$dir/startsleep.$name")"
+          [ "$sl_n" -gt "$sl_total" ] && sl_n="$sl_total"
+          secs="$(sed -n "${sl_n}p" "$dir/startsleep.$name" | tr -d ' \n\r')"
+          [ -n "$secs" ] || secs=0
+          slpid=""; killed=0
+          # Install the trap BEFORE the child: TERM during the sleep must abort
+          # the sleep, not only apply afterwards. Catch the empty pid (TERM
+          # before the spawn), after kill also wait (reap the child). /bin/sleep
+          # directly: tests/bin/sleep is a shim (every sleep -> 0.02 s), here
+          # real blocking is the point of the fixture.
+          trap 'killed=1; if [ -n "${slpid:-}" ]; then kill "$slpid" 2>/dev/null || true; wait "$slpid" 2>/dev/null || true; fi' TERM INT
+          # TERM before the spawn: no more sleeping.
+          if [ "$killed" != 0 ]; then
+            trap - TERM INT
+            [ -n "$name" ] && : > "$dir/.startkilled.$name"
+            echo "herdr: agent start interrupted" >&2
+            exit 143
+          fi
+          if [ "$secs" != 0 ]; then
+            /bin/sleep "$secs" &
+            slpid=$!
+            # TERM between spawn and pid assignment: child now known.
+            if [ "$killed" != 0 ]; then
+              kill "$slpid" 2>/dev/null || true
+              wait "$slpid" 2>/dev/null || true
+              trap - TERM INT
+              [ -n "$name" ] && : > "$dir/.startkilled.$name"
+              echo "herdr: agent start interrupted" >&2
+              exit 143
+            fi
+            wait "$slpid" || killed=1
+          fi
+          trap - TERM INT
+          if [ "$killed" != 0 ]; then
+            [ -n "$name" ] && : > "$dir/.startkilled.$name"
+            echo "herdr: agent start interrupted" >&2
+            exit 143
+          fi
+        fi
+        # Sequence reached (after startsleep): pane text pane-after-start applies.
+        [ -n "$name" ] && : > "$dir/.startdone.$name"
+        if [ "$has_seq" = 1 ]; then
+          if [ "$line" = "ok" ]; then
+            [ -n "$name" ] && { : > "$dir/.started.$name"; side "agent-start-ok $name"; }
+            printf '{"result":{"ok":true}}\n'
+            exit 0
+          fi
+          case "$line" in
+            noreg:*)
+              printf '%s\n' "${line#noreg:}" >&2
+              exit 1
+              ;;
+          esac
+          # Registration also on error: analogous to the real herdr, which can
+          # create the agent and still delivers an error code.
+          [ -n "$name" ] && { : > "$dir/.started.$name"; side "agent-start-ok $name"; }
+          printf '%s\n' "$line" >&2
+          exit 1
+        fi
+        [ -n "$name" ] && { : > "$dir/.started.$name"; side "agent-start-ok $name"; }
+        printf '{"result":{"ok":true}}\n'
+        ;;
+      list)
+        [ -f "$dir/.listfail" ] && { echo "herdr: agent list failed" >&2; exit 1; }
+        # All agents with the current status — without moving the sequence counters.
+        printf '{"result":{"agents":['
+        sep=""
+        for f in "$dir"/status.*; do
+          [ -f "$f" ] || continue
+          nm="$(basename "$f")"; nm="${nm#status.}"
+          if [ -f "$dir/start.$nm" ] && [ ! -f "$dir/.started.$nm" ]; then
+            continue
+          fi
+          n=1
+          [ -f "$dir/.count.$nm" ] && n="$(cat "$dir/.count.$nm")"
+          total="$(wc -l < "$f")"
+          [ "$n" -gt "$total" ] && n="$total"
+          [ "$n" -lt 1 ] && n=1
+          sess_json=""
+          if [ -f "$dir/session.$nm" ]; then
+            sk=""; [ -f "$dir/kind.$nm" ] && sk="$(tr -d '\n\r' < "$dir/kind.$nm")"
+            [ -n "$sk" ] || sk="claude"
+            sv="$(tr -d '\n\r' < "$dir/session.$nm")"
+            sess_json="$(SK="$sk" SV="$sv" python3 -c 'import json,os; print(",\"agent_session\":" + json.dumps({"agent":os.environ["SK"],"kind":"id","source":"herdr:test","value":os.environ["SV"]}))')" || exit 1
+          fi
+          printf '%s{"name":"%s","agent_status":"%s","pane_id":"p:%s","workspace_id":"%s"%s}' \
+            "$sep" "$nm" "$(sed -n "${n}p" "$f")" "$nm" "$(ws_of "$nm")" "$sess_json"
+          sep=","
+        done
+        if [ -f "$dir/extra.jsonl" ]; then
+          while IFS= read -r line || [ -n "$line" ]; do
+            [ -n "$line" ] || continue
+            printf '%s%s' "$sep" "$line"
+            sep=","
+          done < "$dir/extra.jsonl"
+        fi
+        printf ']}}\n'
+        ;;
+      *)         printf '{"result":{}}\n' ;;
+    esac
+    ;;
+  pane)
+    action="${1:-}"; shift || true
+    case "$action" in
+      list)
+        if [ -f "$dir/.pane-list-error" ]; then
+          printf 'partial response\n'
+          cat "$dir/.pane-list-error" >&2
+          exit 13
+        fi
+        printf '{"result":{"panes":['
+        sep=""
+        if [ -f "$dir/extra-panes.jsonl" ]; then
+          while IFS= read -r line || [ -n "$line" ]; do
+            [ -n "$line" ] || continue
+            printf '%s%s' "$sep" "$line"
+            sep=","
+          done < "$dir/extra-panes.jsonl"
+        fi
+        printf ']}}\n'
+        ;;
+      run)
+        side "pane-run $*"
+        # Also log the command file from start (bash <%q-quoted logdir>/cmd.sh):
+        # start deletes it after a successful start. Test paths contain no
+        # characters that %q would escape, so the path is taken literally.
+        runfile="$(printf '%s' "${2:-}" | sed -n "s/^bash \(.*\/cmd\.sh\)\$/\1/p")"
+        if [ -n "$runfile" ] && [ -f "$runfile" ]; then
+          side "pane-run-file $(tr '\n' ' ' < "$runfile")"
+        fi
+        printf '{"result":{"ok":true}}\n'
+        ;;
+      rename)
+        # pane rename <pane> <label> — logged (order/content) for the label
+        # tests; .renamefail.<pane> lets the call fail.
+        side "pane-rename ${1:-} ${2:-}"
+        if [ -f "$dir/.renamefail.${1:-}" ]; then
+          echo "herdr: pane rename failed" >&2
+          exit 1
+        fi
+        printf '{"result":{"ok":true}}\n'
+        ;;
+      resize)
+        side "pane-resize $*"
+        printf '{"result":{}}\n'
+        ;;
+      get)
+        # pane get <pane>: label from label.<pane> (empty/missing = no label);
+        # .panegetfail.<pane> lets the call fail (exit 1). pane-get-raw.<pane>
+        # outputs an arbitrary raw answer with exit 0 (tests for unparseable
+        # JSON, see TLB8).
+        pane="${1:-}"
+        if [ -f "$dir/.panegetfail.$pane" ]; then
+          echo "herdr: pane get failed" >&2
+          exit 1
+        fi
+        if [ -f "$dir/pane-get-raw.$pane" ]; then
+          cat "$dir/pane-get-raw.$pane"
+          exit 0
+        fi
+        lbl=""
+        [ -f "$dir/label.$pane" ] && lbl="$(tr -d '\n\r' < "$dir/label.$pane")"
+        if [ -n "$lbl" ]; then
+          printf '{"result":{"pane":{"pane_id":"%s","label":"%s"}}}\n' "$pane" "$lbl"
+        else
+          printf '{"result":{"pane":{"pane_id":"%s"}}}\n' "$pane"
+        fi
+        ;;
+      close)
+        side "close ${1:-}"
+        printf '{"result":{"ok":true}}\n'
+        ;;
+      send-text)
+        side "pane-text ${1:-}"
+        printf '{"result":{"ok":true}}\n'
+        ;;
+      send-keys)
+        pane="${1:-}"
+        name="${pane#p:}"
+        if [ -f "$dir/.keysfail.$name" ]; then
+          cat "$dir/.keysfail.$name" >&2
+          exit 1
+        fi
+        # Real CLI contract: send-keys writes nothing to stdout on success.
+        side "pane-keys $*"
+        ;;
+      split)
+        side "pane-split"
+        if [ -f "$dir/split.pane" ]; then
+          pid="$(tr -d '\n\r' < "$dir/split.pane")"
+          printf '{"result":{"pane_id":"%s"}}\n' "$pid"
+        else
+          printf '{"result":{}}\n'
+        fi
+        ;;
+      read)
+        # Call form: pane read <pane> --source X --lines N --format text
+        pane="${1:-}"
+        name="${pane#p:}"
+        src="" lines="" fmt=""
+        args=("$@")
+        for ((idx=1; idx<${#args[@]}; idx++)); do
+          case "${args[idx]}" in
+            --source) src="${args[idx+1]:-}"; idx=$((idx + 1)) ;;
+            --source=*) src="${args[idx]#--source=}" ;;
+            --lines) lines="${args[idx+1]:-}"; idx=$((idx + 1)) ;;
+            --lines=*) lines="${args[idx]#--lines=}" ;;
+            --format) fmt="${args[idx+1]:-}"; idx=$((idx + 1)) ;;
+            --format=*) fmt="${args[idx]#--format=}" ;;
+          esac
+        done
+        rn=0
+        if [ "$fmt" = "ansi" ]; then
+          [ -f "$dir/.rcount-ansi.$name" ] && rn="$(cat "$dir/.rcount-ansi.$name")"
+          rn=$((rn + 1)); echo "$rn" > "$dir/.rcount-ansi.$name"
+        else
+          [ -f "$dir/.rcount.$name" ] && rn="$(cat "$dir/.rcount.$name")"
+          rn=$((rn + 1)); echo "$rn" > "$dir/.rcount.$name"
+        fi
+        src_log="${src:-?}"
+        [ "$fmt" = "ansi" ] && src_log="ansi"
+        [ -n "$name" ] && printf '%s %s\n' "$src_log" "${lines:-?}" >> "$dir/.reads.$name"
+        if [ -f "$dir/readfail-once.$name" ]; then
+          # Exactly the listed read numbers fail, the rest stays ok.
+          once_fail=0
+          while read -r once_tok || [ -n "${once_tok:-}" ]; do
+            for once_n in $once_tok; do
+              [ "$once_n" = "$rn" ] && once_fail=1
+            done
+          done < "$dir/readfail-once.$name"
+          if [ "$once_fail" = 1 ]; then
+            echo "herdr: pane $pane not found" >&2
+            exit 1
+          fi
+        fi
+        if [ -f "$dir/readfail.$name" ]; then
+          # Fail from the N-th read on. This makes it provable that an evaluator
+          # reads the pane only ONCE — whoever reads repeatedly gets an error on
+          # the second time and must not conclude anything harmless from it.
+          if [ "$rn" -ge "$(cat "$dir/readfail.$name")" ]; then
+            echo "herdr: pane $pane not found" >&2
+            exit 1
+          fi
+        fi
+        rsleep=""
+        if [ -f "$dir/readsleep-$rn.$name" ]; then
+          rsleep="$(tr -d ' \n' < "$dir/readsleep-$rn.$name")"
+        elif [ -f "$dir/readsleep.$name" ]; then
+          rsleep="$(tr -d ' \n' < "$dir/readsleep.$name")"
+        fi
+        if [ -n "$rsleep" ] && [ "$rsleep" != 0 ]; then
+          # In-process sleep with SIG_IGN: a child /bin/sleep would get TERM and
+          # the trap parent would simply keep running/ending afterwards.
+          python3 -c '
+import os, signal, sys, time
+signal.signal(signal.SIGTERM, signal.SIG_IGN)
+open(sys.argv[1], "w").write("%d\n" % os.getpid())
+time.sleep(float(sys.argv[2]))
+' "$dir/.readpid.$name" "$rsleep" || true
+        fi
+        found_after=""
+        if [ "$fmt" = "ansi" ]; then
+          for ((k=rn; k>=2; k--)); do
+            if [ -f "$dir/pane-ansi-after-$k.$name" ]; then
+              found_after="$dir/pane-ansi-after-$k.$name"
+              break
+            fi
+          done
+          if [ -n "$found_after" ]; then
+            cat "$found_after"
+          elif [ "$rn" -ge 2 ] && [ -f "$dir/pane-ansi-after.$name" ]; then
+            cat "$dir/pane-ansi-after.$name"
+          elif [ -f "$dir/pane-ansi.$name" ]; then
+            cat "$dir/pane-ansi.$name"
+          else
+            for ((k=rn; k>=2; k--)); do
+              if [ -f "$dir/pane-after-$k.$name" ]; then
+                found_after="$dir/pane-after-$k.$name"
+                break
+              fi
+            done
+            if [ -n "$found_after" ]; then
+              cat "$found_after"
+            elif [ -f "$dir/.startdone.$name" ] && [ -f "$dir/pane-after-start.$name" ]; then
+              cat "$dir/pane-after-start.$name"
+            elif [ "$rn" -ge 2 ] && [ -f "$dir/pane-after.$name" ]; then
+              cat "$dir/pane-after.$name"
+            else
+              [ -f "$dir/pane.$name" ] && cat "$dir/pane.$name"
+            fi
+          fi
+        else
+          for ((k=rn; k>=2; k--)); do
+            if [ -f "$dir/pane-after-$k.$name" ]; then
+              found_after="$dir/pane-after-$k.$name"
+              break
+            fi
+          done
+          if [ -n "$found_after" ]; then
+            cat "$found_after"
+          elif [ -f "$dir/.startdone.$name" ] && [ -f "$dir/pane-after-start.$name" ]; then
+            cat "$dir/pane-after-start.$name"
+          elif [ "$rn" -ge 2 ] && [ -f "$dir/pane-after.$name" ]; then
+            cat "$dir/pane-after.$name"
+          else
+            [ -f "$dir/pane.$name" ] && cat "$dir/pane.$name"
+          fi
+        fi
+        ;;
+      *) printf '{"result":{}}\n' ;;
+    esac
+    ;;
+  notification)
+    # Fake for `herdr notification show <TITLE> [--sound S]`: logs one line
+    # (title + options) per call to $FAKE_HERDR_DIR/.notify. If .notifyfail
+    # exists, the call fails (exit 1) — for the error path.
+    action="${1:-}"; shift || true
+    case "$action" in
+      show)
+        [ -f "$dir/.notifyfail" ] && { echo "herdr: notification show failed" >&2; exit 1; }
+        printf '%s\n' "$*" >> "$dir/.notify"
+        ;;
+    esac
+    ;;
+  workspace)
+    action="${1:-}"; shift || true
+    case "$action" in
+      list)
+        [ -f "$dir/.wslistfail" ] && { echo "herdr: workspace list failed" >&2; exit 1; }
+        printf '{"result":{"type":"workspace_list","workspaces":['
+        sep=""
+        for ws in $(collect_workspaces | awk 'NF && !seen[$0]++'); do
+          printf '%s{"workspace_id":"%s"}' "$sep" "$ws"
+          sep=","
+        done
+        printf ']}}\n'
+        ;;
+      *) printf '{"result":{}}\n' ;;
+    esac
+    ;;
+  status)
+    # `herdr status --json` delivers the server version + update flags for the
+    # start hint. Control via HERD_FAKE_STATUS_JSON:
+    #   unset/empty -> exit 1 (no running server)
+    #   "fail"      -> exit 1 (call fails)
+    #   otherwise   -> exit 0, the value is printed as stdout (garbage too)
+    # HERD_FAKE_STATUS_SLEEP=N simulates a hanging server: the exec'ed python
+    # ignores SIGTERM and sleeps N s — only `timeout -k` (SIGKILL) ends it.
+    # exec instead of a child so SIGKILL hits the process directly.
+    # .statuscount counts the status calls (cache proof).
+    sc=0; [ -f "$dir/.statuscount" ] && sc="$(cat "$dir/.statuscount")"
+    echo $((sc + 1)) > "$dir/.statuscount"
+    if [ -n "${HERD_FAKE_STATUS_SLEEP:-}" ]; then
+      exec python3 -c 'import signal, sys, time
+signal.signal(signal.SIGTERM, signal.SIG_IGN)
+time.sleep(float(sys.argv[1]))' "$HERD_FAKE_STATUS_SLEEP"
+    fi
+    case "${HERD_FAKE_STATUS_JSON:-}" in
+      "")   echo "herdr: no server running" >&2; exit 1 ;;
+      fail) echo "herdr: status failed" >&2; exit 1 ;;
+      *)    printf '%s\n' "$HERD_FAKE_STATUS_JSON" ;;
+    esac
+    ;;
+  --version) echo "herdr 0.7.5 (fake)" ;;
+  *)         printf '{"result":{}}\n' ;;
+esac
+exit 0

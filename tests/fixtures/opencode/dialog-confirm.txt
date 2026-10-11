@@ -1,0 +1,24 @@
+
+  ┃
+  ┃  Please read the file /etc/hostname (outside the workspace) and tell me its
+  ┃  content in one sentence.
+  ┃
+
+     + Thought: 185ms
+
+     ⠙ Read /etc/hostname
+
+     ▣  Build · GLM-5.3-Flash (2x usage)
+
+
+
+  ┃
+  ┃  △ Always allow
+  ┃
+  ┃  This will allow the following patterns until OpenCode is restarted
+  ┃
+  ┃  - /etc/*
+  ┃
+  ┃
+  ┃   Confirm   Cancel                                         ⇆ select  enter confirm
+  ┃

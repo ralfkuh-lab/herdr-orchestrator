@@ -1,0 +1,24 @@
+
+   main ~/dev/herdr-or… 1.5K / 500K
+┌────────────────────────────── [✗] ─┐
+│  Context usage  Usage limit        │
+│  Session info                      │
+│────────────────────────────────────│
+│  Weekly limit (SuperGrok)          │
+│                                    │
+│  ████████████████████████░░░░░░    │
+│  Resets: September 2, 22:20        │
+│                                    │
+│                                    │
+│                                    │
+│                                    │
+│                                    │
+│                                    │
+│                                    │
+│                                    │
+│                                    │
+│                                    │
+│                                    │
+│     Tab switch  |  ↑/↓ scroll      │
+│             Esc close              │
+└────────────────────────────────────┘

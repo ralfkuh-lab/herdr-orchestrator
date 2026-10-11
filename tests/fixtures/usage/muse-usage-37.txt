@@ -1,0 +1,25 @@
+# Synthetic fixture for T151b (derived from tests/fixtures/usage/muse-usage.txt)
+user@host:/tmp/claude-1000/-home-user-dev-herdr-orchestrator/1a22b407-314
+c-4ebb-b7c9-5590390d57ae/scratchpad$ muse --model muse-spark-1.3
+
+  Muse Code 1.0.2
+
+  Session usage
+
+    Input      0
+    Cached     0
+    Output     0
+    Total      0
+
+    Turns         0
+    Subagents  none
+
+  Subscription · Muse Code Everyday Usage
+    Current        37% used · Resets at 9:05 PM
+    Weekly         12% used · Resets Sep 8 at 2:00 AM
+    as of 5:28 PM
+
+──────────────────────────────────────────────────────────────────────────────────────────
+⟩
+──────────────────────────────────────────────────────────────────────────────────────────
+  muse-spark-1.3 · high · /t/c/-/1a22b407-314c-4ebb-b7c9-5590390d57ae/scratchpad

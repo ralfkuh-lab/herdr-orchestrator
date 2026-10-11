@@ -1,0 +1,11 @@
+  Account: user@example.domain
+
+    85% remaining · Refreshes in 43h 33m
+
+  Five Hour Limit Remaining
+    [████████████████████████████████████████████░░░░░░] 88.67%
+    89% remaining · Refreshes in 4h 22m
+  (6–10 of 30 lines)
+
+  ↑/↓ Scroll · pgup/pgdown Page · ctrl+end Bottom · ctrl+home Top · esc Close
+                                                            plan · Gemini 3.8 Flash · high

@@ -1,0 +1,21 @@
+╭────────────────────────────────────────────────────────────────────────────────╮
+│  >_ OpenAI Codex (v0.153.4)                                                    │
+│                                                                                │
+│ Visit https://chatgpt.com/codex/settings/usage for up-to-date                  │
+│ information on rate limits and credits                                         │
+│                                                                                │
+│  Model:                gpt-6-astra (reasoning high, summaries auto)            │
+│  Directory:            ~/dev/projects/upstream/some-repo                       │
+│  Permissions:          Workspace (Ask for approval)                            │
+│  Agents.md:            <none>                                                  │
+│  Account:              user@google                                             │
+│  Collaboration mode:   Default                                                 │
+│  Session:              01a07697-5553-7a53-9f63-0704ca048556                    │
+│                                                                                │
+│  5h limit:             [████████████████████] 100% left (resets 19:00)         │
+│  Weekly limit:         [█████████████░░░░░░░] 66% left (resets 23:09 on 7 Sep) │
+╰────────────────────────────────────────────────────────────────────────────────╯
+
+› Ask Codex to do anything
+
+  gpt-6-astra high · ~/dev/projects/upstream/some-repo

@@ -1,0 +1,25 @@
+available. Run /usage to use one.
+
+/usage daily
+
+ Token activity   last 12 months
+ Lifetime 998M · Peak 97.6M
+ Streak 1d (best 22d)
+ Longest task 40m
+
+            Jun     Jul     Aug
+ Su ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■
+ Mo ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■
+ Tu ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■
+ We ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■
+ Th ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■
+ Fr ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■
+ Sa ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■
+
+   Less ■ ■ ■ ■ ■ More
+   daily · weekly · cumulative
+
+
+› Ask Codex to do anything
+
+  gpt-5.6-sol high · ~/dev/herdr-orc…

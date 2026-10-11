@@ -1,0 +1,5508 @@
+{
+  "baseline": "6a41da6: scripts/herd.sh embedded dialog parsers; stdout, stderr and exit status captured before replacement",
+  "views": {
+    "0": "",
+    "1": "Working on the requested task",
+    "2": "❯ 1. Yes\n  2. No",
+    "3": " 1) Yes\n ▶ 2) No",
+    "4": "❯ 1. Yes\n 2. Yes",
+    "5": "❯ 1. Yes once\n 2. Yes always\n 3. No",
+    "6": "❯ 1. Allow once\n 2. Reject once\n 3. No",
+    "7": "❯ 1. Yes\n   explanation continues here\n 2. No",
+    "8": "❯ 1. Old\n 2. Obsolete\n\n 1. Yes\n > 2. No",
+    "9": "❯ 1. Yes\n 3. No",
+    "10": "❯ 2. Yes\n 3. No",
+    "11": "> 1  Yes\n  2  No",
+    "12": "1  Yes\n2  No",
+    "13": "┃ 1 (●) Yes\n┃ 2 ( ) No",
+    "14": "│ ( ) Yes\n│ (x) No",
+    "15": "(●) Yes",
+    "16": "> Yes\n  No",
+    "17": "│   Yes\n│ > No",
+    "18": "> echo command 12:30 PM\n  No",
+    "19": "> Yes\n> No",
+    "20": "> Yes\n  No?",
+    "21": "> xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n  No",
+    "22": "> First\n  Option 0\n  Option 1\n  Option 2\n  Option 3\n  Option 4\n  Option 5\n  Option 6\n  Option 7",
+    "23": "❯ 1. Don’t allow\n 2. “Yes”\n 3. Grünes Licht",
+    "24": "┃ Allow once  Allow always  Reject  ⇆ select enter confirm",
+    "25": "Allow once  Reject",
+    "26": "Allow once  Reject\nYes  No  ⇆ select enter confirm",
+    "27": "Yes ⇆ select enter confirm",
+    "28": "Bash command\n  git status\nDo you want to proceed?\n❯ 1. Yes\n 2. No",
+    "29": "Bash command\n  git diff\nDo you want to proceed?\n❯ 1. Yes\n 2. No",
+    "30": "Old scrollback\nBash command\n git   status\nDo you want to proceed?\n 1. Yes\n❯ 2. No",
+    "31": "Bash command\nDo you want to proceed?\n❯ 1. Yes\n 2. No",
+    "32": "Web Search\n search query\nDo you want to allow?\n❯ 1. Yes\n 2. No",
+    "33": "Fetch\n https://example.org\nDo you want to allow?\n❯ 1. Yes\n 2. No",
+    "34": "⟩ Use a shell command to write the line test to the file\n  /tmp/muse-probe-approval.txt (outside the workspace) and confirm briefly afterwards.\n\n◆ Calling tools (1m 16s · esc to interrupt)\n  └ last event 51s ago\n\n──────────────────────────────────────────────────────────────────────────────────────────\nWould you like to run the following command?\n\n  $ printf 'test\\n' > /tmp/muse-probe-approval.txt && cat /tmp/muse-probe-approval.txt\n  Stage 1/2\n  Current argv: [\"printf\",\"test\\\\n\"]\n\n› 1. Allow this stage once (y)\n  2. Abort the entire command (esc)\n──────────────────────────────────────────────────────────────────────────────────────────\n  muse-spark-1.3 · high · /t/c/-/1a22b407-314c-4ebb-b7c9-5590390d57ae/scratchpad\n",
+    "35": "user@host:/tmp/claude-1000/-home-user-dev-herdr-orchestrator/1a22b407-314\nc-4ebb-b7c9-5590390d57ae/scratchpad$ muse --model muse-spark-1.3\nDo you trust this workspace?\nWorkspace:\n/tmp/claude-1000/-home-user-dev-herdr-orchestrator/1a22b407-314c-4ebb-b7c9-5590390d57ae/sc\nratchpad\n\nTrusting allows project-local skills, rules, hooks, and plugin config to load before the\nmodel runs.\nOnly trust this workspace when you trust its contents.\n\n> 1  Trust and continue\n  2  Quit\n\nUse Up/Down or 1/2, then Enter. Esc quits.\n",
+    "36": "\u001b[0m\u001b[38;2;255;255;255m                                                                                           \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;203;30;209m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m                                                                                      \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;203;30;209m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m  \u001b[0m\u001b[38;2;221;221;221m\u001b[48;2;17;17;17mPlease read the file /etc/hostname (outside the workspace) and tell me its \u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m   \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;203;30;209m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m  \u001b[0m\u001b[38;2;221;221;221m\u001b[48;2;17;17;17mcontent in one sentence.\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m                                                               \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;203;30;209m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m                                                                                      \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m                                                                                           \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m     \u001b[0m\u001b[38;2;206;203;0m+ Thought: 185ms\u001b[0m\u001b[38;2;255;255;255m                                                                      \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m                                                                                           \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m     \u001b[0m\u001b[38;2;206;203;0m⠙\u001b[0m\u001b[38;2;255;255;255m \u001b[0m\u001b[38;2;206;203;0mRead /etc/hostname \u001b[0m\u001b[38;2;255;255;255m                                                                 \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m                                                                                           \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m     \u001b[0m\u001b[38;2;203;30;209m▣ \u001b[0m\u001b[38;2;255;255;255m \u001b[0m\u001b[38;2;221;221;221mBuild\u001b[0m\u001b[38;2;180;180;180m · GLM-5.3-Flash (2x usage)\u001b[0m\u001b[38;2;255;255;255m                                                   \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m                                                                                           \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m                                                                                           \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m                                                                                           \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m                                                                                      \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m△\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m \u001b[0m\u001b[38;2;221;221;221m\u001b[48;2;17;17;17mAlways allow\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m                                                                      \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m                                                                                      \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m  \u001b[0m\u001b[38;2;180;180;180m\u001b[48;2;17;17;17mThis will allow the following patterns until OpenCode is restarted\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m                  \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m                                                                                      \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m  \u001b[0m\u001b[38;2;221;221;221m\u001b[48;2;17;17;17m- /etc/*\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m                                                                            \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m                                                                                      \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;25;25;25m                                                                                      \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;25;25;25m  \u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;206;203;0m \u001b[0m\u001b[38;2;0;0;0m\u001b[48;2;206;203;0mConfirm\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;206;203;0m \u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;25;25;25m  \u001b[0m\u001b[38;2;180;180;180m\u001b[48;2;25;25;25mCancel\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;25;25;25m                                         \u001b[0m\u001b[38;2;221;221;221m\u001b[48;2;25;25;25m⇆ \u001b[0m\u001b[38;2;180;180;180m\u001b[48;2;25;25;25mselect\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;25;25;25m  \u001b[0m\u001b[38;2;221;221;221m\u001b[48;2;25;25;25menter \u001b[0m\u001b[38;2;180;180;180m\u001b[48;2;25;25;25mconfirm\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;25;25;25m   \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;25;25;25m                                                                                      \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m                                                                                           \u001b[0m",
+    "37": "\n  ┃\n  ┃  Please read the file /etc/hostname (outside the workspace) and tell me its\n  ┃  content in one sentence.\n  ┃\n\n     + Thought: 185ms\n\n     ⠙ Read /etc/hostname\n\n     ▣  Build · GLM-5.3-Flash (2x usage)\n\n\n\n  ┃\n  ┃  △ Always allow\n  ┃\n  ┃  This will allow the following patterns until OpenCode is restarted\n  ┃\n  ┃  - /etc/*\n  ┃\n  ┃\n  ┃   Confirm   Cancel                                         ⇆ select  enter confirm\n  ┃\n",
+    "38": "\u001b[0m\u001b[38;2;255;255;255m                                                                                            \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;203;30;209m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m                                                                                       \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;203;30;209m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m  \u001b[0m\u001b[38;2;221;221;221m\u001b[48;2;17;17;17mPlease read the file /etc/hostname (outside the workspace) and tell me its \u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m    \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;203;30;209m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m  \u001b[0m\u001b[38;2;221;221;221m\u001b[48;2;17;17;17mcontent in one sentence.\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m                                                                \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;203;30;209m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m                                                                                       \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m                                                                                            \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m     \u001b[0m\u001b[38;2;206;203;0m⠼\u001b[0m\u001b[38;2;255;255;255m \u001b[0m\u001b[38;2;206;203;0mRead /etc/hostname \u001b[0m\u001b[38;2;255;255;255m                                                                  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m                                                                                            \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m     \u001b[0m\u001b[38;2;203;30;209m▣ \u001b[0m\u001b[38;2;255;255;255m \u001b[0m\u001b[38;2;221;221;221mBuild\u001b[0m\u001b[38;2;180;180;180m · GLM-5.3-Flash (2x usage)\u001b[0m\u001b[38;2;255;255;255m                                                    \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m                                                                                            \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m                                                                                            \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m                                                                                            \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m                                                                                            \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m                                                                                       \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m△\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m \u001b[0m\u001b[38;2;221;221;221m\u001b[48;2;17;17;17mPermission required\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m                                                                \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m    \u001b[0m\u001b[38;2;180;180;180m\u001b[48;2;17;17;17m←\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m \u001b[0m\u001b[38;2;221;221;221m\u001b[48;2;17;17;17mAccess external directory /etc\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m                                                   \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m                                                                                       \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m  \u001b[0m\u001b[38;2;180;180;180m\u001b[48;2;17;17;17mPatterns\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m                                                                             \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m                                                                                       \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m  \u001b[0m\u001b[38;2;221;221;221m\u001b[48;2;17;17;17m- /etc/*\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m                                                                             \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;17;17;17m                                                                                       \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;25;25;25m                                                                                       \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;25;25;25m   \u001b[0m\u001b[38;2;180;180;180m\u001b[48;2;25;25;25mAllow once\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;25;25;25m   \u001b[0m\u001b[38;2;180;180;180m\u001b[48;2;25;25;25mAllow always\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;25;25;25m  \u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;206;203;0m \u001b[0m\u001b[38;2;0;0;0m\u001b[48;2;206;203;0mReject\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;206;203;0m \u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;25;25;25m    \u001b[0m\u001b[38;2;221;221;221m\u001b[48;2;25;25;25mctrl+f \u001b[0m\u001b[38;2;180;180;180m\u001b[48;2;25;25;25mfullscreen\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;25;25;25m  \u001b[0m\u001b[38;2;221;221;221m\u001b[48;2;25;25;25m⇆ \u001b[0m\u001b[38;2;180;180;180m\u001b[48;2;25;25;25mselect\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;25;25;25m  \u001b[0m\u001b[38;2;221;221;221m\u001b[48;2;25;25;25menter \u001b[0m\u001b[38;2;180;180;180m\u001b[48;2;25;25;25mconfirm\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;25;25;25m   \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\u001b[38;2;206;203;0m\u001b[48;2;17;17;17m┃\u001b[0m\u001b[38;2;255;255;255m\u001b[48;2;25;25;25m                                                                                       \u001b[0m\u001b[38;2;255;255;255m  \u001b[0m\n\u001b[0m\u001b[38;2;255;255;255m                                                                                            \u001b[0m",
+    "39": "\n  ┃\n  ┃  Please read the file /etc/hostname (outside the workspace) and tell me its\n  ┃  content in one sentence.\n  ┃\n\n     ⠴ Read /etc/hostname\n\n     ▣  Build · GLM-5.3-Flash (2x usage)\n\n\n\n\n  ┃\n  ┃  △ Permission required\n  ┃    ← Access external directory /etc\n  ┃\n  ┃  Patterns\n  ┃\n  ┃  - /etc/*\n  ┃\n  ┃\n  ┃   Allow once   Allow always   Reject     ctrl+f fullscreen  ⇆ select  enter confirm\n  ┃\n",
+    "40": "\u001b[38;2;0;0;0m\u001b[48;2;206;203;0m Yes \u001b[0m",
+    "41": "\u001b[48;2;206;203;0m\u001b[38;2;0;0;0mNo\u001b[0m",
+    "42": "\u001b[48;2;206;203;0m Yes \u001b[0m",
+    "43": "Yes No",
+    "44": "\u001b[38;2;0;0;0m\u001b[48;2;206;203;0mYes\u001b[0m\u001b[38;2;0;0;0m\u001b[48;2;206;203;0mNo\u001b[0m"
+  },
+  "cases": [
+    {
+      "name": "empty",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "0"
+    },
+    {
+      "name": "empty",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "0"
+    },
+    {
+      "name": "empty",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "0"
+    },
+    {
+      "name": "empty",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "0"
+    },
+    {
+      "name": "empty",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "0"
+    },
+    {
+      "name": "empty",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "0"
+    },
+    {
+      "name": "empty",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "0"
+    },
+    {
+      "name": "empty",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "0"
+    },
+    {
+      "name": "empty",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "0"
+    },
+    {
+      "name": "prose",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "1"
+    },
+    {
+      "name": "prose",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "1"
+    },
+    {
+      "name": "prose",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "1"
+    },
+    {
+      "name": "prose",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "1"
+    },
+    {
+      "name": "prose",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "1"
+    },
+    {
+      "name": "prose",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "1"
+    },
+    {
+      "name": "prose",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "1"
+    },
+    {
+      "name": "prose",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "1"
+    },
+    {
+      "name": "prose",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "1"
+    },
+    {
+      "name": "numbered",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "0\tYes\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "2"
+    },
+    {
+      "name": "numbered",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "0\tYes\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "2"
+    },
+    {
+      "name": "numbered",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "1\tNo\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "2"
+    },
+    {
+      "name": "numbered",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "2"
+    },
+    {
+      "name": "numbered",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "2"
+    },
+    {
+      "name": "numbered",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "2"
+    },
+    {
+      "name": "numbered",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "2"
+    },
+    {
+      "name": "numbered",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "2"
+    },
+    {
+      "name": "numbered",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "2"
+    },
+    {
+      "name": "selected-last",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "-1\tYes\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "3"
+    },
+    {
+      "name": "selected-last",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "-1\tYes\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "3"
+    },
+    {
+      "name": "selected-last",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "0\tNo\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "3"
+    },
+    {
+      "name": "selected-last",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "3"
+    },
+    {
+      "name": "selected-last",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "3"
+    },
+    {
+      "name": "selected-last",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "3"
+    },
+    {
+      "name": "selected-last",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "3"
+    },
+    {
+      "name": "selected-last",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "3"
+    },
+    {
+      "name": "selected-last",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "3"
+    },
+    {
+      "name": "duplicate",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "0\tYes\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tYes\n",
+      "exit_code": 0,
+      "view": "4"
+    },
+    {
+      "name": "duplicate",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tYes\n",
+      "exit_code": 0,
+      "view": "4"
+    },
+    {
+      "name": "duplicate",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tYes\n",
+      "exit_code": 0,
+      "view": "4"
+    },
+    {
+      "name": "duplicate",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tYes\n",
+      "exit_code": 0,
+      "view": "4"
+    },
+    {
+      "name": "duplicate",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tYes\n",
+      "exit_code": 0,
+      "view": "4"
+    },
+    {
+      "name": "duplicate",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tYes\n",
+      "exit_code": 0,
+      "view": "4"
+    },
+    {
+      "name": "duplicate",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tYes\n",
+      "exit_code": 0,
+      "view": "4"
+    },
+    {
+      "name": "duplicate",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tYes\n",
+      "exit_code": 0,
+      "view": "4"
+    },
+    {
+      "name": "duplicate",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tYes\n",
+      "exit_code": 0,
+      "view": "4"
+    },
+    {
+      "name": "prefix",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "0\tYes once\n",
+      "stderr": "OPT\t*\tYes once\nOPT\t \tYes always\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "5"
+    },
+    {
+      "name": "prefix",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "OPT\t*\tYes once\nOPT\t \tYes always\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "5"
+    },
+    {
+      "name": "prefix",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "2\tNo\n",
+      "stderr": "OPT\t*\tYes once\nOPT\t \tYes always\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "5"
+    },
+    {
+      "name": "prefix",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "0\tYes once\n",
+      "stderr": "OPT\t*\tYes once\nOPT\t \tYes always\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "5"
+    },
+    {
+      "name": "prefix",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes once\nOPT\t \tYes always\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "5"
+    },
+    {
+      "name": "prefix",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "OPT\t*\tYes once\nOPT\t \tYes always\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "5"
+    },
+    {
+      "name": "prefix",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes once\nOPT\t \tYes always\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "5"
+    },
+    {
+      "name": "prefix",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes once\nOPT\t \tYes always\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "5"
+    },
+    {
+      "name": "prefix",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes once\nOPT\t \tYes always\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "5"
+    },
+    {
+      "name": "substring",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "0\tAllow once\n",
+      "stderr": "OPT\t*\tAllow once\nOPT\t \tReject once\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "6"
+    },
+    {
+      "name": "substring",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tAllow once\nOPT\t \tReject once\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "6"
+    },
+    {
+      "name": "substring",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "2\tNo\n",
+      "stderr": "OPT\t*\tAllow once\nOPT\t \tReject once\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "6"
+    },
+    {
+      "name": "substring",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "OPT\t*\tAllow once\nOPT\t \tReject once\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "6"
+    },
+    {
+      "name": "substring",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tAllow once\nOPT\t \tReject once\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "6"
+    },
+    {
+      "name": "substring",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "OPT\t*\tAllow once\nOPT\t \tReject once\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "6"
+    },
+    {
+      "name": "substring",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tAllow once\nOPT\t \tReject once\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "6"
+    },
+    {
+      "name": "substring",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tAllow once\nOPT\t \tReject once\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "6"
+    },
+    {
+      "name": "substring",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tAllow once\nOPT\t \tReject once\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "6"
+    },
+    {
+      "name": "wrapped",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "0\tYes\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "7"
+    },
+    {
+      "name": "wrapped",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "0\tYes\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "7"
+    },
+    {
+      "name": "wrapped",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "1\tNo\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "7"
+    },
+    {
+      "name": "wrapped",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "7"
+    },
+    {
+      "name": "wrapped",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "7"
+    },
+    {
+      "name": "wrapped",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "7"
+    },
+    {
+      "name": "wrapped",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "7"
+    },
+    {
+      "name": "wrapped",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "7"
+    },
+    {
+      "name": "wrapped",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "7"
+    },
+    {
+      "name": "last-run",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "-1\tYes\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "8"
+    },
+    {
+      "name": "last-run",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "-1\tYes\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "8"
+    },
+    {
+      "name": "last-run",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "0\tNo\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "8"
+    },
+    {
+      "name": "last-run",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "8"
+    },
+    {
+      "name": "last-run",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "8"
+    },
+    {
+      "name": "last-run",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "8"
+    },
+    {
+      "name": "last-run",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "8"
+    },
+    {
+      "name": "last-run",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "8"
+    },
+    {
+      "name": "last-run",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "8"
+    },
+    {
+      "name": "gap",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "0\t1. Yes\n",
+      "stderr": "OPT\t*\t1. Yes\nOPT\t \t3. No\n",
+      "exit_code": 0,
+      "view": "9"
+    },
+    {
+      "name": "gap",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "0\t1. Yes\n",
+      "stderr": "OPT\t*\t1. Yes\nOPT\t \t3. No\n",
+      "exit_code": 0,
+      "view": "9"
+    },
+    {
+      "name": "gap",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "1\t3. No\n",
+      "stderr": "OPT\t*\t1. Yes\nOPT\t \t3. No\n",
+      "exit_code": 0,
+      "view": "9"
+    },
+    {
+      "name": "gap",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\t1. Yes\nOPT\t \t3. No\n",
+      "exit_code": 0,
+      "view": "9"
+    },
+    {
+      "name": "gap",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\t1. Yes\nOPT\t \t3. No\n",
+      "exit_code": 0,
+      "view": "9"
+    },
+    {
+      "name": "gap",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "OPT\t*\t1. Yes\nOPT\t \t3. No\n",
+      "exit_code": 0,
+      "view": "9"
+    },
+    {
+      "name": "gap",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\t1. Yes\nOPT\t \t3. No\n",
+      "exit_code": 0,
+      "view": "9"
+    },
+    {
+      "name": "gap",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\t1. Yes\nOPT\t \t3. No\n",
+      "exit_code": 0,
+      "view": "9"
+    },
+    {
+      "name": "gap",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\t1. Yes\nOPT\t \t3. No\n",
+      "exit_code": 0,
+      "view": "9"
+    },
+    {
+      "name": "not-one",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "0\t2. Yes\n",
+      "stderr": "OPT\t*\t2. Yes\nOPT\t \t3. No\n",
+      "exit_code": 0,
+      "view": "10"
+    },
+    {
+      "name": "not-one",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "0\t2. Yes\n",
+      "stderr": "OPT\t*\t2. Yes\nOPT\t \t3. No\n",
+      "exit_code": 0,
+      "view": "10"
+    },
+    {
+      "name": "not-one",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "1\t3. No\n",
+      "stderr": "OPT\t*\t2. Yes\nOPT\t \t3. No\n",
+      "exit_code": 0,
+      "view": "10"
+    },
+    {
+      "name": "not-one",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\t2. Yes\nOPT\t \t3. No\n",
+      "exit_code": 0,
+      "view": "10"
+    },
+    {
+      "name": "not-one",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\t2. Yes\nOPT\t \t3. No\n",
+      "exit_code": 0,
+      "view": "10"
+    },
+    {
+      "name": "not-one",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "OPT\t*\t2. Yes\nOPT\t \t3. No\n",
+      "exit_code": 0,
+      "view": "10"
+    },
+    {
+      "name": "not-one",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\t2. Yes\nOPT\t \t3. No\n",
+      "exit_code": 0,
+      "view": "10"
+    },
+    {
+      "name": "not-one",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\t2. Yes\nOPT\t \t3. No\n",
+      "exit_code": 0,
+      "view": "10"
+    },
+    {
+      "name": "not-one",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\t2. Yes\nOPT\t \t3. No\n",
+      "exit_code": 0,
+      "view": "10"
+    },
+    {
+      "name": "muse",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "0\tYes\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "11"
+    },
+    {
+      "name": "muse",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "0\tYes\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "11"
+    },
+    {
+      "name": "muse",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "1\tNo\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "11"
+    },
+    {
+      "name": "muse",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "11"
+    },
+    {
+      "name": "muse",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "11"
+    },
+    {
+      "name": "muse",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "11"
+    },
+    {
+      "name": "muse",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "11"
+    },
+    {
+      "name": "muse",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "11"
+    },
+    {
+      "name": "muse",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "11"
+    },
+    {
+      "name": "table",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "12"
+    },
+    {
+      "name": "table",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "12"
+    },
+    {
+      "name": "table",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "12"
+    },
+    {
+      "name": "table",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "12"
+    },
+    {
+      "name": "table",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "12"
+    },
+    {
+      "name": "table",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "12"
+    },
+    {
+      "name": "table",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "12"
+    },
+    {
+      "name": "table",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "12"
+    },
+    {
+      "name": "table",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "12"
+    },
+    {
+      "name": "grok",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "key:1\tYes\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "13"
+    },
+    {
+      "name": "grok",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "key:1\tYes\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "13"
+    },
+    {
+      "name": "grok",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "key:2\tNo\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "13"
+    },
+    {
+      "name": "grok",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "13"
+    },
+    {
+      "name": "grok",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "13"
+    },
+    {
+      "name": "grok",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "13"
+    },
+    {
+      "name": "grok",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "13"
+    },
+    {
+      "name": "grok",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "13"
+    },
+    {
+      "name": "grok",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "13"
+    },
+    {
+      "name": "radio",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "-1\tYes\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "14"
+    },
+    {
+      "name": "radio",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "-1\tYes\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "14"
+    },
+    {
+      "name": "radio",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "0\tNo\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "14"
+    },
+    {
+      "name": "radio",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "14"
+    },
+    {
+      "name": "radio",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "14"
+    },
+    {
+      "name": "radio",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "14"
+    },
+    {
+      "name": "radio",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "14"
+    },
+    {
+      "name": "radio",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "14"
+    },
+    {
+      "name": "radio",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "14"
+    },
+    {
+      "name": "radio-single",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "15"
+    },
+    {
+      "name": "radio-single",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "15"
+    },
+    {
+      "name": "radio-single",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "15"
+    },
+    {
+      "name": "radio-single",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "15"
+    },
+    {
+      "name": "radio-single",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "15"
+    },
+    {
+      "name": "radio-single",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "15"
+    },
+    {
+      "name": "radio-single",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "15"
+    },
+    {
+      "name": "radio-single",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "15"
+    },
+    {
+      "name": "radio-single",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "15"
+    },
+    {
+      "name": "agy",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "0\tYes\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "16"
+    },
+    {
+      "name": "agy",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "0\tYes\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "16"
+    },
+    {
+      "name": "agy",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "1\tNo\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "16"
+    },
+    {
+      "name": "agy",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "16"
+    },
+    {
+      "name": "agy",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "16"
+    },
+    {
+      "name": "agy",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "16"
+    },
+    {
+      "name": "agy",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "16"
+    },
+    {
+      "name": "agy",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "16"
+    },
+    {
+      "name": "agy",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "16"
+    },
+    {
+      "name": "agy-box",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "-1\tYes\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "17"
+    },
+    {
+      "name": "agy-box",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "-1\tYes\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "17"
+    },
+    {
+      "name": "agy-box",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "0\tNo\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "17"
+    },
+    {
+      "name": "agy-box",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "17"
+    },
+    {
+      "name": "agy-box",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "17"
+    },
+    {
+      "name": "agy-box",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "17"
+    },
+    {
+      "name": "agy-box",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "17"
+    },
+    {
+      "name": "agy-box",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "17"
+    },
+    {
+      "name": "agy-box",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "17"
+    },
+    {
+      "name": "agy-time",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "18"
+    },
+    {
+      "name": "agy-time",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "18"
+    },
+    {
+      "name": "agy-time",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "18"
+    },
+    {
+      "name": "agy-time",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "18"
+    },
+    {
+      "name": "agy-time",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "18"
+    },
+    {
+      "name": "agy-time",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "18"
+    },
+    {
+      "name": "agy-time",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "18"
+    },
+    {
+      "name": "agy-time",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "18"
+    },
+    {
+      "name": "agy-time",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "18"
+    },
+    {
+      "name": "agy-many-markers",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "19"
+    },
+    {
+      "name": "agy-many-markers",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "19"
+    },
+    {
+      "name": "agy-many-markers",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "19"
+    },
+    {
+      "name": "agy-many-markers",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "19"
+    },
+    {
+      "name": "agy-many-markers",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "19"
+    },
+    {
+      "name": "agy-many-markers",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "19"
+    },
+    {
+      "name": "agy-many-markers",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "19"
+    },
+    {
+      "name": "agy-many-markers",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "19"
+    },
+    {
+      "name": "agy-many-markers",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "19"
+    },
+    {
+      "name": "agy-question",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "20"
+    },
+    {
+      "name": "agy-question",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "20"
+    },
+    {
+      "name": "agy-question",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "20"
+    },
+    {
+      "name": "agy-question",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "20"
+    },
+    {
+      "name": "agy-question",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "20"
+    },
+    {
+      "name": "agy-question",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "20"
+    },
+    {
+      "name": "agy-question",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "20"
+    },
+    {
+      "name": "agy-question",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "20"
+    },
+    {
+      "name": "agy-question",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "20"
+    },
+    {
+      "name": "agy-long",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "21"
+    },
+    {
+      "name": "agy-long",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "21"
+    },
+    {
+      "name": "agy-long",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "21"
+    },
+    {
+      "name": "agy-long",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "21"
+    },
+    {
+      "name": "agy-long",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "21"
+    },
+    {
+      "name": "agy-long",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "21"
+    },
+    {
+      "name": "agy-long",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "21"
+    },
+    {
+      "name": "agy-long",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "21"
+    },
+    {
+      "name": "agy-long",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "21"
+    },
+    {
+      "name": "agy-nine",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "22"
+    },
+    {
+      "name": "agy-nine",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "22"
+    },
+    {
+      "name": "agy-nine",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "22"
+    },
+    {
+      "name": "agy-nine",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "22"
+    },
+    {
+      "name": "agy-nine",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "22"
+    },
+    {
+      "name": "agy-nine",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "22"
+    },
+    {
+      "name": "agy-nine",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "22"
+    },
+    {
+      "name": "agy-nine",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "22"
+    },
+    {
+      "name": "agy-nine",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "22"
+    },
+    {
+      "name": "unicode",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "0\tDon’t allow\n",
+      "stderr": "OPT\t*\tDon’t allow\nOPT\t \t“Yes”\nOPT\t \tGrünes Licht\n",
+      "exit_code": 0,
+      "view": "23"
+    },
+    {
+      "name": "unicode",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "1\t“Yes”\n",
+      "stderr": "OPT\t*\tDon’t allow\nOPT\t \t“Yes”\nOPT\t \tGrünes Licht\n",
+      "exit_code": 0,
+      "view": "23"
+    },
+    {
+      "name": "unicode",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tDon’t allow\nOPT\t \t“Yes”\nOPT\t \tGrünes Licht\n",
+      "exit_code": 0,
+      "view": "23"
+    },
+    {
+      "name": "unicode",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tDon’t allow\nOPT\t \t“Yes”\nOPT\t \tGrünes Licht\n",
+      "exit_code": 0,
+      "view": "23"
+    },
+    {
+      "name": "unicode",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tDon’t allow\nOPT\t \t“Yes”\nOPT\t \tGrünes Licht\n",
+      "exit_code": 0,
+      "view": "23"
+    },
+    {
+      "name": "unicode",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "OPT\t*\tDon’t allow\nOPT\t \t“Yes”\nOPT\t \tGrünes Licht\n",
+      "exit_code": 0,
+      "view": "23"
+    },
+    {
+      "name": "unicode",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "0\tDon’t allow\n",
+      "stderr": "OPT\t*\tDon’t allow\nOPT\t \t“Yes”\nOPT\t \tGrünes Licht\n",
+      "exit_code": 0,
+      "view": "23"
+    },
+    {
+      "name": "unicode",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "1\t“Yes”\n",
+      "stderr": "OPT\t*\tDon’t allow\nOPT\t \t“Yes”\nOPT\t \tGrünes Licht\n",
+      "exit_code": 0,
+      "view": "23"
+    },
+    {
+      "name": "unicode",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "2\tGrünes Licht\n",
+      "stderr": "OPT\t*\tDon’t allow\nOPT\t \t“Yes”\nOPT\t \tGrünes Licht\n",
+      "exit_code": 0,
+      "view": "23"
+    },
+    {
+      "name": "bar",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "BAR\tAllow once\tAllow always\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "24"
+    },
+    {
+      "name": "bar",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "BAR\tAllow once\tAllow always\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "24"
+    },
+    {
+      "name": "bar",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "BAR\tAllow once\tAllow always\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "24"
+    },
+    {
+      "name": "bar",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "BAR\tAllow once\tAllow always\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "24"
+    },
+    {
+      "name": "bar",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "BAR\tAllow once\tAllow always\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "24"
+    },
+    {
+      "name": "bar",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "BAR\tAllow once\tAllow always\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "24"
+    },
+    {
+      "name": "bar",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "BAR\tAllow once\tAllow always\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "24"
+    },
+    {
+      "name": "bar",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "BAR\tAllow once\tAllow always\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "24"
+    },
+    {
+      "name": "bar",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "BAR\tAllow once\tAllow always\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "24"
+    },
+    {
+      "name": "bar-fallback",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "BAR\tAllow once\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "25"
+    },
+    {
+      "name": "bar-fallback",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "BAR\tAllow once\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "25"
+    },
+    {
+      "name": "bar-fallback",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "BAR\tAllow once\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "25"
+    },
+    {
+      "name": "bar-fallback",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "BAR\tAllow once\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "25"
+    },
+    {
+      "name": "bar-fallback",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "BAR\tAllow once\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "25"
+    },
+    {
+      "name": "bar-fallback",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "BAR\tAllow once\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "25"
+    },
+    {
+      "name": "bar-fallback",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "BAR\tAllow once\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "25"
+    },
+    {
+      "name": "bar-fallback",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "BAR\tAllow once\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "25"
+    },
+    {
+      "name": "bar-fallback",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "BAR\tAllow once\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "25"
+    },
+    {
+      "name": "bar-last",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "BAR\tYes\tNo\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "26"
+    },
+    {
+      "name": "bar-last",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "BAR\tYes\tNo\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "26"
+    },
+    {
+      "name": "bar-last",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "BAR\tYes\tNo\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "26"
+    },
+    {
+      "name": "bar-last",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "BAR\tYes\tNo\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "26"
+    },
+    {
+      "name": "bar-last",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "BAR\tYes\tNo\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "26"
+    },
+    {
+      "name": "bar-last",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "BAR\tYes\tNo\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "26"
+    },
+    {
+      "name": "bar-last",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "BAR\tYes\tNo\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "26"
+    },
+    {
+      "name": "bar-last",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "BAR\tYes\tNo\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "26"
+    },
+    {
+      "name": "bar-last",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "BAR\tYes\tNo\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "26"
+    },
+    {
+      "name": "bar-single",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "27"
+    },
+    {
+      "name": "bar-single",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "27"
+    },
+    {
+      "name": "bar-single",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "27"
+    },
+    {
+      "name": "bar-single",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "27"
+    },
+    {
+      "name": "bar-single",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "27"
+    },
+    {
+      "name": "bar-single",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "27"
+    },
+    {
+      "name": "bar-single",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "27"
+    },
+    {
+      "name": "bar-single",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "27"
+    },
+    {
+      "name": "bar-single",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOOPTS\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "27"
+    },
+    {
+      "name": "claude",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "0\tYes\n",
+      "stderr": "IDENTITY\t5c1c39e2b812678032514fb62d8b6c05cfce46709a34b82e96aa80de709d764f\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "28"
+    },
+    {
+      "name": "claude",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "0\tYes\n",
+      "stderr": "IDENTITY\t5c1c39e2b812678032514fb62d8b6c05cfce46709a34b82e96aa80de709d764f\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "28"
+    },
+    {
+      "name": "claude",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "1\tNo\n",
+      "stderr": "IDENTITY\t5c1c39e2b812678032514fb62d8b6c05cfce46709a34b82e96aa80de709d764f\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "28"
+    },
+    {
+      "name": "claude",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t5c1c39e2b812678032514fb62d8b6c05cfce46709a34b82e96aa80de709d764f\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "28"
+    },
+    {
+      "name": "claude",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t5c1c39e2b812678032514fb62d8b6c05cfce46709a34b82e96aa80de709d764f\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "28"
+    },
+    {
+      "name": "claude",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "IDENTITY\t5c1c39e2b812678032514fb62d8b6c05cfce46709a34b82e96aa80de709d764f\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "28"
+    },
+    {
+      "name": "claude",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t5c1c39e2b812678032514fb62d8b6c05cfce46709a34b82e96aa80de709d764f\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "28"
+    },
+    {
+      "name": "claude",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t5c1c39e2b812678032514fb62d8b6c05cfce46709a34b82e96aa80de709d764f\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "28"
+    },
+    {
+      "name": "claude",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t5c1c39e2b812678032514fb62d8b6c05cfce46709a34b82e96aa80de709d764f\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "28"
+    },
+    {
+      "name": "claude-changed",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "0\tYes\n",
+      "stderr": "IDENTITY\t3392145cf6695368784c9df237f5ad1a21d46256f4bf7e7e3b2120c9892da0c8\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "29"
+    },
+    {
+      "name": "claude-changed",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "0\tYes\n",
+      "stderr": "IDENTITY\t3392145cf6695368784c9df237f5ad1a21d46256f4bf7e7e3b2120c9892da0c8\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "29"
+    },
+    {
+      "name": "claude-changed",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "1\tNo\n",
+      "stderr": "IDENTITY\t3392145cf6695368784c9df237f5ad1a21d46256f4bf7e7e3b2120c9892da0c8\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "29"
+    },
+    {
+      "name": "claude-changed",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t3392145cf6695368784c9df237f5ad1a21d46256f4bf7e7e3b2120c9892da0c8\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "29"
+    },
+    {
+      "name": "claude-changed",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t3392145cf6695368784c9df237f5ad1a21d46256f4bf7e7e3b2120c9892da0c8\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "29"
+    },
+    {
+      "name": "claude-changed",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "IDENTITY\t3392145cf6695368784c9df237f5ad1a21d46256f4bf7e7e3b2120c9892da0c8\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "29"
+    },
+    {
+      "name": "claude-changed",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t3392145cf6695368784c9df237f5ad1a21d46256f4bf7e7e3b2120c9892da0c8\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "29"
+    },
+    {
+      "name": "claude-changed",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t3392145cf6695368784c9df237f5ad1a21d46256f4bf7e7e3b2120c9892da0c8\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "29"
+    },
+    {
+      "name": "claude-changed",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t3392145cf6695368784c9df237f5ad1a21d46256f4bf7e7e3b2120c9892da0c8\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "29"
+    },
+    {
+      "name": "claude-scroll",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "-1\tYes\n",
+      "stderr": "IDENTITY\t5c1c39e2b812678032514fb62d8b6c05cfce46709a34b82e96aa80de709d764f\nOPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "30"
+    },
+    {
+      "name": "claude-scroll",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "-1\tYes\n",
+      "stderr": "IDENTITY\t5c1c39e2b812678032514fb62d8b6c05cfce46709a34b82e96aa80de709d764f\nOPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "30"
+    },
+    {
+      "name": "claude-scroll",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "0\tNo\n",
+      "stderr": "IDENTITY\t5c1c39e2b812678032514fb62d8b6c05cfce46709a34b82e96aa80de709d764f\nOPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "30"
+    },
+    {
+      "name": "claude-scroll",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t5c1c39e2b812678032514fb62d8b6c05cfce46709a34b82e96aa80de709d764f\nOPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "30"
+    },
+    {
+      "name": "claude-scroll",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t5c1c39e2b812678032514fb62d8b6c05cfce46709a34b82e96aa80de709d764f\nOPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "30"
+    },
+    {
+      "name": "claude-scroll",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "IDENTITY\t5c1c39e2b812678032514fb62d8b6c05cfce46709a34b82e96aa80de709d764f\nOPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "30"
+    },
+    {
+      "name": "claude-scroll",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t5c1c39e2b812678032514fb62d8b6c05cfce46709a34b82e96aa80de709d764f\nOPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "30"
+    },
+    {
+      "name": "claude-scroll",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t5c1c39e2b812678032514fb62d8b6c05cfce46709a34b82e96aa80de709d764f\nOPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "30"
+    },
+    {
+      "name": "claude-scroll",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t5c1c39e2b812678032514fb62d8b6c05cfce46709a34b82e96aa80de709d764f\nOPT\t \tYes\nOPT\t*\tNo\n",
+      "exit_code": 0,
+      "view": "30"
+    },
+    {
+      "name": "claude-empty",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "0\tYes\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "31"
+    },
+    {
+      "name": "claude-empty",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "0\tYes\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "31"
+    },
+    {
+      "name": "claude-empty",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "1\tNo\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "31"
+    },
+    {
+      "name": "claude-empty",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "31"
+    },
+    {
+      "name": "claude-empty",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "31"
+    },
+    {
+      "name": "claude-empty",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "31"
+    },
+    {
+      "name": "claude-empty",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "31"
+    },
+    {
+      "name": "claude-empty",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "31"
+    },
+    {
+      "name": "claude-empty",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "31"
+    },
+    {
+      "name": "claude-search",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "0\tYes\n",
+      "stderr": "IDENTITY\t23f1f44b56daa50e46f2f7803b7d38db0f1bb94ed7bdc7e0edf426ea50897df9\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "32"
+    },
+    {
+      "name": "claude-search",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "0\tYes\n",
+      "stderr": "IDENTITY\t23f1f44b56daa50e46f2f7803b7d38db0f1bb94ed7bdc7e0edf426ea50897df9\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "32"
+    },
+    {
+      "name": "claude-search",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "1\tNo\n",
+      "stderr": "IDENTITY\t23f1f44b56daa50e46f2f7803b7d38db0f1bb94ed7bdc7e0edf426ea50897df9\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "32"
+    },
+    {
+      "name": "claude-search",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t23f1f44b56daa50e46f2f7803b7d38db0f1bb94ed7bdc7e0edf426ea50897df9\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "32"
+    },
+    {
+      "name": "claude-search",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t23f1f44b56daa50e46f2f7803b7d38db0f1bb94ed7bdc7e0edf426ea50897df9\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "32"
+    },
+    {
+      "name": "claude-search",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "IDENTITY\t23f1f44b56daa50e46f2f7803b7d38db0f1bb94ed7bdc7e0edf426ea50897df9\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "32"
+    },
+    {
+      "name": "claude-search",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t23f1f44b56daa50e46f2f7803b7d38db0f1bb94ed7bdc7e0edf426ea50897df9\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "32"
+    },
+    {
+      "name": "claude-search",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t23f1f44b56daa50e46f2f7803b7d38db0f1bb94ed7bdc7e0edf426ea50897df9\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "32"
+    },
+    {
+      "name": "claude-search",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t23f1f44b56daa50e46f2f7803b7d38db0f1bb94ed7bdc7e0edf426ea50897df9\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "32"
+    },
+    {
+      "name": "claude-fetch",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "0\tYes\n",
+      "stderr": "IDENTITY\t53d15e16940c6d28866d495c344769328d0ef31c14f1bb66c39a81c63b328891\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "33"
+    },
+    {
+      "name": "claude-fetch",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "0\tYes\n",
+      "stderr": "IDENTITY\t53d15e16940c6d28866d495c344769328d0ef31c14f1bb66c39a81c63b328891\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "33"
+    },
+    {
+      "name": "claude-fetch",
+      "command": "dialog",
+      "args": [
+        "No"
+      ],
+      "stdout": "1\tNo\n",
+      "stderr": "IDENTITY\t53d15e16940c6d28866d495c344769328d0ef31c14f1bb66c39a81c63b328891\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "33"
+    },
+    {
+      "name": "claude-fetch",
+      "command": "dialog",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t53d15e16940c6d28866d495c344769328d0ef31c14f1bb66c39a81c63b328891\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "33"
+    },
+    {
+      "name": "claude-fetch",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t53d15e16940c6d28866d495c344769328d0ef31c14f1bb66c39a81c63b328891\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "33"
+    },
+    {
+      "name": "claude-fetch",
+      "command": "dialog",
+      "args": [
+        ""
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "IDENTITY\t53d15e16940c6d28866d495c344769328d0ef31c14f1bb66c39a81c63b328891\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "33"
+    },
+    {
+      "name": "claude-fetch",
+      "command": "dialog",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t53d15e16940c6d28866d495c344769328d0ef31c14f1bb66c39a81c63b328891\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "33"
+    },
+    {
+      "name": "claude-fetch",
+      "command": "dialog",
+      "args": [
+        "“yes”"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t53d15e16940c6d28866d495c344769328d0ef31c14f1bb66c39a81c63b328891\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "33"
+    },
+    {
+      "name": "claude-fetch",
+      "command": "dialog",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "IDENTITY\t53d15e16940c6d28866d495c344769328d0ef31c14f1bb66c39a81c63b328891\nOPT\t*\tYes\nOPT\t \tNo\n",
+      "exit_code": 0,
+      "view": "33"
+    },
+    {
+      "name": "tests/fixtures/muse/dialog-approval.txt",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "0\tAllow this stage once (y)\n",
+      "stderr": "OPT\t*\tAllow this stage once (y)\nOPT\t \tAbort the entire command (esc)\n",
+      "exit_code": 0,
+      "view": "34"
+    },
+    {
+      "name": "tests/fixtures/muse/dialog-approval.txt",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tAllow this stage once (y)\nOPT\t \tAbort the entire command (esc)\n",
+      "exit_code": 0,
+      "view": "34"
+    },
+    {
+      "name": "tests/fixtures/muse/dialog-approval.txt",
+      "command": "dialog",
+      "args": [
+        "Allow"
+      ],
+      "stdout": "0\tAllow this stage once (y)\n",
+      "stderr": "OPT\t*\tAllow this stage once (y)\nOPT\t \tAbort the entire command (esc)\n",
+      "exit_code": 0,
+      "view": "34"
+    },
+    {
+      "name": "tests/fixtures/muse/dialog-approval.txt",
+      "command": "dialog",
+      "args": [
+        "Reject"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tAllow this stage once (y)\nOPT\t \tAbort the entire command (esc)\n",
+      "exit_code": 0,
+      "view": "34"
+    },
+    {
+      "name": "tests/fixtures/muse/dialog-approval.txt",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tAllow this stage once (y)\nOPT\t \tAbort the entire command (esc)\n",
+      "exit_code": 0,
+      "view": "34"
+    },
+    {
+      "name": "tests/fixtures/muse/dialog-trust.txt",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "0\tTrust and continue\n",
+      "stderr": "OPT\t*\tTrust and continue\nOPT\t \tQuit\n",
+      "exit_code": 0,
+      "view": "35"
+    },
+    {
+      "name": "tests/fixtures/muse/dialog-trust.txt",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tTrust and continue\nOPT\t \tQuit\n",
+      "exit_code": 0,
+      "view": "35"
+    },
+    {
+      "name": "tests/fixtures/muse/dialog-trust.txt",
+      "command": "dialog",
+      "args": [
+        "Allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tTrust and continue\nOPT\t \tQuit\n",
+      "exit_code": 0,
+      "view": "35"
+    },
+    {
+      "name": "tests/fixtures/muse/dialog-trust.txt",
+      "command": "dialog",
+      "args": [
+        "Reject"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tTrust and continue\nOPT\t \tQuit\n",
+      "exit_code": 0,
+      "view": "35"
+    },
+    {
+      "name": "tests/fixtures/muse/dialog-trust.txt",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "OPT\t*\tTrust and continue\nOPT\t \tQuit\n",
+      "exit_code": 0,
+      "view": "35"
+    },
+    {
+      "name": "tests/fixtures/opencode/dialog-confirm.ansi",
+      "command": "bar-marked",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "NOMARK\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "36"
+    },
+    {
+      "name": "tests/fixtures/opencode/dialog-confirm.ansi",
+      "command": "bar-marked",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "NOMARK\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "36"
+    },
+    {
+      "name": "tests/fixtures/opencode/dialog-confirm.txt",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "BAR\tConfirm\tCancel\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "37"
+    },
+    {
+      "name": "tests/fixtures/opencode/dialog-confirm.txt",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "BAR\tConfirm\tCancel\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "37"
+    },
+    {
+      "name": "tests/fixtures/opencode/dialog-confirm.txt",
+      "command": "dialog",
+      "args": [
+        "Allow"
+      ],
+      "stdout": "BAR\tConfirm\tCancel\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "37"
+    },
+    {
+      "name": "tests/fixtures/opencode/dialog-confirm.txt",
+      "command": "dialog",
+      "args": [
+        "Reject"
+      ],
+      "stdout": "BAR\tConfirm\tCancel\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "37"
+    },
+    {
+      "name": "tests/fixtures/opencode/dialog-confirm.txt",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "BAR\tConfirm\tCancel\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "37"
+    },
+    {
+      "name": "tests/fixtures/opencode/dialog-permission.ansi",
+      "command": "bar-marked",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "Reject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "38"
+    },
+    {
+      "name": "tests/fixtures/opencode/dialog-permission.ansi",
+      "command": "bar-marked",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "NOMARK\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "38"
+    },
+    {
+      "name": "tests/fixtures/opencode/dialog-permission.txt",
+      "command": "dialog",
+      "args": [
+        "__FIRST__"
+      ],
+      "stdout": "BAR\tAllow once\tAllow always\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "39"
+    },
+    {
+      "name": "tests/fixtures/opencode/dialog-permission.txt",
+      "command": "dialog",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "BAR\tAllow once\tAllow always\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "39"
+    },
+    {
+      "name": "tests/fixtures/opencode/dialog-permission.txt",
+      "command": "dialog",
+      "args": [
+        "Allow"
+      ],
+      "stdout": "BAR\tAllow once\tAllow always\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "39"
+    },
+    {
+      "name": "tests/fixtures/opencode/dialog-permission.txt",
+      "command": "dialog",
+      "args": [
+        "Reject"
+      ],
+      "stdout": "BAR\tAllow once\tAllow always\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "39"
+    },
+    {
+      "name": "tests/fixtures/opencode/dialog-permission.txt",
+      "command": "dialog",
+      "args": [
+        "missing"
+      ],
+      "stdout": "BAR\tAllow once\tAllow always\tReject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "39"
+    },
+    {
+      "name": "empty",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "0"
+    },
+    {
+      "name": "empty",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "0"
+    },
+    {
+      "name": "prose",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "1"
+    },
+    {
+      "name": "prose",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "1"
+    },
+    {
+      "name": "numbered",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "2"
+    },
+    {
+      "name": "numbered",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "2"
+    },
+    {
+      "name": "selected-last",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "3"
+    },
+    {
+      "name": "selected-last",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "3"
+    },
+    {
+      "name": "duplicate",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "4"
+    },
+    {
+      "name": "duplicate",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "4"
+    },
+    {
+      "name": "prefix",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "5"
+    },
+    {
+      "name": "prefix",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "5"
+    },
+    {
+      "name": "substring",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "6"
+    },
+    {
+      "name": "substring",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "6"
+    },
+    {
+      "name": "wrapped",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "7"
+    },
+    {
+      "name": "wrapped",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "7"
+    },
+    {
+      "name": "last-run",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "8"
+    },
+    {
+      "name": "last-run",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "8"
+    },
+    {
+      "name": "gap",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "9"
+    },
+    {
+      "name": "gap",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "9"
+    },
+    {
+      "name": "not-one",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "10"
+    },
+    {
+      "name": "not-one",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "10"
+    },
+    {
+      "name": "muse",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "11"
+    },
+    {
+      "name": "muse",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "11"
+    },
+    {
+      "name": "table",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "12"
+    },
+    {
+      "name": "table",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "12"
+    },
+    {
+      "name": "grok",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "13"
+    },
+    {
+      "name": "grok",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "13"
+    },
+    {
+      "name": "radio",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "14"
+    },
+    {
+      "name": "radio",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "14"
+    },
+    {
+      "name": "radio-single",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "15"
+    },
+    {
+      "name": "radio-single",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "15"
+    },
+    {
+      "name": "agy",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "16"
+    },
+    {
+      "name": "agy",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "16"
+    },
+    {
+      "name": "agy-box",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "17"
+    },
+    {
+      "name": "agy-box",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "17"
+    },
+    {
+      "name": "agy-time",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "18"
+    },
+    {
+      "name": "agy-time",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "18"
+    },
+    {
+      "name": "agy-many-markers",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "19"
+    },
+    {
+      "name": "agy-many-markers",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "19"
+    },
+    {
+      "name": "agy-question",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "20"
+    },
+    {
+      "name": "agy-question",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "20"
+    },
+    {
+      "name": "agy-long",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "21"
+    },
+    {
+      "name": "agy-long",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "21"
+    },
+    {
+      "name": "agy-nine",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "22"
+    },
+    {
+      "name": "agy-nine",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "22"
+    },
+    {
+      "name": "unicode",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "23"
+    },
+    {
+      "name": "unicode",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "23"
+    },
+    {
+      "name": "bar",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "SAME\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "24"
+    },
+    {
+      "name": "bar",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "FOLLOW\tAllow once | Allow always | Reject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "24"
+    },
+    {
+      "name": "bar-fallback",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "FOLLOW\tAllow once | Reject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "25"
+    },
+    {
+      "name": "bar-fallback",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "FOLLOW\tAllow once | Reject\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "25"
+    },
+    {
+      "name": "bar-last",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "FOLLOW\tYes | No\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "26"
+    },
+    {
+      "name": "bar-last",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "SAME\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "26"
+    },
+    {
+      "name": "bar-single",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "SAME\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "27"
+    },
+    {
+      "name": "bar-single",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "SAME\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "27"
+    },
+    {
+      "name": "claude",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "28"
+    },
+    {
+      "name": "claude",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "28"
+    },
+    {
+      "name": "claude-changed",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "29"
+    },
+    {
+      "name": "claude-changed",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "29"
+    },
+    {
+      "name": "claude-scroll",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "30"
+    },
+    {
+      "name": "claude-scroll",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "30"
+    },
+    {
+      "name": "claude-empty",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "31"
+    },
+    {
+      "name": "claude-empty",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "31"
+    },
+    {
+      "name": "claude-search",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "32"
+    },
+    {
+      "name": "claude-search",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "32"
+    },
+    {
+      "name": "claude-fetch",
+      "command": "bar-check",
+      "args": [
+        "Allow once",
+        "Allow always",
+        "Reject"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "33"
+    },
+    {
+      "name": "claude-fetch",
+      "command": "bar-check",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "GONE\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "33"
+    },
+    {
+      "name": "forward",
+      "command": "bar-marked",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "Yes\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "40"
+    },
+    {
+      "name": "forward",
+      "command": "bar-marked",
+      "args": [
+        "unknown"
+      ],
+      "stdout": "NOMARK\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "40"
+    },
+    {
+      "name": "forward",
+      "command": "bar-marked",
+      "args": [],
+      "stdout": "NOMARK\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "40"
+    },
+    {
+      "name": "reverse",
+      "command": "bar-marked",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "No\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "41"
+    },
+    {
+      "name": "reverse",
+      "command": "bar-marked",
+      "args": [
+        "unknown"
+      ],
+      "stdout": "NOMARK\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "41"
+    },
+    {
+      "name": "reverse",
+      "command": "bar-marked",
+      "args": [],
+      "stdout": "NOMARK\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "41"
+    },
+    {
+      "name": "padding",
+      "command": "bar-marked",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "NOMARK\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "42"
+    },
+    {
+      "name": "padding",
+      "command": "bar-marked",
+      "args": [
+        "unknown"
+      ],
+      "stdout": "NOMARK\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "42"
+    },
+    {
+      "name": "padding",
+      "command": "bar-marked",
+      "args": [],
+      "stdout": "NOMARK\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "42"
+    },
+    {
+      "name": "none",
+      "command": "bar-marked",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "NOMARK\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "43"
+    },
+    {
+      "name": "none",
+      "command": "bar-marked",
+      "args": [
+        "unknown"
+      ],
+      "stdout": "NOMARK\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "43"
+    },
+    {
+      "name": "none",
+      "command": "bar-marked",
+      "args": [],
+      "stdout": "NOMARK\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "43"
+    },
+    {
+      "name": "last",
+      "command": "bar-marked",
+      "args": [
+        "Yes",
+        "No"
+      ],
+      "stdout": "No\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "44"
+    },
+    {
+      "name": "last",
+      "command": "bar-marked",
+      "args": [
+        "unknown"
+      ],
+      "stdout": "NOMARK\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "44"
+    },
+    {
+      "name": "last",
+      "command": "bar-marked",
+      "args": [],
+      "stdout": "NOMARK\n",
+      "stderr": "",
+      "exit_code": 0,
+      "view": "44"
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "Yes",
+        "Yes",
+        "No"
+      ],
+      "stdout": "0\tYes\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "No",
+        "Yes",
+        "No"
+      ],
+      "stdout": "1\tNo\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "once",
+        "Yes",
+        "No"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "allow",
+        "Yes",
+        "No"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "missing",
+        "Yes",
+        "No"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "",
+        "Yes",
+        "No"
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "don't allow",
+        "Yes",
+        "No"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "grünes licht",
+        "Yes",
+        "No"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "--yes",
+        "Yes",
+        "No"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "Yes",
+        "Yes once",
+        "Yes always",
+        "No"
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "No",
+        "Yes once",
+        "Yes always",
+        "No"
+      ],
+      "stdout": "2\tNo\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "once",
+        "Yes once",
+        "Yes always",
+        "No"
+      ],
+      "stdout": "0\tYes once\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "allow",
+        "Yes once",
+        "Yes always",
+        "No"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "missing",
+        "Yes once",
+        "Yes always",
+        "No"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "",
+        "Yes once",
+        "Yes always",
+        "No"
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "don't allow",
+        "Yes once",
+        "Yes always",
+        "No"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "grünes licht",
+        "Yes once",
+        "Yes always",
+        "No"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "--yes",
+        "Yes once",
+        "Yes always",
+        "No"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "Yes",
+        "Yes",
+        "YES"
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "No",
+        "Yes",
+        "YES"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "once",
+        "Yes",
+        "YES"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "allow",
+        "Yes",
+        "YES"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "missing",
+        "Yes",
+        "YES"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "",
+        "Yes",
+        "YES"
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "don't allow",
+        "Yes",
+        "YES"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "grünes licht",
+        "Yes",
+        "YES"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "--yes",
+        "Yes",
+        "YES"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "Yes",
+        "Allow once",
+        "Reject once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "No",
+        "Allow once",
+        "Reject once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "once",
+        "Allow once",
+        "Reject once"
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "allow",
+        "Allow once",
+        "Reject once"
+      ],
+      "stdout": "0\tAllow once\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "missing",
+        "Allow once",
+        "Reject once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "",
+        "Allow once",
+        "Reject once"
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "don't allow",
+        "Allow once",
+        "Reject once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "grünes licht",
+        "Allow once",
+        "Reject once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "--yes",
+        "Allow once",
+        "Reject once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "Yes",
+        "Don’t allow",
+        "Grünes Licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "No",
+        "Don’t allow",
+        "Grünes Licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "once",
+        "Don’t allow",
+        "Grünes Licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "allow",
+        "Don’t allow",
+        "Grünes Licht"
+      ],
+      "stdout": "0\tDon’t allow\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "missing",
+        "Don’t allow",
+        "Grünes Licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "",
+        "Don’t allow",
+        "Grünes Licht"
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "don't allow",
+        "Don’t allow",
+        "Grünes Licht"
+      ],
+      "stdout": "0\tDon’t allow\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "grünes licht",
+        "Don’t allow",
+        "Grünes Licht"
+      ],
+      "stdout": "1\tGrünes Licht\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "--yes",
+        "Don’t allow",
+        "Grünes Licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "Yes"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "No"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "once"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "missing"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        ""
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "don't allow"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "grünes licht"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "--yes"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "Yes",
+        "--yes",
+        "No"
+      ],
+      "stdout": "0\t--yes\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "No",
+        "--yes",
+        "No"
+      ],
+      "stdout": "1\tNo\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "once",
+        "--yes",
+        "No"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "allow",
+        "--yes",
+        "No"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "missing",
+        "--yes",
+        "No"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "",
+        "--yes",
+        "No"
+      ],
+      "stdout": "AMBIG\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "don't allow",
+        "--yes",
+        "No"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "grünes licht",
+        "--yes",
+        "No"
+      ],
+      "stdout": "NOMATCH\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "name": "bar-match",
+      "command": "bar-match",
+      "view": "0",
+      "args": [
+        "--yes",
+        "--yes",
+        "No"
+      ],
+      "stdout": "0\t--yes\n",
+      "stderr": "",
+      "exit_code": 0
+    }
+  ]
+}

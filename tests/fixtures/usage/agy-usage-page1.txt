@@ -1,0 +1,25 @@
+  ~/dev/herdr-orchestrator
+
+─────────────────────────────────────
+>
+─────────────────────────────────────
+└ Models & Quota
+
+  Account: user@example.domain
+
+GEMINI MODELS
+  Models within this group: Gemini Fl
+
+  Weekly Limit Remaining
+    [███████████████████████████░] 94
+    95% remaining · Refreshes in 116h
+
+  Five Hour Limit Remaining
+    [███████████████████████░░░░░] 82
+    83% remaining · Refreshes in 1h 1
+  (1–10 of 35 lines)
+
+  ↑/↓ Scroll · pgup/pgdown Page
+  ctrl+end Bottom · ctrl+home Top
+  esc Close
+       plan · Gemini 3.8 Flash · high

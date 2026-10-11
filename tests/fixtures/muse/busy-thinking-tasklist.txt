@@ -1,0 +1,24 @@
+  4298 +      fi
+  4299 +      i=$((i + 1))
+  4300 +    done
+  4301 +    printf '%s\n' "… (37 lines omitted)"
+  4302 +    printf '%s\n' "usage detail line 48: --model <MODEL> --effort <low|high|max> --
+        cwd <DIR>"
+  4303 +    printf '%s\n' "note: unexpected argument '--workspace' is not supported in muse
+         1.0.3"
+  … 16 more lines
+
+◇ Thinking (7m 01s · esc to interrupt)
+
+  ◆ E: fake-TERM race (trap before sleep, PID guard, wait on the TERM path)
+  ◇ H: fix outdated comments
+  ◇ C: awk string comparison + helper negative test
+  ◇ G: replace cut with python3 character shortening + UTF-8 test
+  ◇ F: reads with a 3-s deadline (start_pane_read)
+  ◇ A: re-check after signature + explicit wait status + T156f
+  +3 more
+
+───────────────────────────────────────────────────────────────────────────────────────────
+⟩
+───────────────────────────────────────────────────────────────────────────────────────────
+  muse-spark-1.3 · high · ~/dev/herdr-orchestrator

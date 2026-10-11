@@ -1,0 +1,25 @@
+  ~/dev/herdr-orchestrator
+
+─────────────────────────────────────
+>
+─────────────────────────────────────
+└ Models & Quota
+
+  Account: user@example.domain
+
+
+
+CLAUDE AND GPT MODELS
+  Models within this group: Claude Op
+
+  Weekly Limit Remaining
+    [████████████████████████████] 10
+    Quota available
+
+  Five Hour Limit Remaining
+  (11–20 of 35 lines)
+
+  ↑/↓ Scroll · pgup/pgdown Page
+  ctrl+end Bottom · ctrl+home Top
+  esc Close
+       plan · Gemini 3.8 Flash · high

@@ -1,0 +1,11 @@
+  Account: user@example.domain
+
+  Weekly Limit Remaining
+    [██████████████████████████████████████████████████] 100.00%
+    Quota available
+
+  Five Hour Limit Remaining
+  (16–20 of 30 lines)
+
+  ↑/↓ Scroll · pgup/pgdown Page · ctrl+end Bottom · ctrl+home Top · esc Close
+                                                            plan · Gemini 3.8 Flash · high

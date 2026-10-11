@@ -1,0 +1,9 @@
+   Current session
+                                                   0% used
+   Current week (all models)
+   ██████                                         12% used
+   Resets Sep 18, 9:59am (Europe/Berlin)
+   Current week (Fable)
+   ████████████                                   24% used
+   Resets Sep 18, 9:59am (Europe/Berlin)
+   Esc to cancel

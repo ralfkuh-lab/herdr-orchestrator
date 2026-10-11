@@ -1,0 +1,11 @@
+  Account: user@example.domain
+
+
+
+CLAUDE AND GPT MODELS
+  Models within this group: Claude Opus, Claude Sonnet, GPT-OSS
+
+  (11–15 of 30 lines)
+
+  ↑/↓ Scroll · pgup/pgdown Page · ctrl+end Bottom · ctrl+home Top · esc Close
+                                                            plan · Gemini 3.8 Flash · high

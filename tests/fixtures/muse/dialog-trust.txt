@@ -1,0 +1,15 @@
+user@host:/tmp/claude-1000/-home-user-dev-herdr-orchestrator/1a22b407-314
+c-4ebb-b7c9-5590390d57ae/scratchpad$ muse --model muse-spark-1.3
+Do you trust this workspace?
+Workspace:
+/tmp/claude-1000/-home-user-dev-herdr-orchestrator/1a22b407-314c-4ebb-b7c9-5590390d57ae/sc
+ratchpad
+
+Trusting allows project-local skills, rules, hooks, and plugin config to load before the
+model runs.
+Only trust this workspace when you trust its contents.
+
+> 1  Trust and continue
+  2  Quit
+
+Use Up/Down or 1/2, then Enter. Esc quits.

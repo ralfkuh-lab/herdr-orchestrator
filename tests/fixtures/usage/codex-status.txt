@@ -1,0 +1,25 @@
+│ for up-to-date                    │
+│ information on rate limits and    │
+│ credits                           │
+│                                   │
+│  Model:                gpt-5.6-so │
+│  Directory:            ~/…/…rator │
+│  Permissions:          Read Only  │
+│  Agents.md:            <none>     │
+│  Account:              user@go    │
+│  Collaboration mode:   Default    │
+│  Session:              01a06342-1 │
+│                                   │
+│  5h limit:             56% left   │
+│                        (resets    │
+│                        21:50)     │
+│  Weekly limit:         86% left   │
+│                        (resets    │
+│                        23:09 on 7 │
+│                        Sep)       │
+╰───────────────────────────────────╯
+
+
+› Ask Codex to do anything
+
+  gpt-5.6-sol high · ~/dev/herdr-orc…

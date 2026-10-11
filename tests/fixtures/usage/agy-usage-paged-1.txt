@@ -1,0 +1,11 @@
+  Account: user@example.domain
+
+GEMINI MODELS
+  Models within this group: Gemini Flash, Gemini Pro
+
+  Weekly Limit Remaining
+    [███████████████████████████████████████████░░░░░░░] 85.48%
+  (1–5 of 30 lines)
+
+  ↑/↓ Scroll · pgup/pgdown Page · ctrl+end Bottom · ctrl+home Top · esc Close
+                                                            plan · Gemini 3.8 Flash · high

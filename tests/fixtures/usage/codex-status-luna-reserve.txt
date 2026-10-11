@@ -1,0 +1,18 @@
+╭─────────────────────────────────────────────────────────────────────────────────────────╮
+│  >_ OpenAI Codex (v0.156.0)                                                             │
+│                                                                                         │
+│ Visit https://chatgpt.com/codex/settings/usage for up-to-date                           │
+│ information on rate limits and credits                                                  │
+│                                                                                         │
+│  Model:                       GPT-6-Astra (reasoning medium, summaries auto)            │
+│  Model provider:              openai                                                    │
+│  Directory:                   ~/dev/herdr-orchestrator                                  │
+│  Permissions:                 Read Only (Ask for approval)                              │
+│  Agents.md:                   ~/.codex/AGENTS.md                                        │
+│  Account:                     Pro Lite                                                  │
+│  Collaboration mode:          Default                                                   │
+│  Session:                     01a0cb27-28a9-70a1-87f3-6500c17eb7d7                      │
+│                                                                                         │
+│  Weekly limit:                [░░░░░░░░░░░░░░░░░░░░] 0% left (resets 10:36)             │
+│  Luna Reserve Weekly limit:   [████████████████████] 100% left (resets 00:05 on 30 Sep) │
+╰─────────────────────────────────────────────────────────────────────────────────────────╯

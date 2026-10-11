@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Test shim: drastically shortens every sleep so poll loops in the test do not
+# run in real time. Not 0, to avoid busy loops.
+exec /bin/sleep 0.02

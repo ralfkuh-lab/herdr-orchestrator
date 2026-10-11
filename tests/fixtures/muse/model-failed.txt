@@ -1,0 +1,6 @@
+
+  Read 3 files (ctrl+o to expand)
+
+◆ model failed: model stream idle timeout after 180000ms
+
+⟩ Round 5 (review fixes), please implement: read .herd/fix-start-early-exit-r5.md

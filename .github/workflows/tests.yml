@@ -1,0 +1,23 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    # ubuntu-22.04: setup-python still provides Python 3.8 (the minimum version) there.
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.8", "3.12"]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Shell suite (fake herdr, no daemon)
+        run: bash tests/run.sh
+      - name: Python unit tests
+        run: python3 -m unittest discover -s tests -p 'test_*.py'

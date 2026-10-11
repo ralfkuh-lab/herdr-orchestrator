@@ -1,0 +1,405 @@
+{
+  "baseline": "95f49f6: usage_agy_collect, captured with terminal stubs before extraction",
+  "cases": [
+    {
+      "name": "tall",
+      "snapshots": [
+        "Chrome\nModels & Quota\n\nAlpha\n\nBeta\n\nesc Close\nFooter"
+      ],
+      "expected": {
+        "text": "Alpha\n\nBeta\n",
+        "raw": "Alpha\n\nBeta\n",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 0,
+        "keys": ""
+      }
+    },
+    {
+      "name": "empty",
+      "snapshots": [
+        ""
+      ],
+      "expected": {
+        "text": "",
+        "raw": "",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 0,
+        "keys": ""
+      }
+    },
+    {
+      "name": "no-heading",
+      "snapshots": [
+        "\nAlpha\n\nesc Close"
+      ],
+      "expected": {
+        "text": "Alpha\n",
+        "raw": "Alpha\n",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 0,
+        "keys": ""
+      }
+    },
+    {
+      "name": "no-close",
+      "snapshots": [
+        "Models & Quota\nAlpha\n\n"
+      ],
+      "expected": {
+        "text": "Alpha",
+        "raw": "Alpha",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 0,
+        "keys": ""
+      }
+    },
+    {
+      "name": "empty-lines",
+      "snapshots": [
+        "Models & Quota\n\n\nesc Close"
+      ],
+      "expected": {
+        "text": "",
+        "raw": "",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 0,
+        "keys": ""
+      }
+    },
+    {
+      "name": "complete",
+      "snapshots": [
+        "Chrome\nModels & Quota\nAlpha\n\nBeta\n(1–3 of 5 lines)\nesc Close",
+        "Chrome\nModels & Quota\nBeta\nGamma\nDelta\n(3–5 of 5 lines)\nesc Close"
+      ],
+      "expected": {
+        "text": "Alpha\n\nBeta\nGamma\nDelta",
+        "raw": "Alpha\n\nBeta\nGamma\nDelta",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 1,
+        "keys": "pane send-keys pane down down down\n"
+      }
+    },
+    {
+      "name": "gap",
+      "snapshots": [
+        "Chrome\nModels & Quota\nA\nB\n(1–2 of 5 lines)\nesc Close",
+        "Chrome\nModels & Quota\nD\nE\n(4–5 of 5 lines)\nesc Close"
+      ],
+      "expected": {
+        "text": "A\nB\nD\nE",
+        "raw": "1: A\n2: B\n4: D\n5: E",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 1,
+        "keys": "pane send-keys pane down down\n"
+      }
+    },
+    {
+      "name": "stalled",
+      "snapshots": [
+        "Chrome\nModels & Quota\nA\nB\n(1–2 of 5 lines)\nesc Close"
+      ],
+      "expected": {
+        "text": "A\nB",
+        "raw": "1: A\n2: B",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 4,
+        "keys": "pane send-keys pane down down\n"
+      }
+    },
+    {
+      "name": "leading-empty",
+      "snapshots": [
+        "Chrome\nModels & Quota\n\n\nC\n(1–3 of 3 lines)\nesc Close"
+      ],
+      "expected": {
+        "text": "C",
+        "raw": "C",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 0,
+        "keys": ""
+      }
+    },
+    {
+      "name": "leading-empty-incomplete",
+      "snapshots": [
+        "Chrome\nModels & Quota\n\n\nC\n(1–3 of 5 lines)\nesc Close"
+      ],
+      "expected": {
+        "text": "C",
+        "raw": "3: C",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 4,
+        "keys": "pane send-keys pane down down down\n"
+      }
+    },
+    {
+      "name": "trailing-empty",
+      "snapshots": [
+        "Chrome\nModels & Quota\nA\n\n\n(1–3 of 3 lines)\nesc Close"
+      ],
+      "expected": {
+        "text": "A\n\n",
+        "raw": "A\n\n",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 0,
+        "keys": ""
+      }
+    },
+    {
+      "name": "no-visible-lines",
+      "snapshots": [
+        "(1-2 of 2 lines)\nesc Close"
+      ],
+      "expected": {
+        "text": "",
+        "raw": "",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 0,
+        "keys": ""
+      }
+    },
+    {
+      "name": "short-viewport",
+      "snapshots": [
+        "A\n(1-3 of 3 lines)\nesc Close"
+      ],
+      "expected": {
+        "text": "A",
+        "raw": "1: A",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 0,
+        "keys": ""
+      }
+    },
+    {
+      "name": "width-change",
+      "snapshots": [
+        "Chrome\nModels & Quota\nA\nB\n(1–2 of 6 lines)\nesc Close",
+        "Chrome\nModels & Quota\nC\nD\nE\nF\n(3–6 of 6 lines)\nesc Close"
+      ],
+      "expected": {
+        "text": "A\nB\nC\nD\nE\nF",
+        "raw": "A\nB\nC\nD\nE\nF",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 1,
+        "keys": "pane send-keys pane down down\n"
+      }
+    },
+    {
+      "name": "total-shrink",
+      "snapshots": [
+        "Chrome\nModels & Quota\nA\nB\n(1–2 of 6 lines)\nesc Close",
+        "Chrome\nModels & Quota\nB\nC\n(2–3 of 3 lines)\nesc Close"
+      ],
+      "expected": {
+        "text": "A\nB\nC",
+        "raw": "A\nB\nC",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 1,
+        "keys": "pane send-keys pane down down\n"
+      }
+    },
+    {
+      "name": "total-grow",
+      "snapshots": [
+        "Chrome\nModels & Quota\nA\nB\n(1–2 of 4 lines)\nesc Close",
+        "Chrome\nModels & Quota\nC\nD\n(3–4 of 6 lines)\nesc Close",
+        "Chrome\nModels & Quota\nE\nF\n(5–6 of 6 lines)\nesc Close"
+      ],
+      "expected": {
+        "text": "A\nB\nC\nD\nE\nF",
+        "raw": "A\nB\nC\nD\nE\nF",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 2,
+        "keys": "pane send-keys pane down down\npane send-keys pane down down\n"
+      }
+    },
+    {
+      "name": "repeated",
+      "snapshots": [
+        "Chrome\nModels & Quota\nA\nB\n(1–2 of 4 lines)\nesc Close",
+        "Chrome\nModels & Quota\nA\nB\n(1–2 of 4 lines)\nesc Close",
+        "Chrome\nModels & Quota\nC\nD\n(3–4 of 4 lines)\nesc Close"
+      ],
+      "expected": {
+        "text": "A\nB\nC\nD",
+        "raw": "A\nB\nC\nD",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 2,
+        "keys": "pane send-keys pane down down\n"
+      }
+    },
+    {
+      "name": "backwards",
+      "snapshots": [
+        "Chrome\nModels & Quota\nB\nC\n(2–3 of 4 lines)\nesc Close",
+        "Chrome\nModels & Quota\nA\nB\n(1–2 of 4 lines)\nesc Close",
+        "Chrome\nModels & Quota\nC\nD\n(3–4 of 4 lines)\nesc Close"
+      ],
+      "expected": {
+        "text": "B\nC\nD",
+        "raw": "2: B\n3: C\n4: D",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 2,
+        "keys": "pane send-keys pane down down\n"
+      }
+    },
+    {
+      "name": "footer-lost",
+      "snapshots": [
+        "Chrome\nModels & Quota\nA\nB\n(1–2 of 4 lines)\nesc Close",
+        "Working"
+      ],
+      "expected": {
+        "text": "A\nB",
+        "raw": "1: A\n2: B",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 4,
+        "keys": "pane send-keys pane down down\n"
+      }
+    },
+    {
+      "name": "sendfail",
+      "snapshots": [
+        "Chrome\nModels & Quota\n\nB\n(1–2 of 4 lines)\nesc Close"
+      ],
+      "fail": true,
+      "expected": {
+        "text": "Chrome\nModels & Quota\n\nB\n(1–2 of 4 lines)\nesc Close",
+        "raw": "1: \n2: B",
+        "parse_rc": 1,
+        "rc": 1,
+        "stderr": "[herd] usage: send-keys down failed: injected down failure\n",
+        "reads": 0,
+        "keys": "pane send-keys pane down down\n"
+      }
+    },
+    {
+      "name": "zero-total",
+      "snapshots": [
+        "Chrome\nModels & Quota\nA\n(0–0 of 0 lines)\nesc Close"
+      ],
+      "expected": {
+        "text": "",
+        "raw": "",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 0,
+        "keys": ""
+      }
+    },
+    {
+      "name": "reversed-range",
+      "snapshots": [
+        "Chrome\nModels & Quota\nA\n(3–1 of 3 lines)\nesc Close"
+      ],
+      "expected": {
+        "text": "A",
+        "raw": "3: A",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 4,
+        "keys": "pane send-keys pane down\n"
+      }
+    },
+    {
+      "name": "budget",
+      "snapshots": [
+        "Chrome\nModels & Quota\nA\nB\n(1–2 of 10 lines)\nesc Close",
+        "Chrome\nModels & Quota\nA\nB\n(2–3 of 10 lines)\nesc Close",
+        "Chrome\nModels & Quota\nA\nB\n(3–4 of 10 lines)\nesc Close",
+        "Chrome\nModels & Quota\nA\nB\n(4–5 of 10 lines)\nesc Close",
+        "Chrome\nModels & Quota\nA\nB\n(5–6 of 10 lines)\nesc Close",
+        "Chrome\nModels & Quota\nA\nB\n(6–7 of 10 lines)\nesc Close",
+        "Chrome\nModels & Quota\nA\nB\n(7–8 of 10 lines)\nesc Close",
+        "Chrome\nModels & Quota\nA\nB\n(8–9 of 10 lines)\nesc Close",
+        "Chrome\nModels & Quota\nA\nB\n(9–10 of 10 lines)\nesc Close"
+      ],
+      "expected": {
+        "text": "A\nA\nA\nA\nA\nA\nA\nA\nB",
+        "raw": "1: A\n2: A\n3: A\n4: A\n5: A\n6: A\n7: A\n8: A\n9: B",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 7,
+        "keys": "pane send-keys pane down down\npane send-keys pane down down\npane send-keys pane down down\npane send-keys pane down down\npane send-keys pane down down\npane send-keys pane down down\npane send-keys pane down down\n"
+      }
+    },
+    {
+      "name": "fixture-paged",
+      "snapshots": [
+        "  Account: user@example.domain\n\nGEMINI MODELS\n  Models within this group: Gemini Flash, Gemini Pro\n\n  Weekly Limit Remaining\n    [███████████████████████████████████████████░░░░░░░] 85.48%\n  (1–5 of 30 lines)\n\n  ↑/↓ Scroll · pgup/pgdown Page · ctrl+end Bottom · ctrl+home Top · esc Close\n                                                            plan · Gemini 3.8 Flash · high\n",
+        "  Account: user@example.domain\n\n    85% remaining · Refreshes in 43h 33m\n\n  Five Hour Limit Remaining\n    [████████████████████████████████████████████░░░░░░] 88.67%\n    89% remaining · Refreshes in 4h 22m\n  (6–10 of 30 lines)\n\n  ↑/↓ Scroll · pgup/pgdown Page · ctrl+end Bottom · ctrl+home Top · esc Close\n                                                            plan · Gemini 3.8 Flash · high\n",
+        "  Account: user@example.domain\n\n\n\nCLAUDE AND GPT MODELS\n  Models within this group: Claude Opus, Claude Sonnet, GPT-OSS\n\n  (11–15 of 30 lines)\n\n  ↑/↓ Scroll · pgup/pgdown Page · ctrl+end Bottom · ctrl+home Top · esc Close\n                                                            plan · Gemini 3.8 Flash · high\n",
+        "  Account: user@example.domain\n\n  Weekly Limit Remaining\n    [██████████████████████████████████████████████████] 100.00%\n    Quota available\n\n  Five Hour Limit Remaining\n  (16–20 of 30 lines)\n\n  ↑/↓ Scroll · pgup/pgdown Page · ctrl+end Bottom · ctrl+home Top · esc Close\n                                                            plan · Gemini 3.8 Flash · high\n",
+        "  Account: user@example.domain\n\n    [██████████████████████████████████████████████████] 100.00%\n    Quota available\n\n\n  │Within each group, models share a weekly limit and a 5-hour limit. Quota is\n  (21–25 of 30 lines)\n\n  ↑/↓ Scroll · pgup/pgdown Page · ctrl+end Bottom · ctrl+home Top · esc Close\n                                                            plan · Gemini 3.8 Flash · high\n",
+        "  Account: user@example.domain\n\n  │consumed proportionally to the cost of the tokens. Thus, limits will last\n  │longer with shorter tasks or using more cost-effective models. The 5-hour\n  │limit smooths out aggregate demand to fairly distribute global capacity\n  │across all users, while your weekly limit is tied directly to your individual\n  │tier.\n  (26–30 of 30 lines)\n\n  ↑/↓ Scroll · pgup/pgdown Page · ctrl+end Bottom · ctrl+home Top · esc Close\n                                                            plan · Gemini 3.8 Flash · high\n"
+      ],
+      "expected": {
+        "text": "GEMINI MODELS\n  Models within this group: Gemini Flash, Gemini Pro\n\n  Weekly Limit Remaining\n    [███████████████████████████████████████████░░░░░░░] 85.48%\n    85% remaining · Refreshes in 43h 33m\n\n  Five Hour Limit Remaining\n    [████████████████████████████████████████████░░░░░░] 88.67%\n    89% remaining · Refreshes in 4h 22m\n\n\nCLAUDE AND GPT MODELS\n  Models within this group: Claude Opus, Claude Sonnet, GPT-OSS\n\n  Weekly Limit Remaining\n    [██████████████████████████████████████████████████] 100.00%\n    Quota available\n\n  Five Hour Limit Remaining\n    [██████████████████████████████████████████████████] 100.00%\n    Quota available\n\n\n  │Within each group, models share a weekly limit and a 5-hour limit. Quota is\n  │consumed proportionally to the cost of the tokens. Thus, limits will last\n  │longer with shorter tasks or using more cost-effective models. The 5-hour\n  │limit smooths out aggregate demand to fairly distribute global capacity\n  │across all users, while your weekly limit is tied directly to your individual\n  │tier.",
+        "raw": "GEMINI MODELS\n  Models within this group: Gemini Flash, Gemini Pro\n\n  Weekly Limit Remaining\n    [███████████████████████████████████████████░░░░░░░] 85.48%\n    85% remaining · Refreshes in 43h 33m\n\n  Five Hour Limit Remaining\n    [████████████████████████████████████████████░░░░░░] 88.67%\n    89% remaining · Refreshes in 4h 22m\n\n\nCLAUDE AND GPT MODELS\n  Models within this group: Claude Opus, Claude Sonnet, GPT-OSS\n\n  Weekly Limit Remaining\n    [██████████████████████████████████████████████████] 100.00%\n    Quota available\n\n  Five Hour Limit Remaining\n    [██████████████████████████████████████████████████] 100.00%\n    Quota available\n\n\n  │Within each group, models share a weekly limit and a 5-hour limit. Quota is\n  │consumed proportionally to the cost of the tokens. Thus, limits will last\n  │longer with shorter tasks or using more cost-effective models. The 5-hour\n  │limit smooths out aggregate demand to fairly distribute global capacity\n  │across all users, while your weekly limit is tied directly to your individual\n  │tier.",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 5,
+        "keys": "pane send-keys pane down down down down down\npane send-keys pane down down down down down\npane send-keys pane down down down down down\npane send-keys pane down down down down down\npane send-keys pane down down down down down\n"
+      }
+    },
+    {
+      "name": "fixture-tall",
+      "snapshots": [
+        "      ▄▀▀▄        Antigravity CLI 1.1.27\n     ▀▀▀▀▀▀       user@example.domain (Google AI Pro)\n    ▀▀▀▀▀▀▀▀      Gemini 3.8 Flash (High)\n   ▄▀▀    ▀▀▄     ~/dev/herdr-orchestrator-wt-usage\n  ▄▀▀      ▀▀▄\n───────────────────────────────────────────────────────────────────────────────────────────\n>\n───────────────────────────────────────────────────────────────────────────────────────────\n└ Models & Quota\n  Account: user@example.domain\nGEMINI MODELS\n  Models within this group: Gemini Flash, Gemini Pro\n  Weekly Limit Remaining\n    [██████████████████████████████████████████░░░░░░░░] 83.43%\n    83% remaining · Refreshes in 42h 44m\n  Five Hour Limit Remaining\n    [██████████████████████████████████████░░░░░░░░░░░░] 76.39%\n    76% remaining · Refreshes in 3h 33m\nCLAUDE AND GPT MODELS\n  Models within this group: Claude Opus, Claude Sonnet, GPT-OSS\n  Weekly Limit Remaining\n    [██████████████████████████████████████████████████] 100.00%\n    Quota available\n  Five Hour Limit Remaining\n    [██████████████████████████████████████████████████] 100.00%\n    Quota available\n  │Within each group, models share a weekly limit and a 5-hour limit. Quota is\n  │consumed proportionally to the cost of the tokens. Thus, limits will last\n  │longer with shorter tasks or using more cost-effective models. The 5-hour\n  │limit smooths out aggregate demand to fairly distribute global capacity\n  │across all users, while your weekly limit is tied directly to your individual\n  │tier.\n  ↑/↓ Scroll · pgup/pgdown Page · ctrl+end Bottom · ctrl+home Top · esc Close\n                                                             plan · Gemini 3.8 Flash · high\n"
+      ],
+      "expected": {
+        "text": "  Account: user@example.domain\nGEMINI MODELS\n  Models within this group: Gemini Flash, Gemini Pro\n  Weekly Limit Remaining\n    [██████████████████████████████████████████░░░░░░░░] 83.43%\n    83% remaining · Refreshes in 42h 44m\n  Five Hour Limit Remaining\n    [██████████████████████████████████████░░░░░░░░░░░░] 76.39%\n    76% remaining · Refreshes in 3h 33m\nCLAUDE AND GPT MODELS\n  Models within this group: Claude Opus, Claude Sonnet, GPT-OSS\n  Weekly Limit Remaining\n    [██████████████████████████████████████████████████] 100.00%\n    Quota available\n  Five Hour Limit Remaining\n    [██████████████████████████████████████████████████] 100.00%\n    Quota available\n  │Within each group, models share a weekly limit and a 5-hour limit. Quota is\n  │consumed proportionally to the cost of the tokens. Thus, limits will last\n  │longer with shorter tasks or using more cost-effective models. The 5-hour\n  │limit smooths out aggregate demand to fairly distribute global capacity\n  │across all users, while your weekly limit is tied directly to your individual\n  │tier.",
+        "raw": "  Account: user@example.domain\nGEMINI MODELS\n  Models within this group: Gemini Flash, Gemini Pro\n  Weekly Limit Remaining\n    [██████████████████████████████████████████░░░░░░░░] 83.43%\n    83% remaining · Refreshes in 42h 44m\n  Five Hour Limit Remaining\n    [██████████████████████████████████████░░░░░░░░░░░░] 76.39%\n    76% remaining · Refreshes in 3h 33m\nCLAUDE AND GPT MODELS\n  Models within this group: Claude Opus, Claude Sonnet, GPT-OSS\n  Weekly Limit Remaining\n    [██████████████████████████████████████████████████] 100.00%\n    Quota available\n  Five Hour Limit Remaining\n    [██████████████████████████████████████████████████] 100.00%\n    Quota available\n  │Within each group, models share a weekly limit and a 5-hour limit. Quota is\n  │consumed proportionally to the cost of the tokens. Thus, limits will last\n  │longer with shorter tasks or using more cost-effective models. The 5-hour\n  │limit smooths out aggregate demand to fairly distribute global capacity\n  │across all users, while your weekly limit is tied directly to your individual\n  │tier.",
+        "parse_rc": 0,
+        "rc": 0,
+        "stderr": "",
+        "reads": 0,
+        "keys": ""
+      }
+    }
+  ]
+}
