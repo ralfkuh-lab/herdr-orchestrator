@@ -9,6 +9,12 @@ time. Token efficiency comes from prompt discipline: agents write their results
 to a file instead of the orchestrator pulling the TUI scrollback into its
 context.
 
+![Demo: an orchestrator delegates FizzBuzz to pi (DeepSeek) and a review to codex, each in its own visible herdr pane](https://raw.githubusercontent.com/ralfkuh-lab/herdr-orchestrator/assets/demo.gif)
+
+*The orchestrator pane (left, scripted for this demo — normally Claude Code or
+Codex) starts an implementer and a reviewer in visible panes, watches their
+states and reads the results from files. Sped up 3×.*
+
 The skill has two roles, both built on herdr:
 
 1. **Delegation** to coding agents (backends: `codex`, `agy`, `opencode`,

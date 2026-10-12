@@ -975,6 +975,22 @@ if should_run T90 target; then
         "|2|yes/a idle|0/a idle|0/|2|yes|yes|yes" "$r1|$poll_gone/$r2/$r3/$r4|$hard|$fallback|$preflight"
 fi
 
+if should_run T90s target; then
+  # herd.sh called via a symlink (e.g. ~/bin/herd.sh -> <skill>/scripts/herd.sh)
+  # must still find its helpers next to the real file; before the fix watch
+  # ended with "watcher missing: <symlink dir>/herd_events.py".
+  mkdir -p "$WORK/t90s-bin"
+  ln -sf "$ROOT/scripts/herd.sh" "$WORK/t90s-bin/herd.sh"
+  dispatch_fixtures "$WORK/t90s"
+  HERD_REAL="$HERD"; HERD="$WORK/t90s-bin/herd.sh"
+  run_dispatch events "tcp:127.0.0.1:$EV_PORT" a --stall-timeout 0 --max-events 1
+  HERD="$HERD_REAL"
+  ev_stop
+  missing=no; case "$ERR" in *"watcher missing"*) missing=yes ;; esac
+  check T90s target "watch via a symlinked herd.sh finds herd_events.py" \
+        "a idle|0|no" "$OUT|$RC|$missing"
+fi
+
 if should_run T91 target; then
   fixture_dir "t91"
   fixture a blocked

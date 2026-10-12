@@ -322,7 +322,9 @@ batch_wrapper() {
 # working directory yield the same path. The skill is symlinked as a WHOLE
 # directory, so resolving with readlink would be unnecessary — both files
 # always live in the same (symlinked) directory.
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+# readlink -f: also find the helpers when herd.sh is called via a symlink
+# (e.g. ~/bin/herd.sh -> <skill>/scripts/herd.sh).
+SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
 EVENTS_PY="$SCRIPT_DIR/herd_events.py"
 
 # Role lock for sub-agents that read global instructions themselves at start
@@ -2196,7 +2198,7 @@ build_cli() {
       if [ -n "$effort" ]; then
         [ "$resume" != 1 ] || { echo "[herd] opencode: --effort with --resume not supported (stored session variant takes precedence)" >&2; exit 2; }
         local oc_helper
-        oc_helper="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/herd_opencode.py"
+        oc_helper="$SCRIPT_DIR/herd_opencode.py"
         command -v python3 >/dev/null || { echo "[herd] opencode --effort requires python3" >&2; exit 2; }
         python3 "$oc_helper" check "$cwd" "$model" "$effort" || exit 2
         cli=(python3 "$oc_helper" run "$cwd" "$model" "$effort" "${cli[@]}")
