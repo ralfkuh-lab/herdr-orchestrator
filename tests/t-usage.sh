@@ -29,6 +29,16 @@ if should_run T145 target; then
   want_a="$(printf '%s\t%s\t%s\t%s\t%s\t%s|0' "a" "agy" "5h=83% left" "week=95% left" "reset5h=1h 1" "resetweek=116h")"
   check T145b target "usage agy: 5h=83% left, week=95% left" "$want_a" "$OUT|$RC"
 
+  # T145b2: agy view with the Argon section (2026-10-17): 53 lines without a scroll
+  # footer, i.e. taller than pane_visible's 40 lines -> agy reads the whole screen
+  fixture_dir "t145b2"
+  usage_fixture a agy "$ROOT/tests/fixtures/usage/agy-usage-argon.txt"
+  run_herd usage a
+  # (the dialog guard before sending keeps reading visible 40)
+  reads_a=no; grep -qx 'visible ?' "$FAKE_HERDR_DIR/.reads.a" 2>/dev/null && reads_a=yes
+  want_argon="$(printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s|0|yes' "a" "agy" "5h=100% left" "week=100% left" "reset5h=?" "resetweek=?" "argon_5h=–" "argon_week=98% left" "argon_reset5h=–" "argon_resetweek=167h 52m")"
+  check T145b2 target "usage agy with Argon section: whole screen, argon_week=98% left" "$want_argon" "$OUT|$RC|$reads_a"
+
   # T145c: claude fixture
   fixture_dir "t145c"
   usage_fixture cl claude "$ROOT/tests/fixtures/usage/claude-usage.txt"

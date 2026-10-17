@@ -22,6 +22,7 @@ class UsageResult:
     reset5: str
     resetw: str
     ok: bool
+    extra: tuple = ()  # further (key, value) fields, e.g. agy's separate Argon quota
 
     @property
     def exit_code(self) -> int:
@@ -29,7 +30,8 @@ class UsageResult:
 
     def to_tsv(self, name: str, kind: str) -> str:
         return (f"{name}\t{kind}\t5h={self.pct5}\tweek={self.week}"
-                f"\treset5h={self.reset5}\tresetweek={self.resetw}")
+                f"\treset5h={self.reset5}\tresetweek={self.resetw}"
+                + "".join(f"\t{k}={v}" for k, v in self.extra))
 
 
 @dataclass(frozen=True)
@@ -51,6 +53,70 @@ class CodexLogResult:
         return line
 
 
+def _agy_window(seg: str):
+    """(percent, reset, reset_optional, ok) of one delimited agy limit block."""
+    pct = reset = "?"
+    optional = False
+    ok = True
+    # FIRST NN% remaining, otherwise the bar value
+    mp = re.search(r"([0-9]+)%\s*remaining", seg)
+    if not mp:
+        mp = re.search(r"\[[^\]]*\]\s*([0-9]+)(?:\.[0-9]+)?%", seg)
+    if mp:
+        pct = f"{mp.group(1)}% left"
+    else:
+        ok = False
+    # Search for the reset independently of the percentage; delimit reset fields against Account/header (R2-5)
+    mr = re.search(r"(?:Refreshes|Resets) in\s+([^\n│┃|]+)", seg)
+    if mr and not mr.group(1).strip().startswith("Account:"):
+        reset = mr.group(1).strip()
+    elif (mp and re.search(r"(?<![0-9.])100(?:\.0+)?%", mp.group(0))
+          and re.search(r"\bQuota available\b", seg)
+          and not re.search(r"(?:Refreshes|Resets) in", seg)):
+        optional = True  # reset not yet finalized, stays ?.
+    else:
+        ok = False
+    return pct, reset, optional, ok
+
+
+def _agy_argon(text: str):
+    """Fields of agy's separate Argon section, () without one; ok False if unparseable.
+
+    Pro plans (2026-10) show only a weekly limit there ("Gemini 4 Argon Weekly
+    Limit"); a five-hour line is read if a plan shows one, otherwise 5h is –.
+    """
+    m = re.search(r"^[^\S\n]*GEMINI [0-9.]+ ARGON[^\S\n]*$", text, re.M)
+    if not m:
+        return (), True
+    sec = text[m.end():]
+    # Up to the next heading, the │ note block or the scroll footer
+    m_end = re.search(r"^[^\S\n]*(?:[A-Z][A-Z0-9 .]*[A-Z]$|│|↑/↓)", sec, re.M)
+    if m_end:
+        sec = sec[:m_end.start()]
+    sec = "\n".join(line for line in sec.splitlines()
+                    if not line.strip().startswith("Account:") and "Models & Quota" not in line)
+    ok = True
+    fields = {}
+    for key, label, other in (("5h", "Five Hour Limit", "Weekly Limit"),
+                              ("week", "Weekly Limit", "Five Hour Limit")):
+        idx = sec.find(label)
+        if idx == -1:
+            fields[key] = ("–", "–")
+            continue
+        seg = sec[idx + len(label):]
+        idx_other = seg.find(other)
+        if idx_other != -1:
+            seg = seg[:idx_other]
+        pct, reset, _optional, w_ok = _agy_window(seg)
+        ok = ok and w_ok
+        fields[key] = (pct, reset)
+    if fields["week"] == ("–", "–"):
+        fields["week"] = ("?", "?")  # weekly limit is the required anchor, as for the Gemini group
+        ok = False
+    return ((("argon_5h", fields["5h"][0]), ("argon_week", fields["week"][0]),
+             ("argon_reset5h", fields["5h"][1]), ("argon_resetweek", fields["week"][1])), ok)
+
+
 def parse_usage(text: str, kind: str) -> UsageResult:
     """Parse one captured view without I/O; preserve partial fields on errors.
 
@@ -62,6 +128,7 @@ def parse_usage(text: str, kind: str) -> UsageResult:
     reset5 = "?"
     resetw = "?"
     reset5_optional = resetw_optional = False
+    extra = ()
     ok = True
 
     try:
@@ -200,7 +267,7 @@ def parse_usage(text: str, kind: str) -> UsageResult:
             if matches:
                 first_m = matches[0]
                 sec = text[first_m.start():]
-                m_end = re.search(r"\n\s*[A-Z][A-Z ]*MODELS", sec[len("GEMINI MODELS"):])
+                m_end = re.search(r"\n\s*(?:[A-Z][A-Z ]*MODELS|GEMINI [0-9.]+ ARGON)", sec[len("GEMINI MODELS"):])
                 if m_end:
                     sec = sec[:len("GEMINI MODELS") + m_end.start()]
 
@@ -219,25 +286,8 @@ def parse_usage(text: str, kind: str) -> UsageResult:
                     if m_end5:
                         s5 = s5[:m_end5.start()]
 
-                    # FIRST NN% remaining, otherwise the bar value
-                    mp = re.search(r"([0-9]+)%\s*remaining", s5)
-                    if not mp:
-                        mp = re.search(r"\[[^\]]*\]\s*([0-9]+)(?:\.[0-9]+)?%", s5)
-                    if mp:
-                        pct5 = f"{mp.group(1)}% left"
-                    else:
-                        ok = False
-
-                    # Search for the reset independently of the percentage; delimit reset fields against Account/header (R2-5)
-                    mr = re.search(r"(?:Refreshes|Resets) in\s+([^\n│┃|]+)", s5)
-                    if mr and not mr.group(1).strip().startswith("Account:"):
-                        reset5 = mr.group(1).strip()
-                    elif (mp and re.search(r"(?<![0-9.])100(?:\.0+)?%", mp.group(0))
-                          and re.search(r"\bQuota available\b", s5)
-                          and not re.search(r"(?:Refreshes|Resets) in", s5)):
-                        reset5_optional = True  # reset not yet finalized, stays ?.
-                    else:
-                        ok = False
+                    pct5, reset5, reset5_optional, w_ok = _agy_window(s5)
+                    ok = ok and w_ok
                 else:
                     ok = False
 
@@ -249,25 +299,12 @@ def parse_usage(text: str, kind: str) -> UsageResult:
                     if m_endw:
                         sw = sw[:m_endw.start()]
 
-                    mp = re.search(r"([0-9]+)%\s*remaining", sw)
-                    if not mp:
-                        mp = re.search(r"\[[^\]]*\]\s*([0-9]+)(?:\.[0-9]+)?%", sw)
-                    if mp:
-                        week = f"{mp.group(1)}% left"
-                    else:
-                        ok = False
-
-                    mr = re.search(r"(?:Refreshes|Resets) in\s+([^\n│┃|]+)", sw)
-                    if mr and not mr.group(1).strip().startswith("Account:"):
-                        resetw = mr.group(1).strip()
-                    elif (mp and re.search(r"(?<![0-9.])100(?:\.0+)?%", mp.group(0))
-                          and re.search(r"\bQuota available\b", sw)
-                          and not re.search(r"(?:Refreshes|Resets) in", sw)):
-                        resetw_optional = True  # reset not yet finalized, stays ?.
-                    else:
-                        ok = False
+                    week, resetw, resetw_optional, w_ok = _agy_window(sw)
+                    ok = ok and w_ok
                 else:
                     ok = False
+                extra, a_ok = _agy_argon(text)
+                ok = ok and a_ok
             else:
                 # F11: without a GEMINI MODELS header do not parse at all, all four fields stay ?
                 ok = False
@@ -306,7 +343,7 @@ def parse_usage(text: str, kind: str) -> UsageResult:
             or (resetw == "?" and not resetw_optional)):
         ok = False
 
-    return UsageResult(pct5, week, reset5, resetw, ok)
+    return UsageResult(pct5, week, reset5, resetw, ok, extra)
 
 
 @dataclass(frozen=True)

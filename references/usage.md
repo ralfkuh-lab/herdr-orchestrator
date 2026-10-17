@@ -30,6 +30,13 @@ impl-muse  muse   5h=100% left  week=100% left                 reset5h=at 10:23 
   the reconstructed text — before that, panes of the 2×2 grid regularly showed
   `5h=?`. A still-open old view is closed beforehand with `esc`. herdr does not
   know `pgdown`/`end`.
+- agy with a **separate Argon section** (`GEMINI 4 ARGON`, Google AI Pro since
+  2026-10) appends four fields to its line: `argon_5h=–  argon_week=98% left
+  argon_reset5h=–  argon_resetweek=167h 52m`. Pro plans show only a weekly
+  Argon limit; a five-hour line is read if a plan shows one. Without the
+  section the line stays as before; a section without a readable weekly limit
+  gives `argon_week=?` and exit 1. The usage view is then taller than 40 lines,
+  so agy reads the whole visible screen.
 - `–` = this window does not exist for the backend (grok has no 5h window, its
   bar shows consumption and is converted to the remaining value; since codex
   0.156 the 5h window is missing, `5h=–`). In `/usage`, muse shows the lines

@@ -274,6 +274,30 @@
       "text": "╭─────────────────────────────────────────╮\n│  >_ OpenAI Codex (v0.156.0)             │\n│                                         │\n│  Weekly limit: [░░░░░░░░░░░░░░░░░░░░]   │\n│                0%                       │\n│                left                     │\n│                (resets 10:36)           │\n╰─────────────────────────────────────────╯\n",
       "stdout": "probe\tcodex\t5h=–\tweek=0% left\treset5h=–\tresetweek=10:36\n",
       "exit_code": 0
+    },
+    {
+      "id": "agy-argon-pro",
+      "kind": "agy",
+      "fixture": "agy-usage-argon.txt",
+      "stdout": "probe\tagy\t5h=100% left\tweek=100% left\treset5h=?\tresetweek=?\targon_5h=–\targon_week=98% left\targon_reset5h=–\targon_resetweek=167h 52m\n",
+      "exit_code": 0,
+      "note": "Pro plan 2026-10-17: separate Argon section with weekly limit only (5h –)."
+    },
+    {
+      "id": "agy-argon-five-hour",
+      "kind": "agy",
+      "text": "GEMINI MODELS\n  Weekly Limit Remaining\n    [████░] 83.43%\n    83% remaining · Refreshes in 42h 44m\n  Five Hour Limit Remaining\n    [██████████████████████████████████████████████████] 100.00%\n    Quota available\nGEMINI 4 ARGON\n  Gemini 4 Argon Weekly Limit\n    [████░] 61.20%\n    61% remaining · Refreshes in 90h 5m\n  Gemini 4 Argon Five Hour Limit\n    [████░] 40.00%\n    40% remaining · Refreshes in 2h 10m\n",
+      "stdout": "probe\tagy\t5h=100% left\tweek=83% left\treset5h=?\tresetweek=42h 44m\targon_5h=40% left\targon_week=61% left\targon_reset5h=2h 10m\targon_resetweek=90h 5m\n",
+      "exit_code": 0,
+      "note": "Assumed layout of a plan with an Argon five-hour window (not observed); Gemini 5h Quota available directly before the Argon header must not take Argon's reset."
+    },
+    {
+      "id": "agy-argon-cut-off",
+      "kind": "agy",
+      "text": "GEMINI MODELS\n  Weekly Limit Remaining\n    [████░] 83.43%\n    83% remaining · Refreshes in 42h 44m\n  Five Hour Limit Remaining\n    [██████████████████████████████████████████████████] 100.00%\n    Quota available\nGEMINI 4 ARGON\n  For paid Pro plans, Argon quota is separate.\n",
+      "stdout": "probe\tagy\t5h=100% left\tweek=83% left\treset5h=?\tresetweek=42h 44m\targon_5h=–\targon_week=?\targon_reset5h=–\targon_resetweek=?\n",
+      "exit_code": 1,
+      "note": "Argon header without limit lines (incomplete collection) -> argon fields ?, exit 1."
     }
   ]
 }

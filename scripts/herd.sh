@@ -2416,6 +2416,11 @@ usage_read_pane() {
     codex|muse)
       herdr pane read "$pane" --source recent --lines 200 --format text 2>/dev/null
       ;;
+    agy)
+      # Whole screen: without a scroll footer the quota view is not paged, and
+      # since the Argon section (2026-10) it is taller than pane_visible's 40 lines.
+      herdr pane read "$pane" --source visible --format text 2>/dev/null
+      ;;
     *)
       pane_visible "$pane"
       ;;
