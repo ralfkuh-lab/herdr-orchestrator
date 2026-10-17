@@ -298,6 +298,22 @@
       "stdout": "probe\tagy\t5h=100% left\tweek=83% left\treset5h=?\tresetweek=42h 44m\targon_5h=–\targon_week=?\targon_reset5h=–\targon_resetweek=?\n",
       "exit_code": 1,
       "note": "Argon header without limit lines (incomplete collection) -> argon fields ?, exit 1."
+    },
+    {
+      "id": "agy-argon-weekly-reset-missing",
+      "kind": "agy",
+      "text": "GEMINI MODELS\n  Weekly Limit Remaining\n    [████░] 83.43%\n    83% remaining · Refreshes in 42h 44m\n  Five Hour Limit Remaining\n    [██████████████████████████████████████████████████] 100.00%\n    Quota available\nGEMINI 4 ARGON\n  Gemini 4 Argon Weekly Limit\n    [████] 61.20%\n    Refreshes in\n  Gemini 4 Argon Five Hour Limit\n    [████] 40.00%\n    Refreshes in 2h 10m\n",
+      "stdout": "probe\tagy\t5h=100% left\tweek=83% left\treset5h=?\tresetweek=42h 44m\targon_5h=40% left\targon_week=61% left\targon_reset5h=2h 10m\targon_resetweek=?\n",
+      "exit_code": 1,
+      "note": "Review Sol 2026-10-17: bare 'Refreshes in' before the next Argon limit heading -> reset ?, exit 1 (not the heading prefix)."
+    },
+    {
+      "id": "agy-argon-five-hour-reset-missing",
+      "kind": "agy",
+      "text": "GEMINI MODELS\n  Weekly Limit Remaining\n    [████░] 83.43%\n    83% remaining · Refreshes in 42h 44m\n  Five Hour Limit Remaining\n    [██████████████████████████████████████████████████] 100.00%\n    Quota available\nGEMINI 4 ARGON\n  Gemini 4 Argon Five Hour Limit\n    [████] 40.00%\n    Refreshes in\n  Gemini 4 Argon Weekly Limit\n    [████] 61.20%\n    Refreshes in 90h 5m\n",
+      "stdout": "probe\tagy\t5h=100% left\tweek=83% left\treset5h=?\tresetweek=42h 44m\targon_5h=40% left\targon_week=61% left\targon_reset5h=?\targon_resetweek=90h 5m\n",
+      "exit_code": 1,
+      "note": "Review Sol 2026-10-17: bare 'Refreshes in' before the next Argon limit heading -> reset ?, exit 1 (not the heading prefix)."
     }
   ]
 }

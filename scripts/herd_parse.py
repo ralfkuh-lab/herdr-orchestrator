@@ -104,9 +104,11 @@ def _agy_argon(text: str):
             fields[key] = ("–", "–")
             continue
         seg = sec[idx + len(label):]
-        idx_other = seg.find(other)
-        if idx_other != -1:
-            seg = seg[:idx_other]
+        # End before the whole line of the other limit, not inside it: a bare
+        # "Refreshes in" would otherwise take its "Gemini 4 Argon " prefix as reset.
+        m_other = re.search(r"^[^\n]*" + other, seg, re.M)
+        if m_other:
+            seg = seg[:m_other.start()]
         pct, reset, _optional, w_ok = _agy_window(seg)
         ok = ok and w_ok
         fields[key] = (pct, reset)
