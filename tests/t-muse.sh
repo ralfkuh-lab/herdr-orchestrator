@@ -428,6 +428,33 @@ if should_run T159 target; then
   check T159d2 target "classify-pane: marker-less 'model failed:' -> clean" \
         "clean|0" "$OUT|$RC"
 
+  # T159d3: codex "Selected model is at capacity" with the ■ marker -> failed
+  # (2026-10-12: watch reported idle although the prompt was not processed).
+  pane_text a "$(printf '%s\n' '■ Selected model is at capacity. Please try a different model.' '› implement the fix')"
+  run_herd classify-pane p:a --kind codex
+  check T159d3 target "classify-pane: codex 'Selected model is at capacity' -> failed" \
+        "failed|0" "$OUT|$RC"
+
+  # T159d4: the same line without the ■ marker is NOT failed (marker required)
+  pane_text a "$(printf '%s\n' 'Selected model is at capacity. Please try a different model.' '› implement the fix')"
+  run_herd classify-pane p:a --kind codex
+  check T159d4 target "classify-pane: marker-less 'Selected model is at capacity' -> clean" \
+        "clean|0" "$OUT|$RC"
+
+  # T159d5: the ■ line inside an open ```-code block (with following text) is
+  # tool/code output, not a backend error -> clean
+  pane_text a "$(printf '%s\n' '```' 'Output:' '■ Selected model is at capacity. Please try a different model.' '```' '› implement the fix')"
+  run_herd classify-pane p:a --kind codex
+  check T159d5 target "classify-pane: ■ capacity line inside a code block -> clean" \
+        "clean|0" "$OUT|$RC"
+
+  # T159d6: an indented ■ line is tool output, not the codex error line
+  # (codex writes it in column 0) -> clean
+  pane_text a "$(printf '%s\n' '  ■ Selected model is at capacity. Please try a different model.' '› implement the fix')"
+  run_herd classify-pane p:a --kind codex
+  check T159d6 target "classify-pane: indented ■ capacity line -> clean" \
+        "clean|0" "$OUT|$RC"
+
   # T159e: send guard: model failed is no dialog — send may send
   fixture a idle
   pane_text a "$(cat "$ROOT/tests/fixtures/muse/model-failed.txt")"

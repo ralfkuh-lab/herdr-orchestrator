@@ -149,6 +149,22 @@ if should_run T103 target; then
         "yes|yes" "$([ "$RC" != 0 ] && echo yes || echo no)|$hint"
 fi
 
+if should_run T103b target; then
+  # Confirmation repeats the read: long/wrapped dialogs close only a moment
+  # after Enter (2026-10-09). First post-read still shows the dialog, the
+  # second one is gone -> exit 0, "confirmed".
+  fixture_dir "t103b"
+  fixture a idle
+  pane_text a "1. Yes, continue
+2. No, reject"
+  printf 'ok\n' > "$WORK/t103b-gone.txt"
+  pane_after_files a 2 "$FAKE_HERDR_DIR/pane.a" "$WORK/t103b-gone.txt"
+  HERD_ANSWER_VERIFY_SEC=0 run_herd answer a "Yes, continue"
+  ok=no; case "$OUT" in *"confirmed"*) ok=yes ;; esac
+  check T103b target "answer: dialog gone on a later verification read -> exit 0, confirmed" \
+        "0|yes" "$RC|$ok"
+fi
+
 if should_run T99c target; then
   # Event engine: get returns the foreign one, list the own one — the own
   # pane must be subscribed, otherwise watch ends on foreign idle.
@@ -1395,6 +1411,21 @@ open(sys.argv[1] + "/oc-conf-cancel.txt", "w").write(conf_cancel)
   HERD_ANSWER_VERIFY_SEC=0 run_herd answer oc "Allow always"
   has_msg=no; case "$OUT" in *"1 step(s) right"*"confirmed"*) has_msg=yes ;; esac
   check T160n target "answer opencode: keyword fallback without ⇆ -> BAR detected and operated" \
+        "0|yes" "$RC|$has_msg"
+
+  # T160m: the bar dialog is still there on the first post-read and gone on a
+  # later one (long/wrapped dialog, 2026-10-09) -> exit 0, "confirmed".
+  fixture_dir "t160m"
+  fixture oc idle
+  pane_text oc "$(cat "$ROOT/tests/fixtures/opencode/dialog-permission.txt")"
+  pane_ansi oc "$(cat "$WORK/oc-ansi-once.txt")"
+  pane_ansi_after oc "$(cat "$WORK/oc-ansi-always.txt")" 2
+  printf 'ok\n' > "$WORK/t160m-gone.txt"
+  pane_after_files oc 2 "$ROOT/tests/fixtures/opencode/dialog-permission.txt" "$WORK/t160m-gone.txt"
+  rm -f "$FAKE_HERDR_DIR/.side"
+  HERD_ANSWER_VERIFY_SEC=0 run_herd answer oc "Allow always"
+  has_msg=no; case "$OUT" in *"confirmed"*) has_msg=yes ;; esac
+  check T160m target "answer opencode: bar dialog gone on a later verification read -> exit 0" \
         "0|yes" "$RC|$has_msg"
 fi
 

@@ -292,6 +292,11 @@ case "$sub" in
           esac
         done
         name="${1:-}"
+        # Unique entry for EVERY real `agent start` call (also a failed one),
+        # after the --help/kinds query: tests use it to tell "agent start was
+        # used" from a start via `pane run` without matching on the command
+        # file text (whose checkout path can contain the word "start").
+        side "agent-start $name"
         # Consume the sequence line already at the call (not only after
         # sleeping): if the start is killed during startsleep (herd.sh early
         # detection), the attempt stays counted anyway.

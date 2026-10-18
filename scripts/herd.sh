@@ -1674,19 +1674,40 @@ looks_auth() { pane_visible "$1" | text_looks_auth; }
 
 # Heuristic: backend/model error, prompt not processed, agent stays
 # alive at the prompt. Pattern so far only evidenced for muse ("◆ model failed:
-# model stream idle timeout after 180000ms"), but formulated
+# model stream idle timeout after 180000ms") and codex ("■ Selected model is
+# at capacity. Please try a different model.", 2026-10-12), but formulated
 # kind-independent. Own filter, not dialog_relevant_lines: that removes
 # lines with a ◆ prefix (tool echoes "◆ Ran command …" should drop out),
 # but would also swallow the "◆ model failed:" line.
 # Hit: line that starts, after the mandatory marker ◆/•/● and whitespace, with
-# "model failed:", in the last 20 visible lines.
+# "model failed:", or a codex capacity line, in the last 20 visible lines.
 # The marker is mandatory — marker-less prose ("model failed: …" in logs/tests)
 # would otherwise be a false alarm. Window 20: a successful short
 # follow-up brief can still keep an old model-failed line in the window
 # (the same limit as looks_limited/looks_blocked); if needed run /clear before
 # the resend.
+# The codex capacity line is stricter, because the same text is also shown
+# quoted/echoed: it must start in column 0 (codex writes its error without
+# indentation) and must not sit inside an open ```-fence (count the fence
+# lines before it in the window: an even number = outside). This stays a
+# heuristic: without visible context an indented/quoted real error is missed
+# and a column-0 capacity line that is no error still hits.
 text_looks_failed() {
-  tail -n 20 | grep -qiE '^[[:space:]]*(◆|•|●)[[:space:]]+model failed:'
+  awk '
+    { l[NR] = tolower($0) }
+    END {
+      start = NR - 20 + 1; if (start < 1) start = 1
+      for (i = start; i <= NR; i++) {
+        if (l[i] ~ /^[[:space:]]*(◆|•|●)[[:space:]]+model failed:/) exit 0
+        if (l[i] ~ /^■[[:space:]]+selected model is at capacity/) {
+          fences = 0
+          for (j = start; j < i; j++) if (l[j] ~ /^[[:space:]]*```/) fences++
+          if (fences % 2 == 0) exit 0
+        }
+      }
+      exit 1
+    }
+  '
 }
 
 looks_failed() { pane_visible "$1" | text_looks_failed; }
@@ -3550,14 +3571,27 @@ answer)
       :
     fi
     herdr pane send-keys "$pane" enter >/dev/null
-    sleep "${HERD_ANSWER_VERIFY_SEC:-0.4}"
-    rc=0
-    post_buf="$(read_visible_pane "$pane")" || rc=$?
-    if [ "$rc" -ne 0 ] || [ -z "$post_buf" ]; then
-      echo "[herd] answer: verification not readable — no silent success." >&2
-      exit 1
-    fi
-    post_check="$(printf '%s' "$post_buf" | python3 "$SCRIPT_DIR/herd_parse.py" bar-check -- "${opts[@]}")" || post_check="FAIL"
+    # Long, wrapped dialogs need a moment after Enter (2026-10-09): a single
+    # read after HERD_ANSWER_VERIFY_SEC reported a false "not confirmed".
+    # Read again (up to 5 times, ~2 s) until the dialog is gone; only if the
+    # last read still shows it, keep the existing error.
+    verify_try=0
+    while :; do
+      sleep "${HERD_ANSWER_VERIFY_SEC:-0.4}"
+      rc=0
+      post_buf="$(read_visible_pane "$pane")" || rc=$?
+      if [ "$rc" -ne 0 ] || [ -z "$post_buf" ]; then
+        echo "[herd] answer: verification not readable — no silent success." >&2
+        exit 1
+      fi
+      post_check="$(printf '%s' "$post_buf" | python3 "$SCRIPT_DIR/herd_parse.py" bar-check -- "${opts[@]}")" || post_check="FAIL"
+      case "$post_check" in
+        SAME)
+          verify_try=$((verify_try + 1))
+          [ "$verify_try" -lt 5 ] || break ;;
+        *) break ;;
+      esac
+    done
 
     case "$post_check" in
       SAME)
@@ -3606,12 +3640,29 @@ answer)
   # After choosing, verify that the dialog is really gone.
   # Otherwise the caller takes exit 0 for "answered" and waits for
   # work that never begins (2026-08-17).
-  sleep "${HERD_ANSWER_VERIFY_SEC:-0.4}"
-  post="$(dialog_answer_plan "$pane" "$target" 2>"$answer_opts")" || true
-  new_identity="$(sed -n 's/^IDENTITY\t//p' "$answer_opts")"
-  post="${post%%$'\n'*}"
-  if [ "$answer_kind" = claude ] && [ -n "$old_identity" ] &&
-     [ -n "$new_identity" ] && [ "$old_identity" != "$new_identity" ]; then
+  # Long, wrapped dialogs need a moment after Enter (2026-10-09): a single
+  # read after HERD_ANSWER_VERIFY_SEC reported a false "not confirmed".
+  # Read again (up to 5 times, ~2 s) until the dialog is gone; a follow-up
+  # dialog (changed identity) and a read error are reported immediately.
+  verify_try=0; verify_followup=no
+  while :; do
+    sleep "${HERD_ANSWER_VERIFY_SEC:-0.4}"
+    post="$(dialog_answer_plan "$pane" "$target" 2>"$answer_opts")" || true
+    new_identity="$(sed -n 's/^IDENTITY\t//p' "$answer_opts")"
+    post="${post%%$'\n'*}"
+    if [ "$answer_kind" = claude ] && [ -n "$old_identity" ] &&
+       [ -n "$new_identity" ] && [ "$old_identity" != "$new_identity" ]; then
+      verify_followup=yes
+      break
+    fi
+    case "$post" in
+      READFAIL|""|NOOPTS) break ;;
+      *)
+        verify_try=$((verify_try + 1))
+        [ "$verify_try" -lt 5 ] || break ;;
+    esac
+  done
+  if [ "$verify_followup" = yes ]; then
     echo "[herd] answer: '$chosen' selected and confirmed — follow-up dialog open; check with read $name --source visible."
     exit 0
   fi

@@ -381,7 +381,10 @@ if should_run T172 target; then
   # Only the call of the command file is typed; the wrapper is inside it
   # (the fake logs its content as pane-run-file).
   case "$(side_log)" in *"pane-run p:t bash /"*"/cmd.sh"*'pane-run-file python3 '*'herd_opencode.py run '*'test/model high opencode '*) invoked=yes ;; esac
-  case "$(side_log)" in *'start '*) canonical=yes ;; esac
+  # Unique fake entry for EVERY real `agent start` call; match at the line
+  # start, since a checkout path like …/repo-agent-start appears in the middle
+  # of a `pane-run-file …` side-log line as well.
+  side_log | grep -q '^agent-start ' && canonical=yes
   check T172 target 'real start path passes the wrapper to pane run (command file), not agent start' '0|yes|no' "$RC|$invoked|$canonical"
 fi
 
@@ -400,7 +403,9 @@ if should_run T172b target; then
   infile=no; canonical=no; note=no; gone=no
   case "$(side_log)" in *'pane-run-file claude '*--append-system-prompt*) infile=yes ;; esac
   [ -n "$cmdfile" ] && [ ! -e "$cmdfile" ] && gone=yes
-  case "$(side_log)" in *'start '*) canonical=yes ;; esac
+  # Unique fake entry for every real `agent start` call (see T172), at the
+  # line start.
+  side_log | grep -q '^agent-start ' && canonical=yes
   case "$ERR" in *'starting claude via pane run'*) note=yes ;; esac
   # Invalid value: exit 2 before the pane split.
   fixture_dir "t172b-bad"
