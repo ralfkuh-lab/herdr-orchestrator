@@ -197,14 +197,31 @@ prune_logdirs() {
   return 0
 }
 
+# Physical path of $1 in HERD_PHYS, loss-free: command substitution strips
+# trailing newlines, so a directory name ending in a newline would otherwise
+# silently become its neighbour — the sentinel keeps that newline (callers
+# reject any path with one). Deliberately not printed to stdout: a second
+# `$(…)` at the caller would strip the trailing newline again. Error → return 1.
+herd_physical_path() {
+  local p
+  p="$(cd -P -- "$1" 2>/dev/null && pwd -P && printf x)" || return 1
+  p="${p%x}"
+  p="${p%$'\n'}"
+  HERD_PHYS="$p"
+  return 0
+}
+
 # `.herd/` in the project (convention from SKILL.md §4 Writing a brief) is a
 # throwaway working directory for specs, prompts, diffs and reports. Deleted are
 # top-level entries that have not changed for $2 days (folders by their most
 # recent file); `questions/` stays. The reason is less the space than the
 # full-text search (grep), which would otherwise find old drafts.
 # Affected are .herd/ in $1, in the repo root and in the main checkout (agents
-# often run in a worktree, but .herd/ lives in the project). Age by
-# mtime — unlike /tmp no temp cleanup touches project folders.
+# often run in a worktree, but .herd/ lives in the project). The repo root is
+# found by walking PHYSICALLY up from $1 to the first directory holding a `.git`
+# entry — deliberately NOT `git rev-parse --show-toplevel`, which follows a
+# crafted `core.worktree` to an arbitrary directory. Age by mtime — unlike /tmp
+# no temp cleanup touches project folders.
 # Never follows symlinks (security reviews 2026-10-11): a repository can ship
 # `.herd` as a symlink to anywhere — such a `.herd` is skipped with a note.
 # Otherwise the work happens in a subshell that `cd -P`s into `.herd`, checks
@@ -215,25 +232,43 @@ prune_logdirs() {
 # only after a SUCCESSFUL age check (find error, missing find, unreadable
 # subdirectory → keep it). The main checkout counts only if the current
 # checkout is registered in its `git worktree list` (a crafted `.git` file
-# could point anywhere).
+# could point anywhere); that list is read NUL-separated so a worktree path
+# with embedded newlines cannot forge an entry. Any path containing a newline
+# is not cleaned up at all (a lossy `pwd -P` would otherwise redirect it to a
+# neighbour directory).
+# Known limit: the age check and `rm -rf` are not atomic, so two parallel runs
+# could delete an entry that just became active (no lock — .herd is throwaway).
 # 0 or invalid = off; errors are ignored.
 prune_herd_workdirs() {
   local cwd="$1" days="${2:-14}" top common dir real seen=" "
   case "$days" in ''|*[!0-9]*) return 0 ;; esac
   days=$((10#$days))
   [ "$days" -gt 0 ] && [ -d "$cwd" ] || return 0
-  top="$(git -C "$cwd" rev-parse --show-toplevel 2>/dev/null || true)"
+  herd_physical_path "$cwd" || return 0
+  cwd="$HERD_PHYS"
+  case "$cwd" in *$'\n'*) echo "[herd] note: path contains a newline — not cleaned up" >&2; return 0 ;; esac
+  # Repo root by physical upward walk; the first directory with a `.git` entry
+  # wins. Without one there is no repo root (then only $cwd is considered).
+  top=""; dir="$cwd"
+  while :; do
+    if [ -e "$dir/.git" ]; then top="$dir"; break; fi
+    [ "$dir" = / ] && break
+    dir="${dir%/*}"
+    [ -n "$dir" ] || dir=/
+  done
   common="$(git -C "$cwd" rev-parse --path-format=absolute --git-common-dir 2>/dev/null || true)"
   case "$common" in */.git) common="${common%/.git}" ;; *) common="" ;; esac
   if [ -n "$common" ] && ! herd_is_worktree_of "$common" "${top:-$cwd}"; then common=""; fi
   for dir in "$cwd" "$top" "$common"; do
     [ -n "$dir" ] || continue
+    case "$dir" in *$'\n'*) echo "[herd] note: path contains a newline — not cleaned up" >&2; continue ;; esac
     if [ -L "$dir/.herd" ]; then
       echo "[herd] note: $dir/.herd is a symlink — not cleaned up" >&2
       continue
     fi
     [ -d "$dir/.herd" ] || continue
-    real="$(cd -P -- "$dir" 2>/dev/null && pwd -P)" || continue
+    herd_physical_path "$dir" || continue
+    real="$HERD_PHYS"
     case "$seen" in *" $real "*) continue ;; esac
     seen="$seen$real "
     ( prune_herd_dir "$real" "$days" ) || true
@@ -245,7 +280,8 @@ prune_herd_workdirs() {
 prune_herd_dir() {
   local real="$1" days="$2" list e young
   cd -P -- "$real/.herd" 2>/dev/null || return 0
-  if [ "$(pwd -P)" != "$real/.herd" ]; then
+  herd_physical_path . || return 0
+  if [ "$HERD_PHYS" != "$real/.herd" ]; then
     echo "[herd] note: $real/.herd changed during the cleanup check — not cleaned up" >&2
     return 0
   fi
@@ -265,15 +301,25 @@ prune_herd_dir() {
 }
 
 # Is the checkout $2 registered in `git worktree list` of the repository $1?
-# Compared by physical path; any error → no.
+# Compared by physical path; any error (git fails, path not resolvable) → no.
+# Read as `--porcelain -z` via `read -d ''`: a worktree path with embedded
+# newlines must not forge a `worktree <path>` line. git's output goes into a
+# file so its exit status stays visible.
 herd_is_worktree_of() {
-  local want line p
-  want="$(cd -P -- "$2" 2>/dev/null && pwd -P)" || return 1
-  while IFS= read -r line; do
+  local want line p list
+  herd_physical_path "$2" || return 1
+  want="$HERD_PHYS"
+  case "$want" in *$'\n'*) return 1 ;; esac
+  list="$HERD_TMP/herd-wt-list"
+  git -C "$1" worktree list --porcelain -z >"$list" 2>/dev/null \
+    || { rm -f "$list"; return 1; }
+  while IFS= read -r -d '' line; do
     case "$line" in "worktree "*) ;; *) continue ;; esac
-    p="$(cd -P -- "${line#worktree }" 2>/dev/null && pwd -P)" || continue
-    [ "$p" = "$want" ] && return 0
-  done < <(git -C "$1" worktree list --porcelain 2>/dev/null)
+    herd_physical_path "${line#worktree }" || continue
+    p="$HERD_PHYS"
+    [ "$p" = "$want" ] && { rm -f "$list"; return 0; }
+  done <"$list"
+  rm -f "$list"
   return 1
 }
 
@@ -647,6 +693,10 @@ own_workspace_id() {
 # (and by hand before an exec, which skips the trap).
 HERD_TMP="$(mktemp -d "${TMPDIR:-/tmp}/herd.XXXXXX")" \
   || { echo "[herd] cannot create a private temporary directory under ${TMPDIR:-/tmp}" >&2; exit 1; }
+# Make it absolute: a relative TMPDIR would otherwise be re-resolved after a
+# `cd` in the cleanup path, where "$HERD_TMP/..." would point elsewhere.
+HERD_TMP="$(cd -P -- "$HERD_TMP" && pwd -P)" \
+  || { echo "[herd] cannot resolve the private temporary directory" >&2; exit 1; }
 HERD_SPACE_NOTE_FILE="${HERD_SPACE_NOTE_FILE:-$HERD_TMP/space-note}"
 note_unscoped_space() {
   if [ ! -f "$HERD_SPACE_NOTE_FILE" ]; then
@@ -2714,7 +2764,7 @@ start)
   guard_backend "$backend"
   require_herdr || exit 2
 
-  cwd="$(pwd)"; name=""; role="impl"; model=""; effort=""; perm_mode=""
+  cwd="$PWD"; name=""; role="impl"; model=""; effort=""; perm_mode=""
   split=""; resume=0; rid=""; timeout_min=3; do_wait=1
   # copilot-specific switches. build_cli reads them as globals (like pi_* for pi),
   # instead of widening the signature by four more positional arguments.
@@ -3985,7 +4035,7 @@ print("%s\t%s" % (kind, sid))
 # without clipboard ping-pong. Addressable by name with type/read/key/stop.
 term)
   require_herdr || exit 2
-  cwd="$(pwd)"; name=""; split=""; shell=""; tab_opt=""
+  cwd="$PWD"; name=""; split=""; shell=""; tab_opt=""
   max_per_tab="${HERD_MAX_PER_TAB:-4}"
   while [ $# -gt 0 ]; do
     case "$1" in
@@ -4041,7 +4091,7 @@ exec)
   esac
   guard_backend "$backend"
 
-  cwd="$(pwd)"; name=""; timeout_min=30; do_wait=1; hold_sec=8
+  cwd="$PWD"; name=""; timeout_min=30; do_wait=1; hold_sec=8
   model=""; effort=""; spec=""; agent=""; prompt=()
   cp_context=""; cp_tier=""; cp_credits=""
   while [ $# -gt 0 ]; do
@@ -4227,7 +4277,7 @@ exec)
 
 # ------------------------------------------------------------------ run -------
 run)
-  cwd="$(pwd)"; name=""; timeout_min=30; do_wait=1; hold_sec=8; prompt=()
+  cwd="$PWD"; name=""; timeout_min=30; do_wait=1; hold_sec=8; prompt=()
   while [ $# -gt 0 ]; do
     case "$1" in
       --cwd)     cwd="$2"; shift 2 ;;

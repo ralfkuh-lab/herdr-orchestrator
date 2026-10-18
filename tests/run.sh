@@ -13,7 +13,7 @@
 #   tests/t-stop-list.sh       -- stop, list sessions
 #   tests/t-muse.sh            -- muse start, muse states
 #   tests/t-start-early-exit.sh -- start early exit (T156)
-#   tests/t-security.sh        -- security hardening (TSEC1-11)
+#   tests/t-security.sh        -- security hardening (TSEC1-16)
 #
 # Where new tests belong:
 #   New block at the end of the matching t-*.sh; a new file only for a new

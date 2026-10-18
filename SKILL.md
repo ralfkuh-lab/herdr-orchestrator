@@ -96,8 +96,10 @@ intermediate findings in a shared file and hand them over consolidated.
   is kept). Only a real `.herd` directory is cleaned, from inside it (never
   through a symlink, also not if it is swapped meanwhile); a `.herd` symlink is
   skipped with a note, symlink entries are removed as links. The main checkout
-  counts only if the current checkout is one of its registered worktrees. An
-  entry whose age check fails (unreadable subfolder, no `find`) is kept.
+  counts only if the current checkout is one of its registered worktrees. A
+  project path containing a newline is not cleaned up (it cannot be resolved
+  unambiguously). An entry whose age check fails (unreadable subfolder, no
+  `find`) is kept.
   Whatever should last belongs in the repo docs or a permanent notes system.
   For claude/copilot, alternatively pass the target directory as an additional
   scope at start.

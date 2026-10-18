@@ -287,7 +287,8 @@ fi
 # Derivation: a crafted `.git` file (gitdir: <foreign repo>/.git) makes git
 # report the foreign repository as common dir, although the project is not in
 # its `git worktree list`. The foreign .herd is no cleanup target; a real
-# worktree stays one (T172d).
+# worktree stays one (T172d). The setup itself is asserted, otherwise the case
+# would pass vacuously if git no longer resolves the crafted .git file.
 if should_run TSEC9 target; then
   d="$WORK/tsec9"
   out="$(run_herd_fn '
@@ -296,10 +297,13 @@ if should_run TSEC9 target; then
     git init -q "$d/foreign"
     printf "gitdir: %s/foreign/.git\n" "$d" > "$d/project/.git"
     printf valuable > "$d/foreign/.herd/important.txt"; touch -d "20 days ago" "$d/foreign/.herd/important.txt"
+    got="$(git -C "$d/project" rev-parse --path-format=absolute --git-common-dir 2>/dev/null)"
+    [ "$got" = "$d/foreign/.git" ] && echo "setup=ok" || echo "setup=$got"
     prune_herd_workdirs "$d/project" 14 2>/dev/null
     echo "foreign=$([ -e "$d/foreign/.herd/important.txt" ] && echo kept || echo DELETED)"
   ')"
-  check TSEC9 target 'cleanup: foreign common dir from a crafted .git file is skipped' "foreign=kept" "$out"
+  check TSEC9 target 'cleanup: foreign common dir from a crafted .git file is skipped' "setup=ok
+foreign=kept" "$out"
 fi
 
 # --------------------------------------- TSEC10: failed age check (B2) --------
@@ -326,10 +330,19 @@ if should_run TSEC10 target; then
     chmod 700 "$o/locked" 2>/dev/null
     echo "b: old=$([ -e "$o/old.txt" ] && echo kept || echo DELETED) fresh=$([ -e "$o/locked/fresh.txt" ] && echo kept || echo DELETED)"
   ')"
-  case "$out" in *"b: skipped"*) printf '  \033[33mSKIP\033[0m TSEC10 (b) traversal error (running as root)\n'; out="${out%%b: skipped*}b: old=kept fresh=kept" ;; esac
-  check TSEC10 target 'cleanup: missing find or traversal error -> nothing deleted' \
-        "a: fresh=kept old=kept
-b: old=kept fresh=kept" "$out"
+  # (a) and (b) separately: as root (b) is skipped (permissions do not apply)
+  # and must count as SKIP, not as a pass with a substituted expectation.
+  ta="$(printf '%s\n' "$out" | sed -n 's/^\(a:.*\)$/\1/p')"
+  tb="$(printf '%s\n' "$out" | sed -n 's/^\(b:.*\)$/\1/p')"
+  check TSEC10a target 'cleanup: missing find -> nothing deleted' \
+        "a: fresh=kept old=kept" "$ta"
+  if [ "$tb" = "b: skipped" ]; then
+    printf '  \033[33mSKIP\033[0m TSEC10b traversal error (running as root)\n'
+    skip=$((skip + 1))
+  else
+    check TSEC10b target 'cleanup: traversal error -> nothing deleted' \
+          "b: old=kept fresh=kept" "$tb"
+  fi
 fi
 
 # ------------------------------------------ TSEC11: grok without flock (W7) ---
@@ -348,4 +361,121 @@ if should_run TSEC11 target; then
     echo "same=$([ "$(cksum < "$d/home/.grok/trusted_folders.toml")" = "$before" ] && echo yes || echo no) note=$(grep -q "flock not available" "$d/err" && echo yes || echo no)"
   ')"
   check TSEC11 target 'grok trust without flock: file byte-identical, note' "same=yes note=yes" "$out"
+fi
+
+# --------------------------------- TSEC12: crafted core.worktree (B2) --------
+# Derivation: `git rev-parse --show-toplevel` follows a crafted `core.worktree`
+# to an arbitrary directory; the cleanup must instead find the repo root by
+# walking physically up from the project. The foreign .herd stays, the project's
+# own .herd is still cleaned.
+if should_run TSEC12 target; then
+  d="$WORK/tsec12"
+  out="$(run_herd_fn '
+    d="'"$d"'"
+    mkdir -p "$d/project/.herd" "$d/foreign/.herd"
+    git init -q "$d/project"
+    git -C "$d/project" config core.worktree "$d/foreign"
+    printf keep > "$d/foreign/.herd/important.txt"; touch -d "20 days ago" "$d/foreign/.herd/important.txt"
+    printf x > "$d/project/.herd/old.txt"; touch -d "20 days ago" "$d/project/.herd/old.txt"
+    prune_herd_workdirs "$d/project" 14 2>/dev/null
+    echo "foreign=$([ -e "$d/foreign/.herd/important.txt" ] && echo kept || echo DELETED)"
+    echo "own=$([ -e "$d/project/.herd/old.txt" ] && echo kept || echo cleaned)"
+  ')"
+  check TSEC12 target 'core.worktree cannot redirect the cleanup; foreign .herd stays, own .herd is cleaned' \
+        "foreign=kept
+own=cleaned" "$out"
+fi
+
+# ---------------------------- TSEC13: newline at the path end (B2) -----------
+# Derivation: `$(cd -P … && pwd -P)` strips trailing newlines, so cleaning
+# $'P\n' would silently clean the neighbour directory P. A path containing a
+# newline must be skipped with a note instead.
+if should_run TSEC13 target; then
+  d="$WORK/tsec13"
+  out="$(run_herd_fn '
+    d="'"$d"'"
+    nl=$'"'"'\n'"'"'
+    mkdir -p "$d/P/.herd" "$d/P$nl/.herd"
+    printf x > "$d/P/.herd/old.txt";  touch -d "20 days ago" "$d/P/.herd/old.txt"
+    printf x > "$d/P$nl/.herd/old.txt"; touch -d "20 days ago" "$d/P$nl/.herd/old.txt"
+    prune_herd_workdirs "$d/P$nl" 14 2>"$d/err"
+    echo "neighbour=$([ -e "$d/P/.herd/old.txt" ] && echo kept || echo DELETED)"
+    echo "own=$([ -e "$d/P$nl/.herd/old.txt" ] && echo kept || echo DELETED)"
+    echo "note=$(grep -q "newline" "$d/err" && echo yes || echo no)"
+  ')"
+  check TSEC13 target 'newline at the path end: neighbour P untouched, the newline dir skipped with a note' \
+        "neighbour=kept
+own=kept
+note=yes" "$out"
+fi
+
+# ------------------- TSEC14: forged worktree registration (B2) ---------------
+# Derivation: `git worktree list --porcelain` is newline-separated; a worktree
+# path with embedded newlines can forge a `worktree <path>` line and make a
+# foreign common dir look like a registered worktree. The list is read
+# NUL-separated, so the forgery fails and the foreign .herd stays.
+if should_run TSEC14 target; then
+  d="$WORK/tsec14"
+  out="$(run_herd_fn '
+    d="'"$d"'"
+    nl=$'"'"'\n'"'"'
+    mkdir -p "$d/project" "$d/foreign/.herd"
+    git init -q "$d/foreign"
+    git -C "$d/foreign" config user.name t; git -C "$d/foreign" config user.email t@t
+    git -C "$d/foreign" commit -q --allow-empty -m init
+    git -C "$d/foreign" worktree add -q --detach "$d/fake${nl}worktree $d/project${nl}end"
+    printf "gitdir: %s/foreign/.git\n" "$d" > "$d/project/.git"
+    printf keep > "$d/foreign/.herd/important.txt"; touch -d "20 days ago" "$d/foreign/.herd/important.txt"
+    forged=no
+    case "$(git -C "$d/foreign" worktree list --porcelain 2>/dev/null)" in
+      *"worktree $d/project"*) forged=yes ;;
+    esac
+    echo "forged=$forged"
+    prune_herd_workdirs "$d/project" 14 2>/dev/null
+    echo "foreign=$([ -e "$d/foreign/.herd/important.txt" ] && echo kept || echo DELETED)"
+  ')"
+  check TSEC14 target 'forged worktree registration via a newline path cannot unlock a foreign .herd' \
+        "forged=yes
+foreign=kept" "$out"
+fi
+
+# ------------------------------ TSEC15: relative TMPDIR (B2) -----------------
+# Derivation: HERD_TMP is created once but used after `cd` into .herd; a relative
+# TMPDIR would make the entry list write land elsewhere and silently disable the
+# cleanup. TMPDIR must therefore be relative at load time, HERD_TMP becomes
+# absolute right after mktemp.
+if should_run TSEC15 target; then
+  d="$WORK/tsec15"; mkdir -p "$d/run/reltmp" "$d/project/.herd"
+  printf x > "$d/project/.herd/old.txt"; touch -d "20 days ago" "$d/project/.herd/old.txt"
+  printf x > "$d/project/.herd/fresh.txt"
+  out="$( cd "$d/run" && export TMPDIR=reltmp && run_herd_fn '
+    d="'"$d"'"
+    prune_herd_workdirs "$d/project" 14 2>/dev/null
+    echo "old=$([ -e "$d/project/.herd/old.txt" ] && echo kept || echo DELETED) fresh=$([ -e "$d/project/.herd/fresh.txt" ] && echo kept || echo DELETED)"
+  ' )"
+  check TSEC15 target 'relative TMPDIR: cleanup still removes old entries and keeps fresh ones' \
+        "old=DELETED fresh=kept" "$out"
+fi
+
+# ------------------- TSEC16: CLI cwd with a trailing newline (P1) ------------
+# Derivation: the CLI entry points used `cwd="$(pwd)"`, whose command
+# substitution strips a trailing newline BEFORE prune_herd_workdirs sees the
+# path — `run` from $'P\n' then cleaned the neighbour P. `cwd="$PWD"` keeps the
+# newline, so the cleanup skips with a note and both .herd directories stay.
+if should_run TSEC16 target; then
+  d="$WORK/tsec16"; nl=$'\n'
+  fixture_dir "tsec16"
+  mkdir -p "$d/P/.herd" "$d/P$nl/.herd" "$d/rt"
+  printf x > "$d/P/.herd/old.txt";  touch -d "20 days ago" "$d/P/.herd/old.txt"
+  printf x > "$d/P$nl/.herd/old.txt"; touch -d "20 days ago" "$d/P$nl/.herd/old.txt"
+  out="$( cd "$d/P$nl" || exit 1
+    HERD_WORKDIR_KEEP_DAYS=14 XDG_RUNTIME_DIR="$d/rt" HERD_CONFIG="$WORK/no-config" \
+      run_herd run --name tsec16 --hold 0 --no-wait -- true
+    printf 'neighbour=%s own=%s note=%s rc=%s' \
+      "$([ -e "$d/P/.herd/old.txt" ] && echo kept || echo DELETED)" \
+      "$([ -e "$d/P$nl/.herd/old.txt" ] && echo kept || echo DELETED)" \
+      "$(case "$ERR" in *newline*) echo yes ;; *) echo no ;; esac)" "$RC"
+  )"
+  check TSEC16 target 'run from a cwd with a trailing newline: neighbour untouched, skip note' \
+        "neighbour=kept own=kept note=yes rc=0" "$out"
 fi
