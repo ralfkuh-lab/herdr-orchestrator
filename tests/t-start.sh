@@ -158,6 +158,17 @@ if should_run T36d target; then
         "exec-flags|yes|exec-opts|exec-bad|exec-only-copilot" "$r1|$usage36d|$r2|$r3|$r4"
 fi
 
+if should_run T36f target; then
+  fixture_dir "t36f"
+  # --spec frames the file neutrally: it may hold a review brief, not only an
+  # implementation spec.
+  printf 'brief\n' > "$WORK/brief.md"
+  run_exec codex --cwd "$WORK" --spec "$WORK/brief.md" "go"
+  r=wrong; case "$OUT" in *"Follow the instructions in the file $WORK/brief.md. go"*) r=ok ;; esac
+  case "$OUT" in *"Implement the specification"*) r=still-implement ;; esac
+  check T36f target "exec --spec: neutral prompt prefix" "0|ok" "$RC|$r"
+fi
+
 if should_run T37 target; then
   fixture_dir "t37"
   # Three usage errors, all clean exit 2: missing value (would be a $2 abort

@@ -4070,7 +4070,7 @@ exec)
   full_prompt="${prompt[*]:-}"
   if [ -n "$spec" ]; then
     [ -f "$spec" ] || { echo "spec file missing: $spec" >&2; exit 2; }
-    full_prompt="Implement the specification in the file ${spec}. ${full_prompt}"
+    full_prompt="Follow the instructions in the file ${spec}. ${full_prompt}"
   fi
   [ -n "$full_prompt" ] || { echo "[herd] exec: prompt or --spec required" >&2; exit 2; }
   [ -z "$model" ] && model="$(default_model_for "$backend")"   # Config default
