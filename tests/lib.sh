@@ -177,6 +177,12 @@ check() {
   fi
 }
 
+# skip_check <id> <reason> — a test whose precondition is missing here.
+skip_check() {
+  printf '  \033[33mSKIP\033[0m %-5s (%s)\n' "$1" "$2"
+  skip=$((skip + 1))
+}
+
 should_run() {
   local id="$1" kind="$2"
   if [ ${#SELECT[@]} -gt 0 ]; then

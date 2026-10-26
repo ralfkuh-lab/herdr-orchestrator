@@ -748,3 +748,76 @@ if should_run TLB8 target; then
   check TLB8 target "own pane: only a structurally confirmed missing label is renamed" \
         "0|0|0|1|0|0" "$r1|$r2|$r3|$r4|$r5|$r6"
 fi
+
+if should_run TPL1 target; then
+  # Two parallel placements into a tab with 3 of 4 panes: counting and
+  # splitting run under the placement lock, so exactly one splits into w1:t1
+  # and the other opens a new tab. Without the lock both saw pane_count 3 and
+  # both split (incident 2026-10-26: six panes in one tab). Timing-based
+  # regression check; TPL2 proves the lock itself.
+  if ! command -v flock >/dev/null 2>&1; then
+    skip_check TPL1 "flock not available, placement runs unlocked by design"
+  else
+    fixture_dir "tpl1" "$WORK/tpl1-run"
+    printf 'p:t\n' > "$FAKE_HERDR_DIR/split.pane"
+    printf '3\n' > "$FAKE_HERDR_DIR/tab.panes"
+    printf '0.5\n' > "$FAKE_HERDR_DIR/tablistsleep"
+    (
+      export XDG_RUNTIME_DIR="$WORK/tpl1-run"
+      ( HERD_TEST_WS=w1 HERD_TEST_TAB=w1:t1 run_herd term --name ta; echo "$RC" > "$WORK/tpl1-rc.a" ) &
+      ( HERD_TEST_WS=w1 HERD_TEST_TAB=w1:t1 run_herd term --name tb; echo "$RC" > "$WORK/tpl1-rc.b" ) &
+      wait
+    )
+    r="split=$(side_log | grep -cx 'pane-split' || true),tab=$(side_log | grep -cx 'tab-create' || true)"
+    check TPL1 target "parallel placements respect --max-per-tab (lock around count + split)" \
+          "split=1,tab=1|0,0" "$r|$(cat "$WORK/tpl1-rc.a" 2>/dev/null),$(cat "$WORK/tpl1-rc.b" 2>/dev/null)"
+  fi
+fi
+
+if should_run TPL2 target; then
+  # Deterministic lock proof: an independent `flock -n` on the lock file fails
+  # while place_shell_pane runs (success and failure path) and succeeds after
+  # create_shell_pane returned; the return code passes through.
+  if ! command -v flock >/dev/null 2>&1; then
+    skip_check TPL2 "flock not available"
+  else
+    mkdir -p "$WORK/tpl2-run"
+    got="$(XDG_RUNTIME_DIR="$WORK/tpl2-run" run_herd_fn '
+      probe() { if flock -n "$(herd_log_root)/placement.lock" true; then echo free; else echo held; fi; }
+      place_shell_pane() { probe; return "$1"; }
+      a=0; create_shell_pane 0 || a=$?; probe
+      b=0; create_shell_pane 7 || b=$?; probe
+      echo "rc=$a,$b"
+    ' 2>&1 | paste -sd" ")"
+    check TPL2 target "placement lock held during place_shell_pane, released afterwards, rc preserved" \
+          "held free held free rc=0,7" "$got"
+  fi
+fi
+
+if should_run TPL3 target; then
+  # An explicit --split must not drop the chosen target tab: with --tab of
+  # another tab the split targets a pane of that tab instead of --current.
+  # Without any pane in that tab: exit 1, no split in the caller's tab.
+  fixture_dir "tpl3"
+  printf 'p:t\n' > "$FAKE_HERDR_DIR/split.pane"
+  printf '{"pane_id":"w1:p7","tab_id":"w1:t9","workspace_id":"w1","label":"x"}\n' > "$FAKE_HERDR_DIR/extra-panes.jsonl"
+  HERD_TEST_WS=w1 HERD_TEST_TAB=w1:t1 run_herd term --name tc --tab w1:t9 --split down
+  a="$RC:$(head -1 "$FAKE_HERDR_DIR/.split-args" 2>/dev/null)"
+  rm -f "$FAKE_HERDR_DIR/.side" "$FAKE_HERDR_DIR/.split-args"
+  HERD_TEST_WS=w1 HERD_TEST_TAB=w1:t1 run_herd term --name td --tab w1:t8 --split down
+  b="$RC:$(side_log | grep -c pane-split || true)"
+  check TPL3 target "--tab + --split splits inside the target tab; no pane there -> exit 1 without split" \
+        "0:w1:p7 --direction down --cwd $PWD --no-focus|1:0" "$a|$b"
+fi
+
+if should_run TPL4 target; then
+  # --max-per-tab / HERD_MAX_PER_TAB: a non-integer is a usage error before any
+  # pane split (before 2026-10-26 it silently opened a new tab on every start).
+  fixture_dir "tpl4"
+  printf 'p:t\n' > "$FAKE_HERDR_DIR/split.pane"
+  run_herd term --name te --max-per-tab foo
+  a="$RC:$(side_log | grep -c pane-split || true)"
+  HERD_CONFIG="$WORK/no-config" run_herd start pi --name tf --model opencode-go/deepseek-v4.1-flash --max-per-tab 4x --timeout 1
+  b="$RC:$(side_log | grep -c pane-split || true)"
+  check TPL4 target "invalid --max-per-tab -> exit 2 before the pane split" "2:0|2:0" "$a|$b"
+fi

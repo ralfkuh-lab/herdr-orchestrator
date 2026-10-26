@@ -41,6 +41,13 @@
 #   .reads.<name>   logs one line "<source> <lines>" per `pane read` (for format
 #                   ansi: "ansi <lines>").
 #   split.pane      pane_id that `pane split` returns.
+#   .split-args     logs the arguments of every `pane split`, one line each.
+#   tab.panes       base pane count of the one tab w1:t1 (workspace w1) in
+#                   `tab list`, plus one per logged `pane split`; `tab create`
+#                   returns tab w1:t2 with root pane p:root2. Missing →
+#                   `tab list` stays without tabs, `tab create` empty (as before).
+#   tablistsleep    seconds `tab list` sleeps before answering (widens the
+#                   window between counting and splitting for race tests).
 #   start.<name>    sequence for `agent start`: line N applies to the N-th call.
 #                   "ok" -> {"result":{"ok":true}}; "noreg:<text>" -> error
 #                   WITHOUT registration (no .started.<name>), stderr = <text>;
@@ -501,6 +508,7 @@ case "$sub" in
         ;;
       split)
         side "pane-split"
+        printf '%s\n' "$*" >> "$dir/.split-args"
         if [ -f "$dir/split.pane" ]; then
           pid="$(tr -d '\n\r' < "$dir/split.pane")"
           printf '{"result":{"pane_id":"%s"}}\n' "$pid"
@@ -620,6 +628,35 @@ time.sleep(float(sys.argv[2]))
           else
             [ -f "$dir/pane.$name" ] && cat "$dir/pane.$name"
           fi
+        fi
+        ;;
+      *) printf '{"result":{}}\n' ;;
+    esac
+    ;;
+  tab)
+    action="${1:-}"; shift || true
+    case "$action" in
+      list)
+        # /bin/sleep: the sleep shim in tests/bin cuts every sleep to 0.02 s.
+        [ -f "$dir/tablistsleep" ] && /bin/sleep "$(cat "$dir/tablistsleep")"
+        if [ -f "$dir/tab.panes" ]; then
+          # Base count plus one per logged split (append-only, so parallel
+          # splits cannot lose an increment).
+          splits=0
+          [ -f "$dir/.side" ] && splits=$(grep -cx 'pane-split' "$dir/.side" || true)
+          n=$(( $(cat "$dir/tab.panes") + ${splits:-0} ))
+          printf '{"result":{"tabs":[{"label":"1","number":1,"pane_count":%s,"tab_id":"w1:t1","workspace_id":"w1"}]}}\n' "$n"
+        else
+          printf '{"result":{}}\n'
+        fi
+        ;;
+      create)
+        # Only with tab.panes: the other tests rely on the split path.
+        if [ -f "$dir/tab.panes" ]; then
+          side "tab-create"
+          printf '{"result":{"tab":{"tab_id":"w1:t2"},"root_pane":{"pane_id":"p:root2"}}}\n'
+        else
+          printf '{"result":{}}\n'
         fi
         ;;
       *) printf '{"result":{}}\n' ;;

@@ -1986,6 +1986,8 @@ except Exception:
 print(panes[0]["pane_id"] if panes else "")
 ' "$tab" 2>/dev/null)"
   [ -n "$anchor" ] || return 0
+  # Without a readable layout, split the anchor (keeps the pane in this tab).
+  SPLIT_TARGET="$anchor"
   placement="$(herdr pane layout --pane "$anchor" 2>/dev/null | python3 -c '
 import json, sys
 try:
@@ -2015,7 +2017,38 @@ print("right" if r["width"] > 2 * r["height"] else "down", best["pane_id"])
 # A freshly created tab already brings an empty shell root pane —
 # that is used directly instead of splitting. Sets NEW_PANE; return 1 on
 # failure (message on stderr).
+#
+# Counting the panes and splitting runs under a per-user flock: parallel starts
+# otherwise all saw the same pane_count and each split, so one tab got six
+# panes despite --max-per-tab 4 (incident 2026-10-26). Without flock, a
+# usable log root or the lock within 30 s, placement continues unlocked
+# (note on stderr) — a crowded tab is no reason to fail a start. The lock only
+# bounds the wait for it: a hanging herdr call inside keeps holding it.
 create_shell_pane() {
+  local root rc=0 locked=0 why=""
+  if ! command -v flock >/dev/null 2>&1; then
+    why="flock not available"
+  elif ! root="$(herd_log_root 2>/dev/null)"; then
+    why="no usable log root"
+  # The group keeps 2>/dev/null temporary; a bare `exec … 2>/dev/null` would
+  # silence the whole script.
+  elif ! { exec 9>>"$root/placement.lock"; } 2>/dev/null; then
+    why="cannot open $root/placement.lock"
+  elif flock -w 30 9; then
+    locked=1
+  else
+    why="lock not acquired within 30 s"
+  fi
+  [ -z "$why" ] || echo "[herd] note: placing the pane without the placement lock ($why) — parallel starts can exceed --max-per-tab" >&2
+  place_shell_pane "$@" || rc=$?
+  # Unlock explicitly: a herdr child that kept a copy of fd 9 would otherwise
+  # hold the lock beyond the close.
+  if [ "$locked" = 1 ]; then flock -u 9 || true; fi
+  exec 9>&-
+  return "$rc"
+}
+
+place_shell_pane() {
   local cwd="$1" split="$2" tab_opt="$3" max="$4" sj
   NEW_PANE=""
   # Not only HERDR_WORKSPACE_ID: the variable is missing in some panes, TAB_ID
@@ -2026,10 +2059,20 @@ create_shell_pane() {
     NEW_PANE="$TARGET_TAB_ROOT"
     return 0
   fi
+  # A target tab other than our own needs a pane of that tab as split target,
+  # also with an explicit --split (it only sets the direction): --current would
+  # split the caller's tab, even when that one is full. In our own tab an
+  # explicit --split keeps splitting the current pane, as before.
+  local other_tab=0
+  [ -n "$TARGET_TAB" ] && [ "$TARGET_TAB" != "${HERDR_TAB_ID:-}" ] && other_tab=1
   SPLIT_DIR="down"; SPLIT_TARGET=""
-  if [ -z "$split" ]; then
+  if [ -z "$split" ] || [ "$other_tab" = 1 ]; then
     choose_split_placement "${TARGET_TAB:-${HERDR_TAB_ID:-}}"
-    split="$SPLIT_DIR"
+    [ -n "$split" ] || split="$SPLIT_DIR"
+  fi
+  if [ -z "$SPLIT_TARGET" ] && [ "$other_tab" = 1 ]; then
+    echo "[herd] pane split: no pane found in target tab $TARGET_TAB — not splitting another tab instead" >&2
+    return 1
   fi
   if [ -n "$SPLIT_TARGET" ]; then
     sj="$(herdr pane split "$SPLIT_TARGET" --direction "$split" --cwd "$cwd" --no-focus 2>&1)"
@@ -2074,6 +2117,7 @@ print("NEW")
     cj="$(herdr tab create --workspace "$ws" --cwd "$cwd" --label herd --no-focus 2>/dev/null)"
     TARGET_TAB="$(printf '%s' "$cj" | grep -o '"tab_id":"[^"]*"' | head -1 | sed 's/.*:"//; s/"$//')"
     TARGET_TAB_ROOT="$(printf '%s' "$cj" | grep -o '"pane_id":"[^"]*"' | head -1 | sed 's/.*:"//; s/"$//')"
+    [ -n "$TARGET_TAB" ] || echo "[herd] note: no new tab could be created — placing the pane in the current tab" >&2
   else
     TARGET_TAB="$picked"
   fi
@@ -2835,6 +2879,7 @@ start)
   # agent start rejects with invalid_agent_name and the pane stays orphaned.
   validate_name start "$name"
   validate_minutes start --timeout "$timeout_min"
+  validate_minutes start --max-per-tab "$max_per_tab" panes
   # Space-local name collision: the same name in your OWN space blocks
   # (herdr would reject the start). The same name only in a FOREIGN
   # space is no obstacle — two sessions may independently be called
@@ -4101,6 +4146,7 @@ term)
   done
   need_name "$name"
   validate_name term "$name"
+  validate_minutes term --max-per-tab "$max_per_tab" panes
   # herdr >= 0.7.5: terminal panes are NO longer agents. A split opens
   # the herdr default shell (interactive → nvm etc. loaded); the label makes
   # the pane addressable by name for type/read/key/stop (pane_id_of).
@@ -4167,6 +4213,7 @@ exec)
   validate_name exec "$name"
   validate_minutes exec --hold "$hold_sec" seconds
   validate_minutes exec --timeout "$timeout_min"
+  validate_minutes exec HERD_MAX_PER_TAB "${HERD_MAX_PER_TAB:-4}" panes
 
   full_prompt="${prompt[*]:-}"
   if [ -n "$spec" ]; then
@@ -4345,6 +4392,7 @@ run)
   validate_name run "$name"
   validate_minutes run --hold "$hold_sec" seconds
   validate_minutes run --timeout "$timeout_min"
+  validate_minutes run HERD_MAX_PER_TAB "${HERD_MAX_PER_TAB:-4}" panes
 
   stamp="$(date +%Y%m%d-%H%M%S)"
   log_root="$(herd_log_root)" || exit 1

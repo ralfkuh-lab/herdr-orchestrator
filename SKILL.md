@@ -154,9 +154,10 @@ escalation — the orchestrator can then no longer unblock its sub-agents.
 - **`start`:** backend profile and flags: section 12. If the backend dies
   immediately (wrong flag), `start` aborts within seconds: exit 1, backend
   output on stderr, pane closed, name free again. `start` opens a new tab as
-  soon as the current one has 4 panes (`--max-per-tab`/`HERD_MAX_PER_TAB`), and
-  places panes in a 2×2 grid (first agent to the right of the main window);
-  `--split right|down` bypasses that. If a dialog is open after start, `start`
+  soon as the current one has 4 panes (`--max-per-tab`/`HERD_MAX_PER_TAB`; all
+  panes count, parallel starts are serialized by a lock), and places panes in a
+  2×2 grid (first agent to the right of the main window); `--split right|down`
+  bypasses the grid, but a pane in another tab is still split inside that tab. If a dialog is open after start, `start`
   warns.
 - **`send`:** checks prompt acceptance, detects non-acceptance and resends once
   after a content cross-check. If herdr reports `agent_blocked` on the first
