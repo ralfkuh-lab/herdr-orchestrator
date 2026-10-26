@@ -3,8 +3,10 @@
 - **agy** — `role impl` → `--mode accept-edits` (writes without prompting),
   `research` → `--mode plan` (read-only; whether the plan mode ends in an
   approval dialog as with kimi has not been observed yet — check on the first
-  run with `read`). `--effort low|medium|high` is passed through; the
-  model slug (`gemini-3.8-flash-high`) also carries the effort.
+  run with `read`). `--effort low|medium|high` is passed through, but the
+  model slug (`gemini-3.8-flash-high`, `gemini-4-argon-medium`) usually carries
+  the effort: agy then reports that the flag is not supported for that model
+  and ignores it (observed 2026-09-15) — choose the effort via the slug.
   `--permission-mode accept-edits|plan` overrides both roles; the config
   `HERD_IMPL_PERMISSION_MODE` does NOT apply here (claude/grok vocabulary).
   `--model` (see `agy models`). Resume: `-c` / `--conversation`. Official
