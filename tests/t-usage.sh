@@ -36,7 +36,7 @@ if should_run T145 target; then
   run_herd usage a
   # (the dialog guard before sending keeps reading visible 40)
   reads_a=no; grep -qx 'visible ?' "$FAKE_HERDR_DIR/.reads.a" 2>/dev/null && reads_a=yes
-  want_argon="$(printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s|0|yes' "a" "agy" "5h=100% left" "week=100% left" "reset5h=?" "resetweek=?" "argon_5h=–" "argon_week=98% left" "argon_reset5h=–" "argon_resetweek=167h 52m")"
+  want_argon="$(printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s|0|yes' "a" "agy" "5h=100% left" "week=100% left" "reset5h=?" "resetweek=?" "argon_5h=–" "argon_week=98% left" "argon_reset5h=–" "argon_resetweek=167h 52m" "claude_5h=100% left" "claude_week=100% left" "claude_reset5h=?" "claude_resetweek=?")"
   check T145b2 target "usage agy with Argon section: whole screen, argon_week=98% left" "$want_argon" "$OUT|$RC|$reads_a"
 
   # T145c: claude fixture
@@ -556,4 +556,18 @@ fi
 if should_run TCL5 target; then
   check_python_tests TCL5 test_codex_log.py 19 \
     'codex --log: reference cases R1-R11 and CLI contract'
+fi
+
+if should_run TAGYCLAUDE target; then
+  # The real three-group sample has no terminal chrome; add the view's close marker.
+  fixture_dir "tagyclaude"
+  cat "$ROOT/tests/fixtures/usage/agy-usage-claude-gpt.txt" > "$WORK/agy-claude.txt"
+  printf '\n  esc Close\n' >> "$WORK/agy-claude.txt"
+  usage_fixture a agy "$WORK/agy-claude.txt"
+  run_herd usage a
+  want="$(printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s|0' \
+    "a" "agy" "5h=100% left" "week=100% left" "reset5h=?" "resetweek=?" \
+    "argon_5h=–" "argon_week=95% left" "argon_reset5h=–" "argon_resetweek=91h 22m" \
+    "claude_5h=39% left" "claude_week=69% left" "claude_reset5h=4h 55m" "claude_resetweek=167h 55m")"
+  check TAGYCLAUDE target "usage agy: Gemini, Argon and Claude/GPT quotas" "$want" "$OUT|$RC"
 fi

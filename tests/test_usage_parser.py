@@ -26,6 +26,55 @@ class UsageReferenceTests(unittest.TestCase):
     pass
 
 
+class AgyClaudeTests(unittest.TestCase):
+    def setUp(self):
+        self.text = (FIXTURES / 'agy-usage-claude-gpt.txt').read_text(encoding='utf-8')
+
+    def test_three_groups_from_real_usage_screen(self):
+        result = parse_usage(self.text, 'agy')
+        self.assertEqual(result.exit_code, 0)
+        self.assertEqual(result.to_tsv('probe', 'agy'),
+                         'probe\tagy\t5h=100% left\tweek=100% left\treset5h=?\tresetweek=?'
+                         '\targon_5h=–\targon_week=95% left\targon_reset5h=–'
+                         '\targon_resetweek=91h 22m\tclaude_5h=39% left\tclaude_week=69% left'
+                         '\tclaude_reset5h=4h 55m\tclaude_resetweek=167h 55m')
+
+    def test_missing_resets_do_not_leak_from_other_groups(self):
+        for value, field in [('4h 55m', 'claude_reset5h'),
+                             ('167h 55m', 'claude_resetweek')]:
+            with self.subTest(field=field):
+                result = parse_usage(self.text.replace('Refreshes in ' + value, ''), 'agy')
+                self.assertEqual(result.exit_code, 1)
+                self.assertEqual(dict(result.extra)[field], '?')
+                self.assertEqual(dict(result.extra)['argon_resetweek'], '91h 22m')
+
+    def test_present_group_requires_both_windows(self):
+        for label, field in [('Five Hour Limit', 'claude_5h'),
+                             ('Weekly Limit', 'claude_week')]:
+            with self.subTest(field=field):
+                gemini, claude = self.text.split('CLAUDE AND GPT MODELS', 1)
+                result = parse_usage(gemini + 'CLAUDE AND GPT MODELS'
+                                     + claude.replace(label, 'Unavailable Limit', 1), 'agy')
+                self.assertEqual(result.exit_code, 1)
+                self.assertEqual(dict(result.extra)[field], '?')
+
+    def test_absent_group_adds_no_fields(self):
+        gemini, rest = self.text.split('CLAUDE AND GPT MODELS', 1)
+        argon = 'GEMINI 4 ARGON' + rest.split('GEMINI 4 ARGON', 1)[1]
+        result = parse_usage(gemini + argon, 'agy')
+        self.assertEqual(result.exit_code, 0)
+        self.assertFalse(any(key.startswith('claude_') for key, _ in result.extra))
+        self.assertEqual(dict(result.extra)['argon_week'], '95% left')
+
+    def test_truncated_group_reports_unknown_fields(self):
+        text = self.text.split('CLAUDE AND GPT MODELS', 1)[0] + 'CLAUDE AND GPT MODELS\n'
+        result = parse_usage(text, 'agy')
+        self.assertEqual(result.exit_code, 1)
+        self.assertEqual(dict(result.extra), {
+            'claude_5h': '?', 'claude_week': '?',
+            'claude_reset5h': '?', 'claude_resetweek': '?'})
+
+
 def reference_test(case):
     def test(self):
         result = parse_usage(input_text(case), case['kind'])

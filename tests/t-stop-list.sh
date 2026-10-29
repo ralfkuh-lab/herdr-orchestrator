@@ -147,7 +147,7 @@ if should_run T158 target; then
   pane_after_files a 4 "$ROOT/tests/fixtures/usage/agy-usage-paged-"{2..6}.txt
   rm -f "$FAKE_HERDR_DIR/.side"
   run_herd usage a
-  want_158a="$(printf '%s\t%s\t%s\t%s\t%s\t%s|0' "a" "agy" "5h=89% left" "week=85% left" "reset5h=4h 22m" "resetweek=43h 33m")"
+  want_158a="$(printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s|0' "a" "agy" "5h=89% left" "week=85% left" "reset5h=4h 22m" "resetweek=43h 33m" "claude_5h=100% left" "claude_week=100% left" "claude_reset5h=?" "claude_resetweek=?")"
   want_side="$(printf 'prompt a /usage\npane-keys p:a down down down down down\npane-keys p:a down down down down down\npane-keys p:a down down down down down\npane-keys p:a down down down down down\npane-keys p:a down down down down down\npane-keys p:a esc')"
   side="$(cat "$FAKE_HERDR_DIR/.side" 2>/dev/null)"
   side_ok=no; [ "$side" = "$want_side" ] && side_ok=yes
@@ -159,7 +159,7 @@ if should_run T158 target; then
   usage_fixture a agy "$ROOT/tests/fixtures/usage/agy-usage-tall.txt"
   rm -f "$FAKE_HERDR_DIR/.side"
   run_herd usage a
-  want_158b="$(printf '%s\t%s\t%s\t%s\t%s\t%s|0' "a" "agy" "5h=76% left" "week=83% left" "reset5h=3h 33m" "resetweek=42h 44m")"
+  want_158b="$(printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s|0' "a" "agy" "5h=76% left" "week=83% left" "reset5h=3h 33m" "resetweek=42h 44m" "claude_5h=100% left" "claude_week=100% left" "claude_reset5h=?" "claude_resetweek=?")"
   side="$(side_log)"
   has_down=no; case "$side" in *"down"*) has_down=yes ;; esac
   has_esc=no; case "$side" in *"pane-keys p:a esc"*) has_esc=yes ;; esac
@@ -172,7 +172,7 @@ if should_run T158 target; then
   pane_after_files a 4 "$ROOT/tests/fixtures/usage/agy-usage-paged-"{1..6}.txt
   rm -f "$FAKE_HERDR_DIR/.side"
   run_herd usage a
-  want_158c="$(printf '%s\t%s\t%s\t%s\t%s\t%s|0' "a" "agy" "5h=89% left" "week=85% left" "reset5h=4h 22m" "resetweek=43h 33m")"
+  want_158c="$(printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s|0' "a" "agy" "5h=89% left" "week=85% left" "reset5h=4h 22m" "resetweek=43h 33m" "claude_5h=100% left" "claude_week=100% left" "claude_reset5h=?" "claude_resetweek=?")"
   rcount="$(cat "$FAKE_HERDR_DIR/.rcount.a" 2>/dev/null || echo 0)"
   check T158c target "usage agy repeated page: idempotent, exactly one extra read (9), no error" \
         "$want_158c|9" "$OUT|$RC|$rcount"
@@ -184,7 +184,7 @@ if should_run T158 target; then
   pane_after_files a 5 "$ROOT/tests/fixtures/usage/agy-usage-paged-"{2..6}.txt
   rm -f "$FAKE_HERDR_DIR/.side"
   run_herd usage a
-  want_158d="$(printf '%s\t%s\t%s\t%s\t%s\t%s|0' "a" "agy" "5h=89% left" "week=85% left" "reset5h=4h 22m" "resetweek=43h 33m")"
+  want_158d="$(printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s|0' "a" "agy" "5h=89% left" "week=85% left" "reset5h=4h 22m" "resetweek=43h 33m" "claude_5h=100% left" "claude_week=100% left" "claude_reset5h=?" "claude_resetweek=?")"
   check T158d target "usage agy read error while paging: transient error repeated, result correct" \
         "$want_158d" "$OUT|$RC"
 
@@ -209,7 +209,7 @@ if should_run T158 target; then
   pane_after_files a 4 "$ROOT/tests/fixtures/usage/agy-usage-paged-"{1..6}.txt
   rm -f "$FAKE_HERDR_DIR/.side"
   run_herd usage a
-  want_158f1="$(printf '%s\t%s\t%s\t%s\t%s\t%s|0' "a" "agy" "5h=89% left" "week=85% left" "reset5h=4h 22m" "resetweek=43h 33m")"
+  want_158f1="$(printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s|0' "a" "agy" "5h=89% left" "week=85% left" "reset5h=4h 22m" "resetweek=43h 33m" "claude_5h=100% left" "claude_week=100% left" "claude_reset5h=?" "claude_resetweek=?")"
   idx_pre_esc="$(grep -n "pane-keys p:a esc" "$FAKE_HERDR_DIR/.side" | head -1 | cut -d: -f1)"
   idx_prompt="$(grep -n "prompt a /usage" "$FAKE_HERDR_DIR/.side" | head -1 | cut -d: -f1)"
   pre_esc_ok=no; [ -n "$idx_pre_esc" ] && [ -n "$idx_prompt" ] && [ "$idx_pre_esc" -lt "$idx_prompt" ] && pre_esc_ok=yes
@@ -247,7 +247,7 @@ GEMINI MODELS
     95% remaining · Refreshes in 116h
   Five Hour Limit Remaining
     83% remaining · Refreshes in 1h 1
-CLAUDE AND GPT MODELS
+OTHER MODELS
 EOF
   usage_fixture a agy "$WORK/t158g-fix.txt" 3
   rm -f "$FAKE_HERDR_DIR/.side"
@@ -278,7 +278,7 @@ EOF
 
     89% remaining · Refreshes in 4h 22m
 
-CLAUDE AND GPT MODELS
+OTHER MODELS
   Weekly Limit Remaining
     Quota available
   (6–10 of 10 lines)
@@ -374,7 +374,7 @@ GEMINI MODELS
     89% remaining · Refreshes in
     Account: test
     4h 22m
-CLAUDE AND GPT MODELS
+OTHER MODELS
   esc Close
 EOF
   usage_fixture a agy "$WORK/t158l-fix.txt" 3

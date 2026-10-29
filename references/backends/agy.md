@@ -19,3 +19,11 @@
   `send` also transmits digit prompts unchanged. **Limit:** The evaluation of
   such prompts by agy with an open survey is not proven live; before a
   digit prompt, close the visible survey with `key NAME 0` and read it back.
+- **Usage:** `usage NAME` and `usage --probe agy` read all quota groups from
+  `/usage`. The base `5h`, `week`, `reset5h`, `resetweek` fields describe
+  Gemini. Separate groups append `argon_5h`, `argon_week`, `argon_reset5h`,
+  `argon_resetweek` and `claude_5h`, `claude_week`, `claude_reset5h`,
+  `claude_resetweek`. The `claude_*` fields cover the shared **CLAUDE AND GPT
+  MODELS** quota, including GPT-OSS. Absent groups add no fields; an existing
+  Claude group requires both windows. Percentages are remaining, reset times
+  are verbatim. See [usage.md](../usage.md) for parsing and error rules.

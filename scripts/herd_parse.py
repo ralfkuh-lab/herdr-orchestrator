@@ -22,7 +22,7 @@ class UsageResult:
     reset5: str
     resetw: str
     ok: bool
-    extra: tuple = ()  # further (key, value) fields, e.g. agy's separate Argon quota
+    extra: tuple = ()  # further (key, value) fields for agy's additional quota groups
 
     @property
     def exit_code(self) -> int:
@@ -79,13 +79,13 @@ def _agy_window(seg: str):
     return pct, reset, optional, ok
 
 
-def _agy_argon(text: str):
-    """Fields of agy's separate Argon section, () without one; ok False if unparseable.
+def _agy_group(text: str, heading: str, prefix: str, optional_5h=False):
+    """Fields of an additional agy group, () without one; False if unparseable.
 
     Pro plans (2026-10) show only a weekly limit there ("Gemini 4 Argon Weekly
-    Limit"); a five-hour line is read if a plan shows one, otherwise 5h is –.
+    Limit"); Argon's five-hour line is optional, otherwise both are required.
     """
-    m = re.search(r"^[^\S\n]*GEMINI [0-9.]+ ARGON[^\S\n]*$", text, re.M)
+    m = re.search(r"^[^\S\n]*" + heading + r"[^\S\n]*$", text, re.M)
     if not m:
         return (), True
     sec = text[m.end():]
@@ -101,7 +101,11 @@ def _agy_argon(text: str):
                               ("week", "Weekly Limit", "Five Hour Limit")):
         idx = sec.find(label)
         if idx == -1:
-            fields[key] = ("–", "–")
+            if key == "5h" and optional_5h:
+                fields[key] = ("–", "–")
+            else:
+                fields[key] = ("?", "?")
+                ok = False
             continue
         seg = sec[idx + len(label):]
         # End before the whole line of the other limit, not inside it: a bare
@@ -112,11 +116,8 @@ def _agy_argon(text: str):
         pct, reset, _optional, w_ok = _agy_window(seg)
         ok = ok and w_ok
         fields[key] = (pct, reset)
-    if fields["week"] == ("–", "–"):
-        fields["week"] = ("?", "?")  # weekly limit is the required anchor, as for the Gemini group
-        ok = False
-    return ((("argon_5h", fields["5h"][0]), ("argon_week", fields["week"][0]),
-             ("argon_reset5h", fields["5h"][1]), ("argon_resetweek", fields["week"][1])), ok)
+    return (((prefix + "_5h", fields["5h"][0]), (prefix + "_week", fields["week"][0]),
+             (prefix + "_reset5h", fields["5h"][1]), (prefix + "_resetweek", fields["week"][1])), ok)
 
 
 def parse_usage(text: str, kind: str) -> UsageResult:
@@ -305,8 +306,10 @@ def parse_usage(text: str, kind: str) -> UsageResult:
                     ok = ok and w_ok
                 else:
                     ok = False
-                extra, a_ok = _agy_argon(text)
-                ok = ok and a_ok
+                extra, a_ok = _agy_group(text, r"GEMINI [0-9.]+ ARGON", "argon", optional_5h=True)
+                claude, c_ok = _agy_group(text, "CLAUDE AND GPT MODELS", "claude")
+                extra += claude
+                ok = ok and a_ok and c_ok
             else:
                 # F11: without a GEMINI MODELS header do not parse at all, all four fields stay ?
                 ok = False

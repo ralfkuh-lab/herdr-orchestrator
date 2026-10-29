@@ -62,7 +62,7 @@
       "id": "agy-usage-tall",
       "kind": "agy",
       "fixture": "agy-usage-tall.txt",
-      "stdout": "probe\tagy\t5h=76% left\tweek=83% left\treset5h=3h 33m\tresetweek=42h 44m\n",
+      "stdout": "probe\tagy\t5h=76% left\tweek=83% left\treset5h=3h 33m\tresetweek=42h 44m\tclaude_5h=100% left\tclaude_week=100% left\tclaude_reset5h=?\tclaude_resetweek=?\n",
       "exit_code": 0
     },
     {
@@ -279,7 +279,7 @@
       "id": "agy-argon-pro",
       "kind": "agy",
       "fixture": "agy-usage-argon.txt",
-      "stdout": "probe\tagy\t5h=100% left\tweek=100% left\treset5h=?\tresetweek=?\targon_5h=–\targon_week=98% left\targon_reset5h=–\targon_resetweek=167h 52m\n",
+      "stdout": "probe\tagy\t5h=100% left\tweek=100% left\treset5h=?\tresetweek=?\targon_5h=–\targon_week=98% left\targon_reset5h=–\targon_resetweek=167h 52m\tclaude_5h=100% left\tclaude_week=100% left\tclaude_reset5h=?\tclaude_resetweek=?\n",
       "exit_code": 0,
       "note": "Pro plan 2026-10-17: separate Argon section with weekly limit only (5h –)."
     },

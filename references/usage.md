@@ -37,6 +37,16 @@ impl-muse  muse   5h=100% left  week=100% left                 reset5h=at 10:23 
   section the line stays as before; a section without a readable weekly limit
   gives `argon_week=?` and exit 1. The usage view is then taller than 40 lines,
   so agy reads the whole visible screen.
+- agy's **Claude and GPT group** (`CLAUDE AND GPT MODELS`) appends
+  `claude_5h=39% left  claude_week=69% left  claude_reset5h=4h 55m
+  claude_resetweek=167h 55m`. These fields describe the shared quota for
+  Claude Opus, Claude Sonnet and GPT-OSS within agy. The base fields still
+  describe Gemini; Argon fields, when present, precede the Claude fields.
+  As for Argon, decimal percentages are truncated unless the view supplies
+  an integer `N% remaining`. Without the group no fields are appended;
+  with the group both windows are required. Missing values or resets give
+  `?` and exit 1, except an unused 100% window with `Quota available`, whose
+  reset may stay `?` on success.
 - `–` = this window does not exist for the backend (grok has no 5h window, its
   bar shows consumption and is converted to the remaining value; since codex
   0.156 the 5h window is missing, `5h=–`). In `/usage`, muse shows the lines
